@@ -1,0 +1,77 @@
+html
+{
+  padding: 0 !important;
+}
+
+
+.Maindiv{
+  background-color: #FEFCF3;
+}
+
+.header-links {
+  position: absolute;
+  display: flex;
+  top: 30px;
+  right: 15px;
+}
+
+.header-link {
+  /* margin-left: 5px; */
+  color: #efadad;
+  text-decoration: none;
+  font-size: 30px;
+  margin-right: 35px;
+  /* font-weight: bold; */
+}
+
+.header-link:hover {
+  color: #555;
+}
+
+.header-text {
+  text-align: center;
+  font-size: 34px;
+  margin-top: 80px;
+  /* overflow-wrap: break-word; */
+  font-family: 'Roboto', sans-serif;
+}
+.photo-container {
+  display: flex;
+  flex-wrap: wrap; /* Allow items to wrap into multiple rows */
+  justify-content: center; /* Center items horizontally */
+}
+
+.photo-container img {
+  margin: 10px; /* Adjust the spacing between photos */
+  max-height: 700px; 
+  max-width: calc(25% - 20px);
+
+}
+
+/* Define styles for screens smaller than 768px */
+@media screen and (max-width: 768px) {
+  .header-links {
+    position: static;
+    display: block;
+    text-align: center; /* Center links on smaller screens */
+    margin-top: 20px; /* Adjust spacing */
+    margin-bottom: 20px; /* Adjust spacing */
+  }
+
+  .header-link {
+    display: block;
+    margin: 0 auto; /* Center the links */
+    margin-bottom: 15px; /* Adjust spacing */
+  }
+
+  .photo-container img {
+    max-width: calc(50% - 20px); /* Two images per row on smaller screens */
+  }
+}
+
+/* Define styles for screens smaller than 480px */
+@media screen and (max-width: 480px) {
+  .photo-container img {
+    max-width: calc(100% - 20px); /* Single column layout for very small screens */
+  }
+}

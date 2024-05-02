@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Oleo+Script:wght@400;700&family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Oleo+Script:wght@400;700&family=Pacifico&family=Teko:wght@300..700&display=swap');
+.oleo-script-regular {
+    font-family: "Oleo Script", system-ui;
+    /* font-weight: 400; */
+    font-style: normal;
+    margin: 0;
+    margin-left: 20px;
+    font-size: 45px;
+    color: #DBA39A;
+  }
+  
+  .oleo-script-bold {
+    font-family: "Oleo Script", system-ui;
+    /* font-weight: 700; */
+    font-style: normal;
+    
+  }
+  
+  .lobster-regular {
+    font-family: "Lobster", sans-serif;
+    /* font-weight: 400; */
+    font-style: normal;
+
+  }
+  .teko-heading {
+    font-family: "Teko", sans-serif;
+    font-optical-sizing: auto;
+    /* font-weight: 500; */
+    font-style: normal;
+    text-align: center;
+  font-size: 40px;
+  margin-top: 80px;
+  color: #F0DBDB;
+    padding-left: 10%;
+    padding-right: 10%;
+
+  }
+  
