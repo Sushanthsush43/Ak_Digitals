@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { initializeApp } from "firebase/app";
 import { getStorage, ref, uploadBytes } from 'firebase/storage';
 import { toast } from "react-toastify";
-import { toastSuccessStyle, toastErrorStyle } from './toastStyle';
+import { toastSuccessStyle, toastErrorStyle } from './uitls/toastStyle';
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
@@ -20,7 +20,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const storage = getStorage(app);
 
-function ImageUploader() {
+function PhotoUpload() {
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [selectedFilesCopy, setSelectedFilesCopy] = useState([]);
     const [uploading, setUploading] = useState(false);
@@ -135,4 +135,4 @@ function ImageUploader() {
     );
 }
 
-export default ImageUploader;
+export default PhotoUpload;
