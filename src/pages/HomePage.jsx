@@ -43,6 +43,7 @@ function HomePage() {
   const imagesPerPage = 10;
   const [isLoading, setIsLoading] = useState(false);
   const [moreCount, setMoreCount] = useState(0);
+  const [imageRefs, setImageRefs] = useState([]);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -54,9 +55,6 @@ function HomePage() {
 
     return () => clearTimeout(timeout);
   }, []);
-
-
-
 
   // Function to view image
   const viewImage = (img, i) => {
@@ -81,65 +79,81 @@ function HomePage() {
     }
   }
 
+    useEffect(() => {
+        initialFetchImages(); // only once retreive all images from database
+    }, []);
 
+    useEffect(() => {
+        fetchImages();
+    }, [page,imageRefs]);
 
-
-  useEffect(() => {
-    fetchImages();
-  }, [page]);
-
-  async function fetchImages() {
-    setIsLoading(true);
-    try {
-      const startIndex = (page - 1) * imagesPerPage;
-      const endIndex = startIndex + imagesPerPage;
-      const imageRefs = await listAll(ref(storage, 'images')); // List items inside 'images' folder
-
-      const totalPages = Math.ceil(imageRefs.items.length / imagesPerPage);
-
-      const urls = await Promise.all(imageRefs.items.slice(startIndex, endIndex).map(async (itemRef) => {
+    async function initialFetchImages()
+    {
+        setIsLoading(true);
         try {
-          const url = await getDownloadURL(itemRef);
-          return { url, loaded: false };
+            const imageRefs_temp = await listAll(ref(storage, 'images')); // List items inside 'images' folder
+            setImageRefs(imageRefs_temp);
         } catch (error) {
-          console.error('Error getting download URL for itemRef:', error);
-          return null;
+            toast.error("Something went wrong, Please try again!",toastErrorStyle());
+            console.error('Error listing items in storage:', error);
+        } finally {
+            setIsLoading(false);
         }
-      }));
-
-      // If it's the last page, reset the page count
-      if (page === totalPages) {
-        setPage(1);
-        setMoreCount(0);
-      }
-
-      // if viewMoreCount >= 3, then replace old images with new ones, else add to the div
-      if (moreCount >= 3) {
-        setImageUrls(urls.filter(item => item !== null));
-        setMoreCount(0);
-      } else {
-        setImageUrls(prevUrls => [...prevUrls, ...urls.filter(url => url !== null)]);
-      }
-    } catch (error) {
-      toast.error("Something went wrong, Please try again!", toastErrorStyle());
-      console.error('Error listing items in storage:', error);
-    } finally {
-      setIsLoading(false);
     }
-  }
 
-  const handleViewMore = () => {
-    setPage(prevPage => prevPage + 1);
-    setMoreCount(prevCount => prevCount + 1);
-  };
+    async function fetchImages() {
+        if(imageRefs && imageRefs.items && imageRefs.items.length >= 1){
+            setIsLoading(true);
+            try {
+                const startIndex = (page - 1) * imagesPerPage;
+                const endIndex = startIndex + imagesPerPage;
+    
+                const totalPages = Math.ceil(imageRefs.items.length / imagesPerPage);
+    
+                const urls = await Promise.all(imageRefs.items.slice(startIndex, endIndex).map(async (itemRef) => {
+                    try {
+                        const url = await getDownloadURL(itemRef);
+                        return { url, loaded: false };
+                    } catch (error) {
+                        console.error('Error getting download URL for itemRef:', error);
+                        return null;
+                    }
+                }));
+    
+                // If it's the last page, reset the page count
+                if (page === totalPages) {
+                    setPage(1);
+                    setMoreCount(0);
+                }
+    
+                // if viewMoreCount >= 3, then replace old images with new ones, else add to the div
+                if (moreCount >= 3) {
+                    setImageUrls(urls.filter(item => item !== null));
+                    setMoreCount(0);
+                } else {
+                    setImageUrls(prevUrls => [...prevUrls, ...urls.filter(url => url !== null)]);
+                }
+            } catch (error) {
+                toast.error("Something went wrong, Please try again!",toastErrorStyle());
+                console.error('Error listing items in storage:', error);
+            } finally {
+                setIsLoading(false);
+            }
+        } 
+    }
 
-  const handleImageLoad = (index) => {
-    setImageUrls(prevImageUrls => {
-      const updatedImageUrls = [...prevImageUrls];
-      updatedImageUrls[index].loaded = true; // Mark image as loaded
-      return updatedImageUrls;
-    });
-  };
+    const handleViewMore = () => {
+        setPage(prevPage => prevPage + 1);
+        setMoreCount(prevCount => prevCount + 1);
+    };
+
+    const handleImageLoad = (index) => {
+        setImageUrls(prevImageUrls => {
+            const updatedImageUrls = [...prevImageUrls];
+            updatedImageUrls[index].loaded = true; // Mark image as loaded
+            return updatedImageUrls;
+        });
+    };
 
   return (
     <div className={`Maindiv ${isOpened ? 'opened' : ''}`}>
@@ -217,7 +231,7 @@ function HomePage() {
         {/* Loading Button */}
         {imageUrls.length > 0 && (
           <button
-            onClick={handleViewMore}
+            onClick={() => handleViewMore()}
             style={{
               backgroundColor: '#F6F5F2',
               color: '#3E3232',
