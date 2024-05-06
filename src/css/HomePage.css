@@ -1,11 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Oleo+Script:wght@400;700&family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Oleo+Script:wght@400;700&family=Pacifico&family=Teko:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sofia&display=swap');
+
 html {
   padding: 0 !important;
 }
 
-
 .Maindiv {
   background-color: #F6F5F2;
   margin: 0px;
+}
+
+
+.sofia-regular {
+  font-family: "Sofia", cursive;
+  font-weight: 400;
+  font-style: normal;
+  font-weight: 400;
+  font-style: normal;
+  margin: 0;
+  margin-left: 20px;
+  font-size: 40px;
+  color: #3E3232;
+}
+
+
+.teko-heading {
+  position: absolute;
+  display: flex;
+  top: 0px;
+  right: 145px;
+  color: #3E3232;
+  text-decoration: none;
+  font-size: 19px;
+  margin-right: 35px;
+
+}
+
+.teko-headings {
+  position: absolute;
+  display: flex;
+  top: 0px;
+  right: 75px;
+  color: #3E3232;
+  text-decoration: none;
+  font-size: 19px;
+  margin-right: px;
+}
+
+.teko-heading1 {
+  position: absolute;
+  display: flex;
+  top: 0px;
+  right: 30px;
+  color: #3E3232;
+  text-decoration: none;
+  font-size: 25px;
+  margin-right: px;
+}
+
+.teko-heading::before {
+  content: attr(data-content);
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  animation: revealText 5s steps(40);
+}
+
+
+@keyframes revealText {
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .oleo-script-regular {
+    font-size: 25px;
+  }
+
+  .teko-heading {
+    font-size: 24px;
+  }
 }
 
 .header-links {
@@ -16,12 +96,10 @@ html {
 }
 
 .header-link {
-  /* margin-left: 5px; */
   color: #3E3232;
   text-decoration: none;
   font-size: 20px;
   margin-right: 35px;
-  /* font-weight: bold; */
 }
 
 .header-link:hover {
@@ -49,13 +127,11 @@ html {
   text-align: center;
   font-size: 34px;
   margin-top: 80px;
-  /* overflow-wrap: break-word; */
   font-family: 'Roboto', sans-serif;
 }
 
 .photo-container img {
   box-shadow: 10px;
-
   transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -72,7 +148,6 @@ html {
     text-align: right;
     margin-top: -25px;
     margin-bottom: -25px;
-
   }
 
   .header-link {
@@ -89,15 +164,14 @@ html {
   }
 
   .photo-container img {
-    border-radius: 30%;
-    border: 3px solid rgb(233, 105, 14);
-    /* Add border */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    /* Add box shadow */
     transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-    /* Add transition */
   }
 
+  .hoverText {
+    display: none;
+    /* Hide hoverText on small screens */
+  }
 }
 
 .full-screen-image-container {
@@ -111,17 +185,12 @@ html {
   z-index: 2;
   justify-content: center;
   align-items: center;
-
-
 }
 
 .full-screen-image {
   max-width: 90%;
   max-height: 90%;
 }
-
-
-
 
 .nav-btn {
   position: absolute;
@@ -140,7 +209,6 @@ html {
   top: 4%;
   transform: translateY(-50%);
   background: transparent;
-  /* border: none; */
   color: white;
   font-size: 28px;
   cursor: pointer;
@@ -162,19 +230,19 @@ html {
 
 .hoverText {
   position: absolute;
-  bottom: 520px;
-  /* Adjust as needed */
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
   font-size: 20px;
   color: #3E3232;
   opacity: 0;
   z-index: 1;
-  transition: bottom 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  transition: opacity 0.5s ease-in-out;
+  text-align: center;
+  line-height: 1.5;
 }
 
 .hoverText.show {
-  bottom: 520px;
   opacity: 1;
 }
 

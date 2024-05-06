@@ -9,7 +9,6 @@ import { getAnalytics } from "firebase/analytics";
 import { GrInstagram } from "react-icons/gr";
 import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
 import '../css/HomePage.css';
-import '../css/Heading.css';
 import "./ContactPage"
 import '../components/PhotoUpload';
 import { toast } from 'react-toastify';
@@ -168,12 +167,12 @@ function HomePage() {
         </div>
       </header>
 
-      <p className={`hoverText ${showHoverText ? 'show' : ''}`} style={{ textAlign: 'center' }}>
-        <h4>WE CAPTURE THE MOMENTS</h4>
+      <p className={`hoverText ${showHoverText ? 'show' : ''}`}>
+        <h4 style={{textAlign:'center'}}>WE CAPTURE THE MOMENTS</h4>
         <ul style={{ listStyleType: 'none', padding: 0 }}>
-          <li>At Capturer, we specialize in freezing those fleeting moments in time that hold immense significance for you.</li>
-          <li>With our passion for photography and keen eye for detail, we transform ordinary moments into extraordinary memories.</li>
-          <li>Trust us to capture the magic of your life's journey, one frame at a time.</li>
+          <li>Trust us to capture the magic of your life's journey, one frame at a time, freezing fleeting 
+            moments into extraordinary memories with our passion and keen eye for detail.</li>
+          
         </ul>
       </p>
 
@@ -245,7 +244,7 @@ function HomePage() {
 
             }}
           >
-            VIEW ALL WORK
+            VIEW MORE
             <div className='line'></div>
 
           </button>
