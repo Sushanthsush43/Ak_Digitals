@@ -12,6 +12,10 @@ import "./ContactPage"
 import '../components/PhotoUpload';
 import { toast } from 'react-toastify';
 import { toastErrorStyle } from '../components/uitls/toastStyle';
+import VideoUpload from '../components/VideoUpload';
+import DeleteVideos from '../components/DeleteVideos';
+import DeletePhotos from '../components/DeletePhotos';
+
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -176,6 +180,10 @@ function HomePage() {
 
         </ul>
       </p>
+
+      <VideoUpload />
+      {/* <DeleteVideos /> */}
+      {/* <DeletePhotos /> */}
 
       <>
         {data.img && (
