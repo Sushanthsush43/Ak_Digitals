@@ -7,12 +7,13 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import HomePage from './pages/HomePage';
 import PhotoUpload from './components/PhotoUpload';
 import ContactPage from './pages/ContactPage';
+import DashBoard from './pages/DashBoard';
 
 function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/" exact component={HomePage} />
+        <Route path="/" exact component={DashBoard} />
         <Route path="/PhotoUpload" exact component={PhotoUpload} />
         <Route path="/ContactPage" exact component={ContactPage} />
       </Switch>

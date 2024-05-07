@@ -1,0 +1,67 @@
+/* Dashboard.css */
+.MainDashBoardDiv {
+    margin-top: 50px;
+}
+.CountDiv{
+    position: relative; /* Make the container relative */
+    display: flex;
+    flex-direction: row;
+}
+
+.PhotoCount {
+    position: relative; /* Make the container relative */
+    display: flex;
+    flex-direction: row; /* Change direction to row */
+    justify-content: center;
+    align-items: center; /* Align items vertically */
+    width: 150px; /* Adjust width as needed */
+    height: 150px; /* Adjust height as needed */
+    background-color: #ffffff; /* Background color */
+    border-radius: 50%; /* Rounded corners */
+    box-shadow: 0 4px 8px 10px rgba(0, 0, 0, 0.1); /* Box shadow */
+    padding: 16px; /* Padding */
+    margin: 0 auto; /* Center align horizontally */
+}
+.PhotoCount span {
+    font-size: 40px; /* Adjust font size */
+   
+}
+
+.VideoCount {
+    position: relative; /* Make the container relative */
+    display: flex;
+    flex-direction: row; /* Change direction to row */
+    justify-content: center;
+    align-items: center; /* Align items vertically */
+    width: 150px; /* Adjust width as needed */
+    height: 150px; /* Adjust height as needed */
+    background-color: #ffffff; /* Background color */
+    border-radius: 50%; /* Rounded corners */
+    box-shadow: 0 4px 8px 10px rgba(0, 0, 0, 0.1); /* Box shadow */
+    padding: 16px; /* Padding */
+    margin: 0 auto; /* Center align horizontally */
+}
+.VideoCount span {
+    font-size: 40px; /* Adjust font size */
+   
+}
+
+.VisitorCount {
+    position: relative; /* Make the container relative */
+    display: flex;
+    flex-direction: row; /* Change direction to row */
+    justify-content: center;
+    align-items: center; /* Align items vertically */
+    width: 150px; /* Adjust width as needed */
+    height: 150px; /* Adjust height as needed */
+    background-color: #ffffff; /* Background color */
+    border-radius: 50%; /* Rounded corners */
+    box-shadow: 0 4px 8px 10px rgba(0, 0, 0, 0.1); /* Box shadow */
+    padding: 16px; /* Padding */
+    margin: 0 auto; /* Center align horizontally */
+}
+.VisitorCount span {
+    font-size: 40px; /* Adjust font size */
+   
+}
+
