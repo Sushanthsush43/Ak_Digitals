@@ -13,7 +13,6 @@ import '../components/PhotoUpload';
 import { toast } from 'react-toastify';
 import { toastErrorStyle } from '../components/uitls/toastStyle';
 
-// this is config
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
   authDomain: process.env.REACT_APP_AUTH_DOMAIN,
@@ -169,7 +168,7 @@ function HomePage() {
 
       <p className={`hoverText ${showHoverText ? 'show' : ''}`}>
         <h4 style={{textAlign:'center'}}>WE CAPTURE THE MOMENTS</h4>
-        <ul style={{ listStyleType: 'none', padding: 0 }}>
+        <ul style={{ listStyleType: 'none', padding:'10px' }}>
           <li>Trust us to capture the magic of your life's journey, one frame at a time, freezing fleeting 
             moments into extraordinary memories with our passion and keen eye for detail.</li>
           

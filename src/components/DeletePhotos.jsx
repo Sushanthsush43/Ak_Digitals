@@ -16,7 +16,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const storage = getStorage();
+const storage = getStorage(app);
 
 function DeletePhotos() {
     const [imageUrls, setImageUrls] = useState([]);
