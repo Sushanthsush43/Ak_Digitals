@@ -50,9 +50,9 @@ function HomePage() {
 
       {/* <PhotoContainer /> */}
       {/* <DeletePhotos /> */}
-      {/* <VideoContainer /> */}
+      <VideoContainer />
       {/* <Testing /> */}
-      <PhotoUpload />
+      {/* <PhotoUpload /> */}
     </div>
   );
 }
