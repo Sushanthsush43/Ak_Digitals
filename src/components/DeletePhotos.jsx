@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { initializeApp } from "firebase/app";
 import { getStorage, ref, listAll, getDownloadURL, deleteObject } from 'firebase/storage';
 import { toast } from 'react-toastify';
-import { toastErrorStyle, toastSuccessStyle } from './utils/toastStyle';
 import { RiDeleteBinLine } from 'react-icons/ri'; // Import delete icon from react-icons
+import { toastErrorStyle, toastSuccessStyle } from './uitls/toastStyle';
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,

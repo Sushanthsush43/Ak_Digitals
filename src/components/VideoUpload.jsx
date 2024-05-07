@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { initializeApp } from "firebase/app";
 import { getStorage, ref, uploadBytes } from 'firebase/storage';
 import { toast } from "react-toastify";
-import { toastSuccessStyle, toastErrorStyle } from './uitls/toastStyle';
+import { toastSuccessStyle, toastErrorStyle } from './uitls/toastStyle.js';
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
@@ -20,7 +20,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const storage = getStorage(app);
 
-function PhotoUpload() {
+function VideoUpload() {
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [selectedFilesCopy, setSelectedFilesCopy] = useState([]);
     const [uploading, setUploading] = useState(false);
@@ -61,14 +61,12 @@ function PhotoUpload() {
                     //     throw new Error('Simulated error: i equals 2');
                     // }
 
-                    const storageRef = ref(storage, `images/${file.name}`);
+                    const storageRef = ref(storage, `videos/${file.name}`);
                     await uploadBytes(storageRef, file);
-                    // console.log(`File "${file.name}" uploaded successfully.`);
                 } catch (error) {
                     updatedArray[i] = false; // if upload failed, then set failed for that file
                     console.error(`Error uploading file "${file.name}":`, error);
                     isSomeFailed = true;
-                    // console.log("Error on ", i);
                 } finally {
                     setUploadTrack(prevCount => prevCount - 1);
                 }
@@ -89,7 +87,7 @@ function PhotoUpload() {
 
             // display appropriate toast message
             if (!isCompleteFailed && isSomeFailed)
-                toast.error("Some files could not be uploaded", {...toastErrorStyle(), autoClose:false}); // if some files couldnt be uploaded
+                toast.error("Some files could not be uploaded", {...toastErrorStyle(), autoClose:false}); // if some files couldn't be uploaded
             else if (!isCompleteFailed && !isSomeFailed)
                 toast.success("Files successfully uploaded", {...toastSuccessStyle(), autoClose:false}); // if all files are uploaded
         }
@@ -101,13 +99,13 @@ function PhotoUpload() {
             <Link to="/" className="back-button"><i className="fas fa-arrow-left"></i></Link>
 
             <div className='wrapper'>
-                <header>Upload photos</header>
+                <header>Upload videos</header>
                 <form>
                     <label htmlFor="upload-input">
                         <i className="fas fa-cloud-upload-alt"></i>
                         <p>Browse file to upload</p>
                     </label>
-                    <input type="file" id="upload-input" onChange={handleFileChange} accept="image/*" multiple style={{ display: 'none' }} />
+                    <input type="file" id="upload-input" onChange={handleFileChange} accept="video/*" multiple style={{ display: 'none' }} />
                 </form>
 
                 <section className="progress-area">
@@ -135,4 +133,4 @@ function PhotoUpload() {
     );
 }
 
-export default PhotoUpload;
+export default VideoUpload;
