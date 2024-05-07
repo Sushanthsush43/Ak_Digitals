@@ -3,7 +3,6 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-
 import HomePage from './pages/HomePage';
 import PhotoUpload from './components/PhotoUpload';
 import ContactPage from './pages/ContactPage';

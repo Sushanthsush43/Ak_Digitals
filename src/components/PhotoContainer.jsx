@@ -171,7 +171,7 @@ function PhotoContainer() {
                 </div>
                 )}
             </>
-            <div className={`photo-container ${isOpened ? 'animate' : ''}`} style={{ padding: '15px', marginTop: "240px" }}>
+            <div className={`photo-container ${isOpened ? 'animate' : ''}`}>
                 <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}>
                 <Masonry gutter='17px'>
                     {imageUrls.map(({ url, loaded }, index) => (
@@ -224,6 +224,7 @@ function PhotoContainer() {
                 </button>
                 )}
             </div>
+
         </>
   );
 }
