@@ -5,9 +5,6 @@ import { faChevronLeft, faChevronRight, faTimes } from '@fortawesome/free-solid-
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
-import '../css/HomePage.css';
-import "../pages/ContactPage"
-import '../components/PhotoUpload';
 import { toast } from 'react-toastify';
 import { toastErrorStyle } from '../components/uitls/toastStyle';
 
@@ -182,14 +179,14 @@ function PhotoContainer() {
                         alt={`Image ${index}`}
                         data-index={index}
                         onClick={() => viewImage(url, index)} // Add onClick to open image in full-screen
-                        rref={(element) => {
-                        if (element && !loaded) {
-                            if (!observer.current) {
-                            observer.current = new IntersectionObserver(/* observer configuration */);
-                            }
-                            observer.current.observe(element); // Observe the element
-                        }
-                        }}
+                        // ref={(element) => {
+                        // if (element && !loaded) {
+                        //     if (!observer.current) {
+                        //     observer.current = new IntersectionObserver(/* observer configuration */);
+                        //     }
+                        //     observer.current.observe(element); // Observe the element
+                        // }
+                        // }}
 
                         style={{ display: loaded ? 'inline' : 'none' }}
                     />

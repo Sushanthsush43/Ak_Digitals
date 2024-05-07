@@ -9,6 +9,7 @@ import VideoUpload from '../components/VideoUpload';
 import DeleteVideos from '../components/DeleteVideos';
 import DeletePhotos from '../components/DeletePhotos';
 import PhotoContainer from '../components/PhotoContainer';
+import VideoContainer from '../components/VideoContainer';
 
 function HomePage() {
 
@@ -46,7 +47,8 @@ function HomePage() {
         </ul>
       </p>
 
-      <PhotoContainer />
+      {/* <PhotoContainer /> */}
+      <VideoContainer />
     </div>
   );
 }
