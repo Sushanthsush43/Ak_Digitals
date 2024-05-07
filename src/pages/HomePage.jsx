@@ -10,6 +10,8 @@ import DeleteVideos from '../components/DeleteVideos';
 import DeletePhotos from '../components/DeletePhotos';
 import PhotoContainer from '../components/PhotoContainer';
 import VideoContainer from '../components/VideoContainer';
+import Testing from '../components/Testing';
+import PhotoUpload from '../components/PhotoUpload';
 
 function HomePage() {
 
@@ -48,7 +50,9 @@ function HomePage() {
 
       {/* <PhotoContainer /> */}
       {/* <DeletePhotos /> */}
-      <VideoContainer />
+      {/* <VideoContainer /> */}
+      {/* <Testing /> */}
+      <PhotoUpload />
     </div>
   );
 }
