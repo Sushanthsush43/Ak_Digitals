@@ -10,6 +10,7 @@ import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
 import '../css/HomePage.css';
 import "./ContactPage"
 import '../components/PhotoUpload';
+import './UploadingTab'
 import { toast } from 'react-toastify';
 import { toastErrorStyle } from '../components/uitls/toastStyle';
 import VideoUpload from '../components/VideoUpload';
@@ -164,10 +165,10 @@ function HomePage() {
         </div>
 
         <div className='header-links'>
-          <Link to='/PhotoUpload' className="teko-heading">UPLOAD</Link>
+          <Link to='/UploadingTab' className="teko-heading">UPLOAD</Link>
           <Link to='/ContactPage' className="teko-headings">CONTACT</Link>
           <Link to='https://www.instagram.com/abhi.devadi?igsh=MW1pdGcxcjhpZzRiNA==' className="teko-heading1">
-            <GrInstagram style={{ color: '#3E3232', width: '26px', height: '25px' }} />
+            <GrInstagram style={{ color: '#3F2305', width: '26px', height: '25px' }} />
           </Link>
         </div>
       </header>
@@ -181,7 +182,7 @@ function HomePage() {
         </ul>
       </p>
 
-      <VideoUpload />
+      {/* <VideoUpload /> */}
       {/* <DeleteVideos /> */}
       {/* <DeletePhotos /> */}
 
@@ -241,8 +242,8 @@ function HomePage() {
           <button
             onClick={() => handleViewMore()}
             style={{
-              backgroundColor: '#F6F5F2',
-              color: '#3E3232',
+              backgroundColor: '#F5F5F5',
+              color: '#3F2305',
               padding: '10px 20px',
               border: 'none',
               marginTop: '10px',
