@@ -7,7 +7,7 @@ html {
 }
 
 .Maindiv {
-  background-color: #F6F5F2;
+  background-color: #F5F5F5;
   margin: 0px;
 }
 .heading-container {
@@ -15,6 +15,7 @@ html {
   margin-top: 10px;
   height: 100px;
 }
+
 
 
 .sofia-regular {
@@ -26,7 +27,7 @@ html {
   margin: 0;
   margin-left: 20px;
   font-size: 40px;
-  color: #3E3232;
+  color: #3F2305;
 }
 
 
@@ -35,7 +36,7 @@ html {
   display: flex;
   top: 0px;
   right: 145px;
-  color: #3E3232;
+  color: #3F2305;
   text-decoration: none;
   font-size: 19px;
   margin-right: 35px;
@@ -47,7 +48,7 @@ html {
   display: flex;
   top: 0px;
   right: 75px;
-  color: #3E3232;
+  color: #3F2305;
   text-decoration: none;
   font-size: 19px;
   margin-right: px;
@@ -58,7 +59,7 @@ html {
   display: flex;
   top: 0px;
   right: 30px;
-  color: #3E3232;
+  color: #3F2305;
   text-decoration: none;
   font-size: 25px;
   margin-right: px;
@@ -83,7 +84,15 @@ html {
   }
 }
 
+@media screen and (max-width: 768px) {
+  .oleo-script-regular {
+    font-size: 25px;
+  }
 
+  .teko-heading {
+    font-size: 24px;
+  }
+}
 
 .header-links {
   position: absolute;
@@ -93,7 +102,7 @@ html {
 }
 
 .header-link {
-  color: #3E3232;
+  color: #3F2305;
   text-decoration: none;
   font-size: 20px;
   margin-right: 35px;
@@ -133,7 +142,7 @@ html {
 }
 
 .photo-container img:hover {
-  border-color: #F6F5F2;
+  border-color: #F5F5F5;
   transform: scale(1.05);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
@@ -201,15 +210,6 @@ html {
   .hoverText {
     display: none;
     /* Hide hoverText on small screens */
-  }
-  @media screen and (max-width: 768px) {
-    .oleo-script-regular {
-      font-size: 25px;
-    }
-  
-    .teko-heading {
-      font-size: 24px;
-    }
   }
 }
 
@@ -295,7 +295,7 @@ html {
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 20px;
-  color: #3E3232;
+  color: #3F2305;
   opacity: 0;
   z-index: 1;
   transition: opacity 0.5s ease-in-out;

@@ -79,9 +79,9 @@ const ContactPage = () => {
                     <p>Email: ak97.digital@gmail.com</p>
                 </div>
                 {isEditing ? (
-                    <button onClick={handleSave} style={{ width: '90px', height: '40px', background: '#3E3232', color: '#F6F5F2', borderRadius: '10%' }}>Save</button>
+                    <button onClick={handleSave} style={{ width: '90px', height: '40px', background: '#3F2305', color: '#F5F5F5', borderRadius: '10%' }}>Save</button>
                 ) : (
-                    <button onClick={handleEdit} style={{ width: '90px', height: '40px', background: '#3E3232', color: '#F6F5F2', borderRadius: '10%' }}>Edit</button>
+                    <button onClick={handleEdit} style={{ width: '90px', height: '40px', background: '#3F2305', color: '#F5F5F5', borderRadius: '10%' }}>Edit</button>
                 )}
             </div>
         </div>

@@ -1,0 +1,52 @@
+
+.tabs-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tabs {
+  display: flex;
+  height: 50px;
+  gap: 30px;
+  border: 0px solid white;
+  border-radius: 15px;
+}
+
+.tab-content {
+  width: 100%;
+  margin-top: 50px;
+}
+
+.upload-photo,
+.upload-videos {
+  width: 200px;
+  height: 50px;
+  border: 2px solid #D6E6F2;
+  border-radius: 10px;
+  background-color: #769FCD;
+  color: white;
+  cursor: pointer;
+}
+
+.upload-photo:hover,
+.upload-videos:hover {
+  background-color: #F0DBDB;
+}
+
+.upload-photo.active,
+.upload-videos.active {
+  background-color: #F0DBDB;
+}
+
+@media screen and (max-width: 768px) {
+  .tabs {
+      flex-direction: column;
+      gap: 15px;
+  }
+
+  .upload-photo,
+  .upload-videos {
+      width: 100%;
+  }
+}
