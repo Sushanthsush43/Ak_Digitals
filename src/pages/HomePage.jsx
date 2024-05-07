@@ -77,101 +77,103 @@ function HomePage() {
     }
   }
 
-    useEffect(() => {
-        initialFetchImages(); // only once retreive all images from database
-    }, []);
+  useEffect(() => {
+    initialFetchImages(); // only once retreive all images from database
+  }, []);
 
-    useEffect(() => {
-        fetchImages();
-    }, [page,imageRefs]);
+  useEffect(() => {
+    fetchImages();
+  }, [page, imageRefs]);
 
-    async function initialFetchImages()
-    {
-        setIsLoading(true);
-        try {
-            const imageRefs_temp = await listAll(ref(storage, 'images')); // List items inside 'images' folder
-            setImageRefs(imageRefs_temp);
-        } catch (error) {
-            toast.error("Something went wrong, Please try again!",toastErrorStyle());
-            console.error('Error listing items in storage:', error);
-        } finally {
-            setIsLoading(false);
+  async function initialFetchImages() {
+    setIsLoading(true);
+    try {
+      const imageRefs_temp = await listAll(ref(storage, 'images')); // List items inside 'images' folder
+      setImageRefs(imageRefs_temp);
+    } catch (error) {
+      toast.error("Something went wrong, Please try again!", toastErrorStyle());
+      console.error('Error listing items in storage:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  async function fetchImages() {
+    if (imageRefs && imageRefs.items && imageRefs.items.length >= 1) {
+      setIsLoading(true);
+      try {
+        const startIndex = (page - 1) * imagesPerPage;
+        const endIndex = startIndex + imagesPerPage;
+
+        const totalPages = Math.ceil(imageRefs.items.length / imagesPerPage);
+
+        const urls = await Promise.all(imageRefs.items.slice(startIndex, endIndex).map(async (itemRef) => {
+          try {
+            const url = await getDownloadURL(itemRef);
+            return { url, loaded: false };
+          } catch (error) {
+            console.error('Error getting download URL for itemRef:', error);
+            return null;
+          }
+        }));
+
+        // If it's the last page, reset the page count
+        if (page === totalPages) {
+          setPage(1);
+          setMoreCount(0);
         }
+
+        // if viewMoreCount >= 3, then replace old images with new ones, else add to the div
+        if (moreCount >= 3) {
+          setImageUrls(urls.filter(item => item !== null));
+          setMoreCount(0);
+        } else {
+          setImageUrls(prevUrls => [...prevUrls, ...urls.filter(url => url !== null)]);
+        }
+      } catch (error) {
+        toast.error("Something went wrong, Please try again!", toastErrorStyle());
+        console.error('Error listing items in storage:', error);
+      } finally {
+        setIsLoading(false);
+      }
     }
+  }
 
-    async function fetchImages() {
-        if(imageRefs && imageRefs.items && imageRefs.items.length >= 1){
-            setIsLoading(true);
-            try {
-                const startIndex = (page - 1) * imagesPerPage;
-                const endIndex = startIndex + imagesPerPage;
-    
-                const totalPages = Math.ceil(imageRefs.items.length / imagesPerPage);
-    
-                const urls = await Promise.all(imageRefs.items.slice(startIndex, endIndex).map(async (itemRef) => {
-                    try {
-                        const url = await getDownloadURL(itemRef);
-                        return { url, loaded: false };
-                    } catch (error) {
-                        console.error('Error getting download URL for itemRef:', error);
-                        return null;
-                    }
-                }));
-    
-                // If it's the last page, reset the page count
-                if (page === totalPages) {
-                    setPage(1);
-                    setMoreCount(0);
-                }
-    
-                // if viewMoreCount >= 3, then replace old images with new ones, else add to the div
-                if (moreCount >= 3) {
-                    setImageUrls(urls.filter(item => item !== null));
-                    setMoreCount(0);
-                } else {
-                    setImageUrls(prevUrls => [...prevUrls, ...urls.filter(url => url !== null)]);
-                }
-            } catch (error) {
-                toast.error("Something went wrong, Please try again!",toastErrorStyle());
-                console.error('Error listing items in storage:', error);
-            } finally {
-                setIsLoading(false);
-            }
-        } 
-    }
+  const handleViewMore = () => {
+    setPage(prevPage => prevPage + 1);
+    setMoreCount(prevCount => prevCount + 1);
+  };
 
-    const handleViewMore = () => {
-        setPage(prevPage => prevPage + 1);
-        setMoreCount(prevCount => prevCount + 1);
-    };
-
-    const handleImageLoad = (index) => {
-        setImageUrls(prevImageUrls => {
-            const updatedImageUrls = [...prevImageUrls];
-            updatedImageUrls[index].loaded = true; // Mark image as loaded
-            return updatedImageUrls;
-        });
-    };
+  const handleImageLoad = (index) => {
+    setImageUrls(prevImageUrls => {
+      const updatedImageUrls = [...prevImageUrls];
+      updatedImageUrls[index].loaded = true; // Mark image as loaded
+      return updatedImageUrls;
+    });
+  };
 
   return (
     <div className={`Maindiv ${isOpened ? 'opened' : ''}`}>
       <header>
-        <h1 className="sofia-regular">sushanth sherigar</h1>
+        <div className="heading-container">
+          <h1 className="sofia-regular">sushanth sherigar</h1>
+        </div>
+
         <div className='header-links'>
           <Link to='/PhotoUpload' className="teko-heading">UPLOAD</Link>
           <Link to='/ContactPage' className="teko-headings">CONTACT</Link>
-          <Link to='' className="teko-heading1">
+          <Link to='https://www.instagram.com/abhi.devadi?igsh=MW1pdGcxcjhpZzRiNA==' className="teko-heading1">
             <GrInstagram style={{ color: '#3E3232', width: '26px', height: '25px' }} />
           </Link>
         </div>
       </header>
 
       <p className={`hoverText ${showHoverText ? 'show' : ''}`}>
-        <h4 style={{textAlign:'center'}}>WE CAPTURE THE MOMENTS</h4>
-        <ul style={{ listStyleType: 'none', padding:'' }}>
-          <li>Trust us to capture the magic of your life's journey, one frame at a time, freezing fleeting 
+        <h4 style={{ textAlign: 'center' }}>WE CAPTURE THE MOMENTS</h4>
+        <ul style={{ listStyleType: 'none', padding: '' }}>
+          <li>Trust us to capture the magic of your life's journey, one frame at a time, freezing fleeting
             moments into extraordinary memories with our passion and keen eye for detail.</li>
-          
+
         </ul>
       </p>
 
@@ -196,7 +198,7 @@ function HomePage() {
           </div>
         )}
       </>
-      <div className={`photo-container ${isOpened ? 'animate' : ''}`} style={{ padding: '15px', marginTop: "240px" }}>
+      <div className={`photo-container ${isOpened ? 'animate' : ''}`}>
         <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}>
           <Masonry gutter='17px'>
             {imageUrls.map(({ url, loaded }, index) => (

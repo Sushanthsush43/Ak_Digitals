@@ -10,6 +10,11 @@ html {
   background-color: #F6F5F2;
   margin: 0px;
 }
+.heading-container {
+  display: flex;
+  margin-top: 10px;
+  height: 100px;
+}
 
 
 .sofia-regular {
@@ -78,15 +83,7 @@ html {
   }
 }
 
-@media screen and (max-width: 768px) {
-  .oleo-script-regular {
-    font-size: 25px;
-  }
 
-  .teko-heading {
-    font-size: 24px;
-  }
-}
 
 .header-links {
   position: absolute;
@@ -140,6 +137,11 @@ html {
   transform: scale(1.05);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
+.photo-container {
+  padding: 15px;
+  margin-top: 170px; /* Adjust as needed */
+}
+
 
 @media screen and (max-width: 768px) {
   .header-links {
@@ -162,6 +164,9 @@ html {
     font-size: 24px;
     margin-top: 50px;
   }
+  .photo-container {
+    margin-top: 6px; /* Remove margin-top on small screens */
+  }
 
   .photo-container img {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -171,6 +176,15 @@ html {
   .hoverText {
     display: none;
     /* Hide hoverText on small screens */
+  }
+  @media screen and (max-width: 768px) {
+    .oleo-script-regular {
+      font-size: 25px;
+    }
+  
+    .teko-heading {
+      font-size: 24px;
+    }
   }
 }
 
@@ -297,4 +311,31 @@ html {
 
 button:hover .line {
   background-color: #cac7c7;
+}
+
+/* Styles for the menu icon */
+.menu-icon {
+  display: none;
+  margin-top: -100px;
+}
+@media screen and (max-width: 768px) {
+  /* Show menu icon on small screens */
+  .header-links {
+    display: none; /* Hide the links */
+  }
+  .menu-icon {
+    display: block; /* Show the menu icon */
+    /* Add styles for the menu icon */
+  }
+  .header-links.open {
+    display: flex; /* Show the links when the menu is open */
+    /* Add styles for the open menu links */
+  }
+  .sofia-regular {
+    position: relative;
+    top: 100%;
+    left: 45%;
+    font-size: 25px;
+    transform: translate(-50%, -50%);
+  }
 }
