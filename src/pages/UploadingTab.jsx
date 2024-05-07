@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Video from "../components/VideoUpload";
-import Photo from "../components/PhotoUpload";
+import VideoUpload from "../components/VideoUpload";
+import PhotoUpload from "../components/PhotoUpload";
 import './../css/UploadingTab.css';
 
 export default function UploadTab() {
@@ -19,8 +19,8 @@ export default function UploadTab() {
                         <button className={`upload-videos ${activeTab === "video" ? "active" : ""}`} onClick={() => handleTabClick("video")}>Upload Videos</button>
                     </div>
                     <div className="tab-content">
-                        {activeTab === "photo" && <Photo />}
-                        {activeTab === "video" && <Video />}
+                        {activeTab === "photo" && <PhotoUpload />}
+                        {activeTab === "video" && <VideoUpload />}
                     </div>
                 </div>
             </div>

@@ -36,6 +36,7 @@ function VideoContainer() {
   const [isLoading, setIsLoading] = useState(false);
   const [moreCount, setMoreCount] = useState(0);
   const [videoRefs, setVideoRefs] = useState([]);
+  const [hoveredVideoIndex, setHoveredVideoIndex] = useState(null);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -142,7 +143,6 @@ function VideoContainer() {
       return updatedVideoUrls;
     });
   };
-  
 
   return (
     <>
@@ -166,7 +166,7 @@ function VideoContainer() {
         </div>
       )}
       <div className={`video-container ${isOpened ? 'animate' : ''}`}>
-        <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}>
+        <ResponsiveMasonry columnsCountBreakPoints={{ 350: 2, 750: 2, 900: 3 }}>
           <Masonry gutter='17px'>
             {videoUrls.map(({ url, loaded }, index) => (
               <video
@@ -177,6 +177,8 @@ function VideoContainer() {
                 data-index={index}
                 onClick={() => viewVideo(url, index)} // Add onClick to open video in full-screen
                 style={{ display: loaded ? 'inline' : 'none' }}
+                autoPlay={true}
+                muted
               />
             ))}
           </Masonry>

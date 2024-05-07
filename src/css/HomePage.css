@@ -141,11 +141,11 @@ html {
   transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.photo-container img:hover {
+/* .photo-container img:hover {
   border-color: #F5F5F5;
   transform: scale(1.05);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
+} */
 .photo-container {
   padding: 15px;
   margin-top: 170px; /* Adjust as needed */
@@ -156,11 +156,11 @@ html {
   transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.video-container video:hover {
+/* .video-container video:hover {
   border-color: #F6F5F2;
   transform: scale(1.05);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
+} */
 .video-container {
   padding: 15px;
   margin-top: 170px; /* Adjust as needed */
