@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { initializeApp } from "firebase/app";
 import { GrInstagram } from "react-icons/gr";
 import '../css/HomePage.css';
 import "./ContactPage"
@@ -28,11 +27,10 @@ function HomePage() {
     <div className={`Maindiv`}>
       <header>
         <div className="heading-container">
-          <h1 className="sofia-regular">sushanth sherigar</h1>
+          <h1 className="sofia-regular">AK DIGITALS</h1>
         </div>
 
         <div className='header-links'>
-          {/* <Link to='/PhotoUpload' className="teko-heading">UPLOAD</Link> */}
           <Link to='/ContactPage' className="teko-headings">CONTACT</Link>
         </div>
       </header>
@@ -46,14 +44,7 @@ function HomePage() {
       </p>
 
       <PhotoContainer />
-      {/* <DeletePhotos /> */}
-<<<<<<< HEAD
       {/* <VideoContainer /> */}
-=======
-      <VideoContainer />
-      {/* <Testing /> */}
-      {/* <PhotoUpload /> */}
->>>>>>> 7479a6a86878c0eb9fa5ac5e65a8255eeb6a6e74
     </div>
   );
 }

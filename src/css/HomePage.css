@@ -89,16 +89,17 @@ html {
     font-size: 25px;
   }
 
-  .teko-heading {
+  /* .teko-heading {
     font-size: 24px;
-  }
+  } */
 }
 
 .header-links {
   position: absolute;
   display: flex;
-  top: 50px;
-  left: 1700px;
+  top: 10px;
+  right:0px;
+  
 }
 
 
@@ -138,7 +139,7 @@ html {
 } */
 .photo-container {
   padding: 15px;
-  margin-top: 190px; 
+  margin-top: 170px; 
 }
 
 .video-container video {
@@ -153,7 +154,7 @@ html {
 } */
 .video-container {
   padding: 15px;
-  margin-top: 190px; /* Adjust as needed */
+  margin-top: 170px; /* Adjust as needed */
 }
 
 
@@ -164,7 +165,7 @@ html {
     margin-top: 50px;
   }
   .photo-container {
-    margin-top: 6px; /* Remove margin-top on small screens */
+    margin-top: 30px; /* Remove margin-top on small screens */
   }
 
   .photo-container img {
@@ -173,7 +174,7 @@ html {
   }
 
   .video-container {
-    margin-top: 6px; /* Remove margin-top on small screens */
+    margin-top: 30px; /* Remove margin-top on small screens */
   }
 
   .video-container video {
@@ -265,7 +266,7 @@ html {
   top: 220px;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 20px;
+  font-size: 17px;
   color: #3F2305;
   opacity: 0;
   z-index: 1;
@@ -332,14 +333,15 @@ button:hover .line {
 }
 
 
-@media screen and (max-width: 768px) {
+/* @media screen and (max-width: 768px) {
   
   .hoverText {
     font-size: 6px;
     top: 100px;
     transform: translate(-50%, -50%);
     right: px;
-    left: 160px;
+    align-items: center;
+    align-content: center;
     width: 240px;
   }
   
@@ -357,19 +359,85 @@ button:hover .line {
     right: 135px;
    
   }
+  
   .header-links {
     display: flex;
     position: absolute;
-    top: 1000px; /* Adjust top position */
-    right: 10px; /* Adjust right position */
+    top: 10px;
+    left: 480px;
   }
-  
+
   .teko-headings {
     color: #3F2305;
-    text-decoration: none;
-    font-size: 19px;
-    margin-right: 15px;
+    font-size: 15px;
   }
 }
 
+
+ */
+ /* Original CSS code goes here */
+
+@media screen and (max-width: 768px) {
+  .sofia-regular {
+    font-size: 20px;
+    position: absolute;
+    top: 10px;
+    left: 1px;
+    transform: none; 
+  }
+
+  .header-links {
+    display: flex;
+    position: absolute;
+    top: 10px;
+    right:0px;
+  }
+
+  .teko-headings {
+    color: #3F2305;
+    font-size: 15px;
+  }
+  h4 {
+    font-size: 10px;
+    transform: translate(7%, -10%);
+    right: 135px;
+   
+  }
+
+ 
+  .hoverText {
+    font-size: 6px;
+    top: 110px;
+    transform: translate(-50%, -50%);
+    right: px;
+    /* align-items: center; */
+    background-color: transparent;
+    /* align-content: center; */
+    width: 240px;
+    left: 45%;
+    right: 50%;
+  }
+
+  /* .heading-container {
+    height: auto;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+  } */
+
+  /* .header-links {
+    position: static;
+    margin-top: 20px;
+    justify-content: center;
+  }
+
+  .header-links a {
+    margin-right: 20px;
+  } */
+
+  /* .photo-container,
+  .video-container {
+    margin-top: 20px;
+  } */
+}
 
