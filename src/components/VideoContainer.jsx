@@ -177,7 +177,7 @@ function VideoContainer() {
                 data-index={index}
                 onClick={() => viewVideo(url, index)} // Add onClick to open video in full-screen
                 style={{ display: loaded ? 'inline' : 'none' }}
-                autoPlay={true}
+                autoPlay={false}
                 muted
               />
             ))}
