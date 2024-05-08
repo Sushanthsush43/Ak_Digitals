@@ -5,9 +5,6 @@ import { faChevronLeft, faChevronRight, faTimes } from '@fortawesome/free-solid-
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
-import '../css/HomePage.css';
-import "../pages/ContactPage"
-import '../components/PhotoUpload';
 import { toast } from 'react-toastify';
 import { toastErrorStyle } from '../components/uitls/toastStyle';
 
@@ -172,7 +169,7 @@ function PhotoContainer() {
                 )}
             </>
             <div className={`photo-container ${isOpened ? 'animate' : ''}`}>
-                <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}>
+                <ResponsiveMasonry columnsCountBreakPoints={{ 350: 2, 750: 2, 900: 3 }}>
                 <Masonry gutter='17px'>
                     {imageUrls.map(({ url, loaded }, index) => (
                     <img
@@ -182,14 +179,14 @@ function PhotoContainer() {
                         alt={`Image ${index}`}
                         data-index={index}
                         onClick={() => viewImage(url, index)} // Add onClick to open image in full-screen
-                        rref={(element) => {
-                        if (element && !loaded) {
-                            if (!observer.current) {
-                            observer.current = new IntersectionObserver(/* observer configuration */);
-                            }
-                            observer.current.observe(element); // Observe the element
-                        }
-                        }}
+                        // ref={(element) => {
+                        // if (element && !loaded) {
+                        //     if (!observer.current) {
+                        //     observer.current = new IntersectionObserver(/* observer configuration */);
+                        //     }
+                        //     observer.current.observe(element); // Observe the element
+                        // }
+                        // }}
 
                         style={{ display: loaded ? 'inline' : 'none' }}
                     />

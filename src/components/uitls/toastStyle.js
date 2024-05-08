@@ -1,6 +1,4 @@
-import { BsFillCloudSlashFill } from 'react-icons/bs';
 import { FcApproval, FcCancel } from "react-icons/fc";
-import { GrInstagram } from "react-icons/gr";
 
 export const toastSuccessStyle = () => {
   return {
