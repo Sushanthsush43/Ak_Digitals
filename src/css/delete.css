@@ -1,0 +1,31 @@
+.delete-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin: 0 auto; /* Center the container horizontally */
+    max-width: 1200px; /* Limit the container width */
+  }
+  
+  .delete-item-div {
+    position: relative;
+    margin-bottom: 17px; /* Adjust spacing between video rows */
+    margin-right: 17px; /* Adjust spacing between video rows */
+    width: 300px; /* Set fixed width for video items */
+    height: 200px; /* Set fixed height for video items */
+  }
+  
+  .delete-item-div .delete-item {
+    display: block; /* Ensure video elements take full width of container */
+    width: 100%; /* Ensure videos fill the entire width of their parent */
+    height: 100%; /* Ensure videos fill the entire height of their parent */
+    object-fit: cover; /* Maintain aspect ratio and cover the container */
+  }
+  
+  .delete-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }

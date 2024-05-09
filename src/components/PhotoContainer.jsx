@@ -32,7 +32,7 @@ function PhotoContainer() {
   const [data, setData] = useState({ img: '', i: 0 });
   const [imageUrls, setImageUrls] = useState([]);
   const [page, setPage] = useState(1);
-  const imagesPerPage = 10;
+  const imagesPerPage = 12;
   const [isLoading, setIsLoading] = useState(false);
   const [moreCount, setMoreCount] = useState(0);
   const [imageRefs, setImageRefs] = useState([]);

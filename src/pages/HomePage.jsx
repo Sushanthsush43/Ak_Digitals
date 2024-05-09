@@ -43,8 +43,8 @@ function HomePage() {
         </ul>
       </p>
 
-      {/* <PhotoContainer /> */}
-      <VideoContainer />
+      <PhotoContainer />
+      {/* <VideoContainer /> */}
       {/* <PhotoUpload /> */}
       {/* <DeletePhotos /> */}
       {/* <DeleteVideos /> */}

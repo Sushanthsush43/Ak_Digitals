@@ -27,13 +27,12 @@ const storage = getStorage(app);
 
 function VideoContainer() {
 
-  // Define state variables
   const [isOpened, setIsOpened] = useState(false);
   const [data, setData] = useState({ video: '', i: 0 });
   const [videoUrls, setVideoUrls] = useState([]);
   const observer = useRef(null);
   const [page, setPage] = useState(1);
-  const videosPerPage = 10;
+  const videosPerPage = 9;
   const [isLoading, setIsLoading] = useState(false);
   const [moreCount, setMoreCount] = useState(0);
   const [videoRefs, setVideoRefs] = useState([]);
@@ -176,6 +175,7 @@ function VideoContainer() {
                 onChange={(inView) => {inView && loaded ? url=url : url = ''}}
                 onLoadedData={() => handleVideoLoad(index)}
                 src={url}
+                controls
                 alt={`Video ${index}`}
                 data-index={index}
                 onClick={() => viewVideo(url, index)} // Click to open video in full-screen
