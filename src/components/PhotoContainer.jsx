@@ -122,12 +122,12 @@ function PhotoContainer() {
                 }
     
                 // if viewMoreCount >= 3, then replace old images with new ones, else add to the div
-                if (moreCount >= 3) {
-                    setImageUrls(urls.filter(item => item !== null));
-                    setMoreCount(0);
-                } else {
+                // if (moreCount >= 3) {
+                    // setImageUrls(urls.filter(item => item !== null));
+                    // setMoreCount(0);
+                // } else {
                     setImageUrls(prevUrls => [...prevUrls, ...urls.filter(url => url !== null)]);
-                }
+                // }
             } catch (error) {
                 toast.error("Something went wrong, Please try again!",toastErrorStyle());
                 console.error('Error listing items in storage:', error);
@@ -199,25 +199,18 @@ function PhotoContainer() {
 
                 {/* Loading Button */}
                 {imageUrls.length > 0 && (
-                <button
-                    onClick={() => handleViewMore()}
+                <InView
+                    as="div"
+                    onChange={(inView) => inView? handleViewMore()  : ''}
                     style={{
-                    backgroundColor: '#F6F5F2',
-                    color: '#3E3232',
-                    padding: '10px 20px',
-                    border: 'none',
-                    marginTop: '10px',
-                    cursor: 'pointer',
-                    fontWeight: 'bold',
                     position: 'relative',
-                    marginBottom: '20px'
-
+                    width: '100px',
+                    height:'25px'
                     }}
                 >
-                    VIEW MORE
                     <div className='line'></div>
 
-                </button>
+                </InView>
                 )}
             </div>
 
