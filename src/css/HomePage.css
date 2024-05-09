@@ -13,7 +13,7 @@ html {
 .heading-container {
   display: flex;
   margin-top: 10px;
-  height: 100px;
+  height: 0px;
 }
 
 
@@ -97,9 +97,7 @@ html {
 .header-links {
   position: absolute;
   display: flex;
-  top: 10px;
-  right:0px;
-  
+  right: 0%;
 }
 
 
@@ -138,8 +136,8 @@ html {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 } */
 .photo-container {
-  padding: 15px;
-  margin-top: 170px; 
+  padding: 10px;
+  margin-top: 260px; 
 }
 
 .video-container video {
@@ -165,7 +163,7 @@ html {
     margin-top: 50px;
   }
   .photo-container {
-    margin-top: 30px; /* Remove margin-top on small screens */
+    margin-top: 140px; /* Remove margin-top on small screens */
   }
 
   .photo-container img {
@@ -174,14 +172,18 @@ html {
   }
 
   .video-container {
-    margin-top: 30px; /* Remove margin-top on small screens */
+    margin-top: 120px; /* Remove margin-top on small screens */
   }
 
   .video-container video {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
   }
-
+  .teko-headings {
+    color: #3F2305;
+    font-size: 15px;
+    right: 10px;
+  }
   
 }
 
@@ -382,7 +384,7 @@ button:hover .line {
     font-size: 20px;
     position: absolute;
     top: 10px;
-    left: 1px;
+    margin-left: 10px;
     transform: none; 
   }
 
@@ -395,7 +397,7 @@ button:hover .line {
 
   .teko-headings {
     color: #3F2305;
-    font-size: 15px;
+    font-size: 11px;
   }
   h4 {
     font-size: 10px;
@@ -406,24 +408,20 @@ button:hover .line {
 
  
   .hoverText {
-    font-size: 6px;
+    font-size: 8px;
     top: 110px;
     transform: translate(-50%, -50%);
-    right: px;
-    /* align-items: center; */
     background-color: transparent;
-    /* align-content: center; */
-    width: 240px;
+    width: 290px;
     left: 45%;
     right: 50%;
   }
 
-  /* .heading-container {
-    height: auto;
-    justify-content: center;
-    align-items: center;
-    margin-top: 30px;
-  } */
+  .heading-container {
+    display: flex;
+    margin-top: 0px;
+    height: 0px;
+  }
 
   /* .header-links {
     position: static;
