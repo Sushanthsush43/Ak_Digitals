@@ -4,6 +4,7 @@ import { getStorage, ref, listAll, getDownloadURL, deleteObject } from 'firebase
 import { toast } from 'react-toastify';
 import { RiDeleteBinLine } from 'react-icons/ri'; // Import delete icon from react-icons
 import { toastErrorStyle, toastSuccessStyle } from './uitls/toastStyle';
+import { InView } from "react-intersection-observer";
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
@@ -149,13 +150,15 @@ function DeletePhotos() {
                                           marginRight: '10px',
                                           marginBottom: '10px'
                                         }}>
-                    <img
+                    <InView
+                        as="img"
+                        onChange={(inView) => {inView && loaded ? url=url : url = ''}}
+                        onLoad={() => handleImageLoad(index)}
                         src={url}
                         alt={`Img ${index}`}
-                        style={{ display: loaded ? 'block' : 'none', cursor: 'pointer' }}
-                        onLoad={() => handleImageLoad(index)}
                         onClick={() => handleSelect(url)}
-                    />
+                        style={{ display: loaded ? 'block' : 'none', cursor: 'pointer' }}>
+                    </InView>
                     {/* Delete Selection */}
                     <label
                         style={{
@@ -201,11 +204,6 @@ function DeletePhotos() {
                     ))
                 }
             </div>
-
-            {/* <div style={{ position: 'relative', display: 'inline-block' }}>
-    <img src="assets/logo.jpg" alt="Your Image" style={{ width: '100%', height: 'auto' }} />
-    <button style={{ position: 'absolute', top: '0', right: '0' }}>Your Button</button>
-</div> */}
         </>
     );
 }

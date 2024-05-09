@@ -206,10 +206,8 @@ function PhotoContainer() {
                     position: 'relative',
                     width: '100px',
                     height:'25px'
-                    }}
-                >
+                    }}>
                     <div className='line'></div>
-
                 </InView>
                 )}
             </div>

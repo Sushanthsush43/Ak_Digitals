@@ -4,6 +4,7 @@ import { getStorage, ref, listAll, getDownloadURL, deleteObject } from 'firebase
 import { toast } from 'react-toastify';
 import { RiDeleteBinLine } from 'react-icons/ri'; // Import delete icon from react-icons
 import { toastErrorStyle, toastSuccessStyle } from './uitls/toastStyle';
+import { InView } from "react-intersection-observer";
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
@@ -149,13 +150,18 @@ function DeleteVideos() {
                         marginRight: '10px',
                         marginBottom: '10px'
                     }}>
-                        <video
+                        <InView
+                            as="video"
                             src={url}
                             controls
+                            onChange={(inView) => {inView && loaded ? url=url : url = ''}}
                             style={{ display: loaded ? 'block' : 'none', cursor: 'pointer' }}
                             onLoadedData={() => handleVideoLoad(index)}
                             onClick={() => handleSelect(url)}
-                        />
+                            alt={`Vid ${index}`}
+                            autoPlay={false}
+                            muted
+                        ></InView>
                         {/* Delete Selection */}
                         <label
                             style={{
