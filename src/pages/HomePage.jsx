@@ -11,7 +11,6 @@ import PhotoContainer from '../components/PhotoContainer';
 import VideoContainer from '../components/VideoContainer';
 import Testing from '../components/Testing';
 import PhotoUpload from '../components/PhotoUpload';
-import ImageGallery from '../components/Testing';
 
 function HomePage() {
 
@@ -44,8 +43,8 @@ function HomePage() {
         </ul>
       </p>
 
-      {/* <PhotoContainer /> */}
-      <VideoContainer />
+      <PhotoContainer />
+      {/* <VideoContainer /> */}
       {/* <PhotoUpload /> */}
     </div>
   );

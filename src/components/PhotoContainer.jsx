@@ -7,7 +7,7 @@ import { getAnalytics } from "firebase/analytics";
 import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
 import { toast } from 'react-toastify';
 import { toastErrorStyle } from '../components/uitls/toastStyle';
-
+import { InView } from "react-intersection-observer";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -31,12 +31,17 @@ function PhotoContainer() {
   const [isOpened, setIsOpened] = useState(false);
   const [data, setData] = useState({ img: '', i: 0 });
   const [imageUrls, setImageUrls] = useState([]);
-  const observer = useRef(null);
   const [page, setPage] = useState(1);
   const imagesPerPage = 10;
   const [isLoading, setIsLoading] = useState(false);
   const [moreCount, setMoreCount] = useState(0);
   const [imageRefs, setImageRefs] = useState([]);
+
+//   const { ref, inView } = useInView({
+//     triggerOnce: true, // Load the image only once
+//     rootMargin: '100px', // Adjust the root margin as per your requirement
+//   });
+
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -168,28 +173,22 @@ function PhotoContainer() {
                 </div>
                 )}
             </>
-            <div className={`photo-container ${isOpened ? 'animate' : ''}`}>
+            <div className={`photo-container ${isOpened ? 'animate' : ''}`} >
                 <ResponsiveMasonry columnsCountBreakPoints={{ 350: 2, 750: 2, 900: 3 }}>
                 <Masonry gutter='17px'>
                     {imageUrls.map(({ url, loaded }, index) => (
-                    <img
-                        key={index}
-                        onLoad={() => handleImageLoad(index)}
-                        src={url}
-                        alt={`Image ${index}`}
-                        data-index={index}
-                        onClick={() => viewImage(url, index)} // Add onClick to open image in full-screen
-                        // ref={(element) => {
-                        // if (element && !loaded) {
-                        //     if (!observer.current) {
-                        //     observer.current = new IntersectionObserver(/* observer configuration */);
-                        //     }
-                        //     observer.current.observe(element); // Observe the element
-                        // }
-                        // }}
-
-                        style={{ display: loaded ? 'inline' : 'none' }}
-                    />
+                        <InView
+                        as="img"
+                            key={index}
+                            onChange={(inView) => {inView && loaded ? url=url : url = ''}}
+                            onLoad={() => handleImageLoad(index)}
+                            src={url}
+                            alt={`Image ${index}`}
+                            data-index={index}
+                            onClick={() => viewImage(url, index)} // Click to open image in full-screen
+                            style={{ display: loaded ? 'inline' : 'none' }}
+                        >
+                            </InView>
                     ))}
                 </Masonry>
                 </ResponsiveMasonry>
