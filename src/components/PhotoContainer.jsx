@@ -7,7 +7,7 @@ import { getAnalytics } from "firebase/analytics";
 import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
 import { toast } from 'react-toastify';
 import { toastErrorStyle } from '../components/uitls/toastStyle';
-
+import { InView } from "react-intersection-observer";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -31,11 +31,9 @@ function PhotoContainer() {
   const [isOpened, setIsOpened] = useState(false);
   const [data, setData] = useState({ img: '', i: 0 });
   const [imageUrls, setImageUrls] = useState([]);
-  const observer = useRef(null);
   const [page, setPage] = useState(1);
-  const imagesPerPage = 10;
+  const imagesPerPage = 12;
   const [isLoading, setIsLoading] = useState(false);
-  const [moreCount, setMoreCount] = useState(0);
   const [imageRefs, setImageRefs] = useState([]);
 
   useEffect(() => {
@@ -75,7 +73,7 @@ function PhotoContainer() {
 
     useEffect(() => {
         fetchImages();
-    }, [page,imageRefs]);
+    }, [page, imageRefs]);
 
     async function initialFetchImages()
     {
@@ -113,16 +111,10 @@ function PhotoContainer() {
                 // If it's the last page, reset the page count
                 if (page === totalPages) {
                     setPage(1);
-                    setMoreCount(0);
                 }
     
-                // if viewMoreCount >= 3, then replace old images with new ones, else add to the div
-                if (moreCount >= 3) {
-                    setImageUrls(urls.filter(item => item !== null));
-                    setMoreCount(0);
-                } else {
-                    setImageUrls(prevUrls => [...prevUrls, ...urls.filter(url => url !== null)]);
-                }
+                setImageUrls(prevUrls => [...prevUrls, ...urls.filter(url => url !== null)]);
+
             } catch (error) {
                 toast.error("Something went wrong, Please try again!",toastErrorStyle());
                 console.error('Error listing items in storage:', error);
@@ -134,7 +126,6 @@ function PhotoContainer() {
 
     const handleViewMore = () => {
         setPage(prevPage => prevPage + 1);
-        setMoreCount(prevCount => prevCount + 1);
     };
 
     const handleImageLoad = (index) => {
@@ -168,28 +159,22 @@ function PhotoContainer() {
                 </div>
                 )}
             </>
-            <div className={`photo-container ${isOpened ? 'animate' : ''}`}>
+            <div className={`photo-container ${isOpened ? 'animate' : ''}`} >
                 <ResponsiveMasonry columnsCountBreakPoints={{ 350: 2, 750: 2, 900: 3 }}>
                 <Masonry gutter='17px'>
                     {imageUrls.map(({ url, loaded }, index) => (
-                    <img
-                        key={index}
-                        onLoad={() => handleImageLoad(index)}
-                        src={url}
-                        alt={`Image ${index}`}
-                        data-index={index}
-                        onClick={() => viewImage(url, index)} // Add onClick to open image in full-screen
-                        // ref={(element) => {
-                        // if (element && !loaded) {
-                        //     if (!observer.current) {
-                        //     observer.current = new IntersectionObserver(/* observer configuration */);
-                        //     }
-                        //     observer.current.observe(element); // Observe the element
-                        // }
-                        // }}
-
-                        style={{ display: loaded ? 'inline' : 'none' }}
-                    />
+                        <InView
+                        as="img"
+                            key={index}
+                            onChange={(inView) => {inView && loaded ? url=url : url = ''}}
+                            onLoad={() => handleImageLoad(index)}
+                            src={url}
+                            alt={`Image ${index}`}
+                            data-index={index}
+                            onClick={() => viewImage(url, index)} // Click to open image in full-screen
+                            style={{ display: loaded ? 'inline' : 'none', cursor : 'pointer' }}
+                        >
+                            </InView>
                     ))}
                 </Masonry>
                 </ResponsiveMasonry>
@@ -200,25 +185,16 @@ function PhotoContainer() {
 
                 {/* Loading Button */}
                 {imageUrls.length > 0 && (
-                <button
-                    onClick={() => handleViewMore()}
+                <InView
+                    as="div"
+                    onChange={(inView) => inView? handleViewMore()  : ''}
                     style={{
-                    backgroundColor: '#F6F5F2',
-                    color: '#3E3232',
-                    padding: '10px 20px',
-                    border: 'none',
-                    marginTop: '10px',
-                    cursor: 'pointer',
-                    fontWeight: 'bold',
                     position: 'relative',
-                    marginBottom: '20px'
-
-                    }}
-                >
-                    VIEW MORE
+                    width: '100px',
+                    height:'25px'
+                    }}>
                     <div className='line'></div>
-
-                </button>
+                </InView>
                 )}
             </div>
 

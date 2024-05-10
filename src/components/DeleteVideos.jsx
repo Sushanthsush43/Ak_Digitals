@@ -2,8 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { initializeApp } from "firebase/app";
 import { getStorage, ref, listAll, getDownloadURL, deleteObject } from 'firebase/storage';
 import { toast } from 'react-toastify';
-import { RiDeleteBinLine } from 'react-icons/ri'; // Import delete icon from react-icons
+import { RiDeleteBinLine } from 'react-icons/ri';
 import { toastErrorStyle, toastSuccessStyle } from './uitls/toastStyle';
+import { InView } from "react-intersection-observer";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft, faChevronRight, faTimes } from '@fortawesome/free-solid-svg-icons';
+import "../css/DeleteComp.css";
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
@@ -21,7 +25,7 @@ const storage = getStorage(app);
 function DeleteVideos() {
     const [videoUrls, setVideoUrls] = useState([]);
     const [page, setPage] = useState(1);
-    const videosPerPage = 25;
+    const videosPerPage = 27;
     const [isLoading, setIsLoading] = useState(false);
     const [totalPages, setTotalPages] = useState(0);
     const [displayedPages, setDisplayedPages] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
@@ -134,49 +138,46 @@ function DeleteVideos() {
             toast.error("Failed to delete videos. Please try again.", toastErrorStyle());
         }
     };
-
+    
     return (
         <>
+        <div className='delete-main'>
             {/* Delete Videos Button */}
             <button onClick={() => handleDeleteVideos()}>Delete</button>
 
             {/* Video container */}
-            <div className='video-container'>
+            <div className='delete-container'>
                 {videoUrls.map(({ url, loaded }, index) => (
-                    <div key={index} style={{
-                        position: 'relative',
-                        display: 'inline-block',
-                        marginRight: '10px',
-                        marginBottom: '10px'
-                    }}>
-                        <video
-                            src={url}
-                            controls
-                            style={{ display: loaded ? 'block' : 'none', cursor: 'pointer' }}
-                            onLoadedData={() => handleVideoLoad(index)}
-                            onClick={() => handleSelect(url)}
-                        />
-                        {/* Delete Selection */}
-                        <label
-                            style={{
-                                display: loaded ? 'inline' : 'none',
-                                position: 'absolute',
-                                top: '0',
-                                right: '0',
-                                background: 'none',
-                                border: 'none',
-                                cursor: 'pointer',
-                                color: toDelete.includes(url) ? 'red' : 'black' // Change color if URL is in toDelete array
-                            }}
-                            onClick={() => handleSelect(url)}>
-                            <RiDeleteBinLine />
-                        </label>
+                    <div key={index} className='delete-item-div'>
+                    <InView
+                        className='delete-item'
+                        as="video"
+                        key={index}
+                        data-index={index}
+                        src={url}
+                        onMouseEnter={(e) => {e.target.play(); e.target.controls = true;}}
+                        onMouseLeave={(e) => {e.target.pause(); e.target.controls = false;}}
+                        onError={(e) => console.error('Error playing video while hover:', e.target.error)}
+                        onChange={(inView) => { inView && loaded ? url = url : url = '' }}
+                        style={{ display: loaded ? 'block' : 'none' }}
+                        onLoadedData={() => handleVideoLoad(index)}
+                        autoPlay={false}
+                        muted
+                    ></InView>
+                    {/* Delete Selection */}
+                    <label
+                        className='delete-button'
+                        style={{ color: toDelete.includes(url) ? 'red' : 'black' }}
+                        onClick={() => handleSelect(url)}
+                    >
+                        <RiDeleteBinLine />
+                    </label>
                     </div>
                 ))}
-
                 {/* Loading animation */}
                 {isLoading && <div>Loading ...</div>}
             </div>
+
 
             <div className='pagination'>
                 {totalPages > 10 ?
@@ -201,6 +202,7 @@ function DeleteVideos() {
                     ))
                 }
             </div>
+         </div>
         </>
     );
 }

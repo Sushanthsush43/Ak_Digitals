@@ -4,6 +4,10 @@ import { getStorage, ref, listAll, getDownloadURL, deleteObject } from 'firebase
 import { toast } from 'react-toastify';
 import { RiDeleteBinLine } from 'react-icons/ri'; // Import delete icon from react-icons
 import { toastErrorStyle, toastSuccessStyle } from './uitls/toastStyle';
+import { InView } from "react-intersection-observer";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft, faChevronRight, faTimes } from '@fortawesome/free-solid-svg-icons';
+import "../css/DeleteComp.css";
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
@@ -21,12 +25,45 @@ const storage = getStorage(app);
 function DeletePhotos() {
     const [imageUrls, setImageUrls] = useState([]);
     const [page, setPage] = useState(1);
-    const imagesPerPage = 25;
+    const imagesPerPage = 27;
     const [isLoading, setIsLoading] = useState(false);
     const [totalPages, setTotalPages] = useState(0);
     const [displayedPages, setDisplayedPages] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
     const [toDelete, setToDelete] = useState([]);
     const [imageRefs, setImageRefs] = useState([]);
+    const [isOpened, setIsOpened] = useState(false);
+    const [data, setData] = useState({ img: '', i: 0 });
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+          setIsOpened(true);
+        }, 1000);
+        setIsOpened(true);
+        return () => clearTimeout(timeout);
+      }, []);
+    
+      // Function to view image
+      const viewImage = (img, i) => {
+        setData({ img, i });
+        setIsOpened(true);
+      }
+    
+      // Function to handle image actions (next, previous, close)
+      const imgAction = (action) => {
+        if (action === 'next-img') {
+          let newIndex = data.i + 1;
+          if (newIndex < imageUrls.length) {
+            setData({ img: imageUrls[newIndex].url, i: newIndex });
+          }
+        } else if (action === 'previous-img') {
+          let newIndex = data.i - 1;
+          if (newIndex >= 0) {
+            setData({ img: imageUrls[newIndex].url, i: newIndex });
+          }
+        } else if (action === 'close-img') {
+          setIsOpened(false); // Close the full-screen view
+        }
+      }    
 
     useEffect(() => {
         initialFetchImages(); // only once retreive all images from database
@@ -138,74 +175,83 @@ function DeletePhotos() {
 
     return (
         <>
-            {/* Delete Images Button */}
-            <button onClick={() => handleDeleteImages()}>Delete</button>
+            {data.img && (
+                <div className={`full-screen-image-container ${isOpened ? 'open' : 'close'}`}>
+                    <button className="close-btn" onClick={() => imgAction('close-img')}>
+                    <FontAwesomeIcon icon={faTimes} />
+                    </button>
 
-            {/* Photo container */}
-            <div className='photo-container'>
-                {imageUrls.map(({ url, loaded }, index) => (
-                <div key={index} style={{ position: 'relative',
-                                          display: 'inline-block',
-                                          marginRight: '10px',
-                                          marginBottom: '10px'
-                                        }}>
-                    <img
-                        src={url}
-                        alt={`Img ${index}`}
-                        style={{ display: loaded ? 'block' : 'none', cursor: 'pointer' }}
-                        onLoad={() => handleImageLoad(index)}
-                        onClick={() => handleSelect(url)}
-                    />
-                    {/* Delete Selection */}
-                    <label
-                        style={{
-                            display: loaded ? 'inline' : 'none',
-                            position: 'absolute',
-                            top: '0',
-                            right: '0',
-                            background: 'none',
-                            border: 'none',
-                            cursor: 'pointer',
-                            color: toDelete.includes(url) ? 'red' : 'black' // Change color if URL is in toDelete array
-                        }}
-                        onClick={() => handleSelect(url)}>
-                        <RiDeleteBinLine />
-                    </label>
+                    {data.i > 0 && (
+                    <button className="nav-btn prev-btn" onClick={() => imgAction('previous-img')}>
+                        <FontAwesomeIcon icon={faChevronLeft} />
+                    </button>
+                    )}
+                    <img src={data.img} className="full-screen-image" alt="" />
+                    {data.i < imageUrls.length - 1 && (
+                    <button className="nav-btn next-btn" onClick={() => imgAction('next-img')}>
+                        <FontAwesomeIcon icon={faChevronRight} />
+                    </button>
+                    )}
                 </div>
-                ))}
+            )}
+            <div className='delete-main'>
+                {/* Delete Images Button */}
+                <button onClick={() => handleDeleteImages()}>Delete</button>
 
-                {/* Loading animation */}
-                {isLoading && <div>Loading ...</div>}
-            </div>
-
-            <div className='pagination'>
-                {totalPages > 10 ?
-                    displayedPages.map((pageNum) => (
-                        <button
-                            key={pageNum}
-                            onClick={() => handlePageChange(pageNum)}
-                            disabled={isLoading || pageNum === page}
+                {/* Photo container */}
+                <div className='delete-container'>
+                    {imageUrls.map(({ url, loaded }, index) => (
+                    <div key={index} className='delete-item-div'>
+                        <InView
+                            className='delete-item'
+                            as="img"
+                            key={index}
+                            onChange={(inView) => {inView && loaded ? url=url : url = ''}}
+                            onLoad={() => handleImageLoad(index)}
+                            src={url}
+                            data-index={index}
+                            alt={`Img ${index}`}
+                            onClick={() => viewImage(url, index)} // Click to open image in full-screen
+                            style={{ display: loaded ? 'block' : 'none' }}>
+                        </InView>
+                        {/* Delete Selection */}
+                        <label
+                            className='delete-button'
+                            style={{ color: toDelete.includes(url) ? 'red' : 'black' }}
+                            onClick={() => handleSelect(url)}
                         >
-                            {pageNum}
-                        </button>
-                    ))
-                    :
-                    Array.from({ length: totalPages }, (_, i) => (
-                        <button
-                            key={i + 1}
-                            onClick={() => handlePageChange(i + 1)}
-                            disabled={isLoading || (i + 1 === page)}
-                        >
-                            {i + 1}
-                        </button>
-                    ))
-                }
-            </div>
+                            <RiDeleteBinLine />
+                        </label>
+                    </div>
+                    ))}
+                    {/* Loading animation */}
+                    {isLoading && <div>Loading ...</div>}
+                </div>
 
-            {/* <div style={{ position: 'relative', display: 'inline-block' }}>
-    <img src="assets/logo.jpg" alt="Your Image" style={{ width: '100%', height: 'auto' }} />
-    <button style={{ position: 'absolute', top: '0', right: '0' }}>Your Button</button>
-</div> */}
+                <div className='pagination'>
+                    {totalPages > 10 ?
+                        displayedPages.map((pageNum) => (
+                            <button
+                                key={pageNum}
+                                onClick={() => handlePageChange(pageNum)}
+                                disabled={isLoading || pageNum === page}
+                            >
+                                {pageNum}
+                            </button>
+                        ))
+                        :
+                        Array.from({ length: totalPages }, (_, i) => (
+                            <button
+                                key={i + 1}
+                                onClick={() => handlePageChange(i + 1)}
+                                disabled={isLoading || (i + 1 === page)}
+                            >
+                                {i + 1}
+                            </button>
+                        ))
+                    }
+                </div>
+        </div>
         </>
     );
 }
