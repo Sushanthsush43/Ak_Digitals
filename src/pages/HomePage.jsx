@@ -4,6 +4,9 @@ import { GrInstagram } from "react-icons/gr";
 import '../css/HomePage.css';
 import "./ContactPage"
 import '../components/PhotoUpload';
+<<<<<<< HEAD
+import PhotoVideoTab from '../components/PhotoVideoTab';
+=======
 import VideoUpload from '../components/VideoUpload';
 import DeleteVideos from '../components/DeleteVideos';
 import DeletePhotos from '../components/DeletePhotos';
@@ -11,6 +14,7 @@ import PhotoContainer from '../components/PhotoContainer';
 import VideoContainer from '../components/VideoContainer';
 import Testing from '../components/Testing';
 import PhotoUpload from '../components/PhotoUpload';
+>>>>>>> 6bae7352821b97b55eef1ddef983bb68577fd9c4
 
 function HomePage() {
 
@@ -27,7 +31,7 @@ function HomePage() {
     <div className={`Maindiv`}>
       <header>
         <div className="heading-container">
-          <h1 className="sofia-regular">AK DIGITALS</h1>
+          <h1 className="sofia-regular">sushanth sherigar</h1>
         </div>
 
         <div className='header-links'>
@@ -42,13 +46,17 @@ function HomePage() {
             moments into extraordinary memories with our passion and keen eye for detail.</li>
         </ul>
       </p>
-
+      <PhotoVideoTab/>
       {/* <PhotoContainer /> */}
+<<<<<<< HEAD
+      {/* <VideoContainer /> */}
+=======
       <VideoContainer />
       {/* <PhotoUpload /> */}
       {/* <VideoUpload /> */}
       {/* <DeletePhotos /> */}
       {/* <DeleteVideos /> */}
+>>>>>>> 6bae7352821b97b55eef1ddef983bb68577fd9c4
     </div>
   );
 }
