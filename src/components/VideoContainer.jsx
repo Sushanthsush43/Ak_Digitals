@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight, faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -30,13 +30,10 @@ function VideoContainer() {
   const [isOpened, setIsOpened] = useState(false);
   const [data, setData] = useState({ video: '', i: 0 });
   const [videoUrls, setVideoUrls] = useState([]);
-  const observer = useRef(null);
   const [page, setPage] = useState(1);
   const videosPerPage = 9;
   const [isLoading, setIsLoading] = useState(false);
-  const [moreCount, setMoreCount] = useState(0);
   const [videoRefs, setVideoRefs] = useState([]);
-  const [hoveredVideoIndex, setHoveredVideoIndex] = useState(null);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -112,16 +109,10 @@ function VideoContainer() {
         // If it's the last page, reset the page count
         if (page === totalPages) {
           setPage(1);
-          setMoreCount(0);
         }
 
-        // if viewMoreCount >= 3, then replace old videos with new ones, else add to the div
-        // if (moreCount >= 3) {
-          // setVideoUrls(urls.filter(item => item !== null));
-          // setMoreCount(0);
-        // } else {
-          setVideoUrls(prevUrls => [...prevUrls, ...urls.filter(url => url !== null)]);
-        // }
+        setVideoUrls(prevUrls => [...prevUrls, ...urls.filter(url => url !== null)]);
+
       } catch (error) {
         toast.error("Something went wrong, Please try again!", toastErrorStyle());
         console.error('Error listing items in storage:', error);
@@ -133,7 +124,6 @@ function VideoContainer() {
 
   const handleViewMore = () => {
     setPage(prevPage => prevPage + 1);
-    setMoreCount(prevCount => prevCount + 1);
   };
 
   const handleVideoLoad = (index) => {
@@ -170,20 +160,23 @@ function VideoContainer() {
           <Masonry gutter='17px'>
             {videoUrls.map(({ url, loaded }, index) => (
               <InView
+                className='image-video'
                 as="video"
                 key={index}
                 onChange={(inView) => {inView && loaded ? url=url : url = ''}}
                 onLoadedData={() => handleVideoLoad(index)}
                 src={url}
-                controls
+                onMouseEnter={(e) => {e.target.play(); e.target.controls = true;}}
+                onMouseLeave={(e) => {e.target.pause(); e.target.controls = false;}}
+                onError={(e) => console.error('Error playing video while hover:', e.target.error)}
                 alt={`Video ${index}`}
                 data-index={index}
                 onClick={() => viewVideo(url, index)} // Click to open video in full-screen
-                style={{ display: loaded ? 'inline' : 'none' }}
+                style={{ display: loaded ? 'inline' : 'none', cursor : 'pointer' }}
                 autoPlay={false}
                 muted
               >
-                  </InView>
+              </InView>
             ))}
           </Masonry>
         </ResponsiveMasonry>

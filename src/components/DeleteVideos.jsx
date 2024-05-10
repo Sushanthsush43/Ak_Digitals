@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { RiDeleteBinLine } from 'react-icons/ri';
 import { toastErrorStyle, toastSuccessStyle } from './uitls/toastStyle';
 import { InView } from "react-intersection-observer";
-import "../css/delete.css";
+import "../css/Delete.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight, faTimes } from '@fortawesome/free-solid-svg-icons';
 
@@ -31,41 +31,6 @@ function DeleteVideos() {
     const [displayedPages, setDisplayedPages] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
     const [toDelete, setToDelete] = useState([]);
     const [videoRefs, setVideoRefs] = useState([]);
-    const [isOpened, setIsOpened] = useState(false);
-    const [data, setData] = useState({ video: '', i: 0 });
-
-
-
-    useEffect(() => {
-        const timeout = setTimeout(() => {
-          setIsOpened(true);
-        }, 1000);
-        setIsOpened(true);
-        return () => clearTimeout(timeout);
-      }, []);
-    
-      // Function to view video
-      const viewVideo = (video, i) => {
-        setData({ video, i });
-        setIsOpened(true);
-      }
-    
-      // Function to handle video actions (next, previous, close)
-      const videoAction = (action) => {
-        if (action === 'next-video') {
-          let newIndex = data.i + 1;
-          if (newIndex < videoUrls.length) {
-            setData({ video: videoUrls[newIndex].url, i: newIndex });
-          }
-        } else if (action === 'previous-video') {
-          let newIndex = data.i - 1;
-          if (newIndex >= 0) {
-            setData({ video: videoUrls[newIndex].url, i: newIndex });
-          }
-        } else if (action === 'close-video') {
-          setIsOpened(false); // Close the full-screen view
-        }
-      }
 
     useEffect(() => {
         initialFetchVideos(); // Fetch videos on component mount
@@ -176,25 +141,6 @@ function DeleteVideos() {
     
     return (
         <>
-             {data.video && (
-                <div className={`full-screen-video-container ${isOpened ? 'open' : 'close'}`}>
-                <button className="close-btn" onClick={() => videoAction('close-video')}>
-                    <FontAwesomeIcon icon={faTimes} />
-                </button>
-
-                {data.i > 0 && (
-                    <button className="nav-btn prev-btn" onClick={() => videoAction('previous-video')}>
-                    <FontAwesomeIcon icon={faChevronLeft} />
-                    </button>
-                )}
-                <video src={data.video} className="full-screen-video" controls></video>
-                {data.i < videoUrls.length - 1 && (
-                    <button className="nav-btn next-btn" onClick={() => videoAction('next-video')}>
-                    <FontAwesomeIcon icon={faChevronRight} />
-                    </button>
-                )}
-                </div>
-            )}
         <div className='delete-main'>
             {/* Delete Videos Button */}
             <button onClick={() => handleDeleteVideos()}>Delete</button>
@@ -209,11 +155,14 @@ function DeleteVideos() {
                         key={index}
                         data-index={index}
                         src={url}
+                        onMouseEnter={(e) => {e.target.play(); e.target.controls = true;}}
+                        onMouseLeave={(e) => {e.target.pause(); e.target.controls = false;}}
+                        onError={(e) => console.error('Error playing video while hover:', e.target.error)}
                         onChange={(inView) => { inView && loaded ? url = url : url = '' }}
-                        onClick={() => viewVideo(url, index)} // Click to open video in full-screen
                         style={{ display: loaded ? 'block' : 'none' }}
                         onLoadedData={() => handleVideoLoad(index)}
                         autoPlay={false}
+                        muted
                     ></InView>
                     {/* Delete Selection */}
                     <label

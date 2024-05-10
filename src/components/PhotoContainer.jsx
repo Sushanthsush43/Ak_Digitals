@@ -34,14 +34,7 @@ function PhotoContainer() {
   const [page, setPage] = useState(1);
   const imagesPerPage = 12;
   const [isLoading, setIsLoading] = useState(false);
-  const [moreCount, setMoreCount] = useState(0);
   const [imageRefs, setImageRefs] = useState([]);
-
-//   const { ref, inView } = useInView({
-//     triggerOnce: true, // Load the image only once
-//     rootMargin: '100px', // Adjust the root margin as per your requirement
-//   });
-
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -80,7 +73,7 @@ function PhotoContainer() {
 
     useEffect(() => {
         fetchImages();
-    }, [page,imageRefs]);
+    }, [page, imageRefs]);
 
     async function initialFetchImages()
     {
@@ -118,16 +111,10 @@ function PhotoContainer() {
                 // If it's the last page, reset the page count
                 if (page === totalPages) {
                     setPage(1);
-                    setMoreCount(0);
                 }
     
-                // if viewMoreCount >= 3, then replace old images with new ones, else add to the div
-                // if (moreCount >= 3) {
-                    // setImageUrls(urls.filter(item => item !== null));
-                    // setMoreCount(0);
-                // } else {
-                    setImageUrls(prevUrls => [...prevUrls, ...urls.filter(url => url !== null)]);
-                // }
+                setImageUrls(prevUrls => [...prevUrls, ...urls.filter(url => url !== null)]);
+
             } catch (error) {
                 toast.error("Something went wrong, Please try again!",toastErrorStyle());
                 console.error('Error listing items in storage:', error);
@@ -139,7 +126,6 @@ function PhotoContainer() {
 
     const handleViewMore = () => {
         setPage(prevPage => prevPage + 1);
-        setMoreCount(prevCount => prevCount + 1);
     };
 
     const handleImageLoad = (index) => {
@@ -186,7 +172,7 @@ function PhotoContainer() {
                             alt={`Image ${index}`}
                             data-index={index}
                             onClick={() => viewImage(url, index)} // Click to open image in full-screen
-                            style={{ display: loaded ? 'inline' : 'none' }}
+                            style={{ display: loaded ? 'inline' : 'none', cursor : 'pointer' }}
                         >
                             </InView>
                     ))}
