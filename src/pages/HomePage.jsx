@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { GrInstagram } from "react-icons/gr";
 import '../css/HomePage.css';
-import "../css/Delete.css";
 import "./ContactPage"
 import '../components/PhotoUpload';
 import VideoUpload from '../components/VideoUpload';
