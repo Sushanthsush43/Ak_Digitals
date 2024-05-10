@@ -436,12 +436,13 @@ button:hover .line {
     margin-top: 20px;
   } */
 }
+
 .image-video {
   box-shadow: 0 0 9px rgba(0, 0, 0, 0.5);
 }
 
 
 .image-video:hover {
-  transform: scale(1.01); /* Zoom in on hover */
+  transform: scale(1.007); /* Zoom in on hover */
   transition: transform 0.3s ease; /* Add a smooth transition */
 }

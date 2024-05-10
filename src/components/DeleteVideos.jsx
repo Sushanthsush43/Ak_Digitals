@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { initializeApp } from "firebase/app";
-import { getStorage, ref, listAll, getDownloadURL, deleteObject } from 'firebase/storage';
+import { ref, listAll, getDownloadURL, deleteObject } from 'firebase/storage';
 import { toast } from 'react-toastify';
 import { RiDeleteBinLine } from 'react-icons/ri';
 import { toastErrorStyle, toastSuccessStyle } from './uitls/toastStyle';
@@ -9,20 +8,8 @@ import "../css/DeleteComp.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight, faTimes } from '@fortawesome/free-solid-svg-icons';
 
-const firebaseConfig = {
-    apiKey: process.env.REACT_APP_API_KEY,
-    authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-    projectId: process.env.REACT_APP_PROJECT_ID,
-    storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-    messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
-    appId: process.env.REACT_APP_APP_ID,
-    measurementId: process.env.REACT_APP_MEASUREMENT_ID
-};
+function DeleteVideos({storage}) {
 
-const app = initializeApp(firebaseConfig);
-const storage = getStorage(app);
-
-function DeleteVideos() {
     const [videoUrls, setVideoUrls] = useState([]);
     const [page, setPage] = useState(1);
     const videosPerPage = 27;
@@ -227,7 +214,12 @@ function DeleteVideos() {
                         src={url}
                         onMouseEnter={(e) => { handlePlay(e.target); }}
                         onMouseLeave={(e) => { handlePause(e.target); }}
-                        onChange={(inView) => { inView && loaded ? url = url : url = '' }}
+                        onChange={(inView, entry) => {
+                            // Trigger inView callback even before fully visible
+                            if (entry.isIntersecting || entry.boundingClientRect.top < 100) {
+                              inView && loaded ? (url = url) : (url = '');
+                            }
+                          }}
                         onClick={() => viewVideo(url, index)} // Click to open video in full-screen
                         onError={(e) => console.error('Error playing video while hover:', e.target.error)}
                         style={{ display: loaded ? 'block' : 'none' }}

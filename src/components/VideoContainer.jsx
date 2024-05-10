@@ -2,30 +2,12 @@ import React, { useState, useEffect } from 'react';
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
+import { ref, listAll, getDownloadURL } from 'firebase/storage';
 import { toast } from 'react-toastify';
 import { toastErrorStyle } from './uitls/toastStyle';
 import { InView } from "react-intersection-observer";
 
-const firebaseConfig = {
-  apiKey: process.env.REACT_APP_API_KEY,
-  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-  projectId: process.env.REACT_APP_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
-  appId: process.env.REACT_APP_APP_ID,
-  measurementId: process.env.REACT_APP_MEASUREMENT_ID
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-
-const storage = getStorage(app);
-
-function VideoContainer() {
+function VideoContainer({storage}) {
 
   const [isOpened, setIsOpened] = useState(false);
   const [data, setData] = useState({ video: '', i: 0 });
@@ -183,7 +165,12 @@ function VideoContainer() {
                 as="video"
                 className='image-video'
                 key={index}
-                onChange={(inView) => {inView && loaded ? url=url : url = ''}}
+                onChange={(inView, entry) => {
+                  // Trigger inView callback even before fully visible
+                  if (entry.isIntersecting || entry.boundingClientRect.top < 100) {
+                    inView && loaded ? (url = url) : (url = '');
+                  }
+                }}
                 onLoadedData={() => handleVideoLoad(index)}
                 src={url}
                 onMouseEnter={(e) => { handlePlay(e.target); }}

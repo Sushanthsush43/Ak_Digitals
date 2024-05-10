@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { GrInstagram } from "react-icons/gr";
 import '../css/HomePage.css';
 import "./ContactPage"
 import '../components/PhotoUpload';
 import PhotoVideoTab from '../components/PhotoVideoTab';
+import DeletePhotos from '../components/DeletePhotos';
+import DeleteVideos from '../components/DeleteVideos';
+import PhotoUpload from '../components/PhotoUpload';
+import VideoUpload from '../components/VideoUpload';
+import { getFirebaseConfig } from '../components/uitls/firebaseConfig';
 
 function HomePage() {
+
+  // Firebase stuff ( Important )
+  const { storage } = getFirebaseConfig();
 
   const [showHoverText, setShowHoverText] = useState(false);
 
@@ -36,9 +43,11 @@ function HomePage() {
             moments into extraordinary memories with our passion and keen eye for detail.</li>
         </ul>
       </p>
-      <PhotoVideoTab/>
-      {/* <PhotoContainer /> */}
-      {/* <VideoContainer /> */}
+      <PhotoVideoTab storage={storage}/>
+      {/* <DeletePhotos storage={storage}/>
+      <DeleteVideos storage={storage}/>
+      <PhotoUpload storage={storage}/>
+      <VideoUpload storage={storage}/> */}
     </div>
   );
 }
