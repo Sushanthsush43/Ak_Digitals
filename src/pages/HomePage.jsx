@@ -4,17 +4,7 @@ import { GrInstagram } from "react-icons/gr";
 import '../css/HomePage.css';
 import "./ContactPage"
 import '../components/PhotoUpload';
-<<<<<<< HEAD
 import PhotoVideoTab from '../components/PhotoVideoTab';
-=======
-import VideoUpload from '../components/VideoUpload';
-import DeleteVideos from '../components/DeleteVideos';
-import DeletePhotos from '../components/DeletePhotos';
-import PhotoContainer from '../components/PhotoContainer';
-import VideoContainer from '../components/VideoContainer';
-import Testing from '../components/Testing';
-import PhotoUpload from '../components/PhotoUpload';
->>>>>>> 6bae7352821b97b55eef1ddef983bb68577fd9c4
 
 function HomePage() {
 
@@ -48,15 +38,7 @@ function HomePage() {
       </p>
       <PhotoVideoTab/>
       {/* <PhotoContainer /> */}
-<<<<<<< HEAD
       {/* <VideoContainer /> */}
-=======
-      <VideoContainer />
-      {/* <PhotoUpload /> */}
-      {/* <VideoUpload /> */}
-      {/* <DeletePhotos /> */}
-      {/* <DeleteVideos /> */}
->>>>>>> 6bae7352821b97b55eef1ddef983bb68577fd9c4
     </div>
   );
 }
