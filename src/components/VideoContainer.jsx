@@ -134,6 +134,22 @@ function VideoContainer() {
     });
   };
 
+  const handlePlay = (video) => {
+      if (video.paused) {
+          video.play()
+          .catch(error => {
+              console.error('Error playing video:', error);
+          });
+      }
+  };
+
+  const handlePause = (video) => {
+      if (!video.paused) {
+          video.pause();
+      }
+  };    
+
+
   return (
     <>
       {data.video && (
@@ -147,7 +163,11 @@ function VideoContainer() {
               <FontAwesomeIcon icon={faChevronLeft} />
             </button>
           )}
-          <video src={data.video} className="full-screen-video" controls></video>
+          <video src={data.video}
+              className="full-screen-video"
+              controls
+              onError={(e) => console.error('Error playing video while hover:', e.target.error)}>
+          </video>
           {data.i < videoUrls.length - 1 && (
             <button className="nav-btn next-btn" onClick={() => videoAction('next-video')}>
               <FontAwesomeIcon icon={faChevronRight} />
@@ -160,14 +180,14 @@ function VideoContainer() {
           <Masonry gutter='17px'>
             {videoUrls.map(({ url, loaded }, index) => (
               <InView
-                className='image-video'
                 as="video"
+                className='image-video'
                 key={index}
                 onChange={(inView) => {inView && loaded ? url=url : url = ''}}
                 onLoadedData={() => handleVideoLoad(index)}
                 src={url}
-                onMouseEnter={(e) => {e.target.play(); e.target.controls = true;}}
-                onMouseLeave={(e) => {e.target.pause(); e.target.controls = false;}}
+                onMouseEnter={(e) => { handlePlay(e.target); }}
+                onMouseLeave={(e) => { handlePause(e.target); }}
                 onError={(e) => console.error('Error playing video while hover:', e.target.error)}
                 alt={`Video ${index}`}
                 data-index={index}

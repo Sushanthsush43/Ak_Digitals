@@ -164,7 +164,8 @@ function PhotoContainer() {
                 <Masonry gutter='17px'>
                     {imageUrls.map(({ url, loaded }, index) => (
                         <InView
-                        as="img"
+                            as="img"
+                            className='image-video'
                             key={index}
                             onChange={(inView) => {inView && loaded ? url=url : url = ''}}
                             onLoad={() => handleImageLoad(index)}

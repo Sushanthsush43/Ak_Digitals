@@ -203,8 +203,8 @@ function DeletePhotos() {
                     {imageUrls.map(({ url, loaded }, index) => (
                     <div key={index} className='delete-item-div'>
                         <InView
-                            className='delete-item'
                             as="img"
+                            className='delete-item image-video'
                             key={index}
                             onChange={(inView) => {inView && loaded ? url=url : url = ''}}
                             onLoad={() => handleImageLoad(index)}

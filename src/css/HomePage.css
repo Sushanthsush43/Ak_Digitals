@@ -438,12 +438,12 @@ button:hover .line {
     margin-top: 20px;
   } */
 }
-
-.image-video{
-  border-radius: 10px; /* Rounded corners for a modern look */
+.image-video {
+  box-shadow: 0 0 9px rgba(0, 0, 0, 0.5);
 }
 
+
 .image-video:hover {
-  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5); /* Add an inner shadow effect */
-  transition: box-shadow 0.3s ease; /* Smooth transition effect */
+  transform: scale(1.01); /* Zoom in on hover */
+  transition: transform 0.3s ease; /* Add a smooth transition */
 }
