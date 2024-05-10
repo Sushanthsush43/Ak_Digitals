@@ -7,6 +7,7 @@ import { toastErrorStyle, toastSuccessStyle } from './uitls/toastStyle';
 import { InView } from "react-intersection-observer";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight, faTimes } from '@fortawesome/free-solid-svg-icons';
+import "../css/DeleteComp.css";
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
