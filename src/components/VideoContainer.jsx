@@ -61,7 +61,6 @@ function VideoContainer({storage}) {
     try {
       const videoRefsTemp = await listAll(ref(storage, 'videos')); // List items inside 'videos' folder
       setVideoRefs(videoRefsTemp);
-      console.log(videoRefsTemp)
     } catch (error) {
       toast.error("Something went wrong, Please try again!", toastErrorStyle());
       console.error('Error listing items in storage:', error);
@@ -85,16 +84,15 @@ function VideoContainer({storage}) {
             const thumbnailName = itemRef.name.slice(0, -4) + '.png';
 
             const thumbnailRef = ref(storage, `thumbnails/${thumbnailName}`);
-
-            console.log(videoUrl)
+            // console.log(videoUrl)
 
             const thumbnailUrl = await getDownloadURL(thumbnailRef);
-            console.log(thumbnailUrl)
+            // console.log(thumbnailUrl)
 
             return { videoUrl, thumbnailUrl, loaded: false };
           } catch (error) {
             console.error('Error getting download URL for itemRef:', error);
-            return null;  // change here me........
+            return { videoUrl : null, thumbnailUrl : null, loaded: false };
           }
         }));
   
@@ -158,7 +156,7 @@ function VideoContainer({storage}) {
           <video src={data.video}
               className="full-screen-video"
               controls
-              onError={(e) => console.error('Error playing video while hover:', e.target.error)}>
+              onError={(e) => console.error('Error playing video while hover (click):', e.target.error)}>
           </video>
           {data.i < videoUrls.length - 1 && (
             <button className="nav-btn next-btn" onClick={() => videoAction('next-video')}>
@@ -170,7 +168,7 @@ function VideoContainer({storage}) {
       <div className={`video-container ${isOpened ? 'animate' : ''}`}>
         <ResponsiveMasonry columnsCountBreakPoints={{ 350: 2, 750: 2, 900: 3 }}>
           <Masonry gutter='17px'>
-            {videoUrls.map(({ url, loaded }, index) => (
+            {videoUrls.map(({ videoUrl, thumbnailUrl, loaded }, index) => (
               <InView
                 as="video"
                 className='image-video'
@@ -178,17 +176,18 @@ function VideoContainer({storage}) {
                 onChange={(inView, entry) => {
                   // Trigger inView callback even before fully visible
                   if (entry.isIntersecting || entry.boundingClientRect.top < 100) {
-                    inView && loaded ? (url = url) : (url = '');
+                    inView && loaded ? (videoUrl = videoUrl) : (videoUrl = '');
                   }
                 }}
+                onMouseEnter={(e) => { handlePlay(e.target); videoUrl = videoUrl; thumbnailUrl = thumbnailUrl}}
+                onMouseLeave={(e) => { handlePause(e.target); videoUrl = ''; thumbnailUrl = false}}
                 onLoadedData={() => handleVideoLoad(index)}
-                src={url}
-                onMouseEnter={(e) => { handlePlay(e.target); }}
-                onMouseLeave={(e) => { handlePause(e.target); }}
-                onError={(e) => console.error('Error playing video while hover:', e.target.error)}
+                src={videoUrl}
+                poster={thumbnailUrl}
+                onError={(e) => console.error('Error playing video while hover (hover):', e.target.error)}
                 alt={`Video ${index}`}
                 data-index={index}
-                onClick={() => viewVideo(url, index)} // Click to open video in full-screen
+                onClick={() => viewVideo(videoUrl, index)} // Click to open video in full-screen
                 style={{ display: loaded ? 'inline' : 'none', cursor : 'pointer' }}
                 autoPlay={false}
                 muted
