@@ -191,6 +191,7 @@ function VideoContainer({storage}) {
                 style={{ display: loaded ? 'inline' : 'none', cursor : 'pointer' }}
                 autoPlay={false}
                 muted
+                playsinline
               >
               </InView>
             ))}
