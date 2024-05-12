@@ -192,7 +192,7 @@ function VideoContainer({storage}) {
                 autoPlay={false}
                 muted
                 playsInline
-                controls
+                // controls
                 type="video/mp4"
               >
               </InView>
