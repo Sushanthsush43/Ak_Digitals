@@ -61,6 +61,7 @@ function VideoContainer({storage}) {
     try {
       const videoRefsTemp = await listAll(ref(storage, 'videos')); // List items inside 'videos' folder
       setVideoRefs(videoRefsTemp);
+      console.log(videoRefsTemp)
     } catch (error) {
       toast.error("Something went wrong, Please try again!", toastErrorStyle());
       console.error('Error listing items in storage:', error);
@@ -75,26 +76,30 @@ function VideoContainer({storage}) {
       try {
         const startIndex = (page - 1) * videosPerPage;
         const endIndex = startIndex + videosPerPage;
-
+  
         const totalPages = Math.ceil(videoRefs.items.length / videosPerPage);
-        
+  
         const urls = await Promise.all(videoRefs.items.slice(startIndex, endIndex).map(async (itemRef) => {
           try {
-            const url = await getDownloadURL(itemRef);
-            return { url, loaded: false };
+            const videoUrl = await getDownloadURL(itemRef);
+            const thumbnailRef = ref(storage, `thumbnails/${itemRef.name}`);
+            console.log(videoUrl)
+            const thumbnailUrl = await getDownloadURL(thumbnailRef);
+            console.log(thumbnailUrl)
+            return { videoUrl, thumbnailUrl, loaded: false };
           } catch (error) {
             console.error('Error getting download URL for itemRef:', error);
-            return null;
+            return null;  // change here me........
           }
         }));
-
+  
         // If it's the last page, reset the page count
         if (page === totalPages) {
           setPage(1);
         }
-
+  
         setVideoUrls(prevUrls => [...prevUrls, ...urls.filter(url => url !== null)]);
-
+  
       } catch (error) {
         toast.error("Something went wrong, Please try again!", toastErrorStyle());
         console.error('Error listing items in storage:', error);

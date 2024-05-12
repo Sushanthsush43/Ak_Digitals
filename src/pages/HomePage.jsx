@@ -43,11 +43,11 @@ function HomePage() {
             moments into extraordinary memories with our passion and keen eye for detail.</li>
         </ul>
       </p>
-      <PhotoVideoTab storage={storage}/>
-      {/* <DeletePhotos storage={storage}/>
-      <DeleteVideos storage={storage}/>
-      <PhotoUpload storage={storage}/>
-      <VideoUpload storage={storage}/> */}
+      {/* <PhotoVideoTab storage={storage}/> */}
+      {/* <DeletePhotos storage={storage}/> */}
+      {/* <DeleteVideos storage={storage}/> */}
+      {/* <PhotoUpload storage={storage}/> */}
+      <VideoUpload storage={storage}/>
     </div>
   );
 }
