@@ -82,10 +82,15 @@ function VideoContainer({storage}) {
         const urls = await Promise.all(videoRefs.items.slice(startIndex, endIndex).map(async (itemRef) => {
           try {
             const videoUrl = await getDownloadURL(itemRef);
-            const thumbnailRef = ref(storage, `thumbnails/${itemRef.name}`);
+            const thumbnailName = itemRef.name.slice(0, -4) + '.png';
+
+            const thumbnailRef = ref(storage, `thumbnails/${thumbnailName}`);
+
             console.log(videoUrl)
+
             const thumbnailUrl = await getDownloadURL(thumbnailRef);
             console.log(thumbnailUrl)
+
             return { videoUrl, thumbnailUrl, loaded: false };
           } catch (error) {
             console.error('Error getting download URL for itemRef:', error);
