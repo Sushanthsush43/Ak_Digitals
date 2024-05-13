@@ -6,6 +6,7 @@ import { ref, listAll, getDownloadURL } from 'firebase/storage';
 import { toast } from 'react-toastify';
 import { toastErrorStyle } from './uitls/toastStyle';
 import { InView } from "react-intersection-observer";
+import { isIOSorMacDevice } from './uitls/isIOS';
 
 function VideoContainer({storage}) {
 
@@ -16,6 +17,12 @@ function VideoContainer({storage}) {
   const videosPerPage = 9;
   const [isLoading, setIsLoading] = useState(false);
   const [videoRefs, setVideoRefs] = useState([]);
+  const [isIOS, setIsIos] = useState(true); // for safety we will assume its IOS
+
+  useEffect(()=>{
+    const i = isIOSorMacDevice();
+    setIsIos(i);
+  },[])
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -157,6 +164,7 @@ function VideoContainer({storage}) {
           <video src={data.video}
               className="full-screen-video"
               controls
+              playsInline
               onError={(e) => console.error('Error playing video while hover (click):', e.target.error)}>
           </video>
           {data.i < videoUrls.length - 1 && (
@@ -189,21 +197,15 @@ function VideoContainer({storage}) {
                 alt={`Video ${index}`}
                 data-index={index}
                 onClick={() => viewVideo(videoUrl, index)} // Click to open video in full-screen
-                style={{  cursor : 'pointer'}}
+                style={{ display: isIOS ? 'inline' : loaded ? 'inline' : 'none',
+                         cursor: 'pointer' }}                
                 autoPlay={false}
                 muted
                 playsInline
-                // controls
                 type="video/mp4/mov"
               >
               </InView>
 
-            //   <video autoPlay={false} muted id="video-bg" className='image-video'
-            //   onMouseEnter={(e) => {handlePlay(e.target); }}
-            //   onMouseLeave={(e) => {handlePause(e.target); }}
-            //   onLoadedData={() => handleVideoLoad(index)} key={index}>
-            //     <source type="video/mp4" src={videoUrl} poster={thumbnailUrl} />
-            // </video>
             ))}
           </Masonry>
         </ResponsiveMasonry>
