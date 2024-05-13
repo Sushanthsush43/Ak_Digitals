@@ -7,6 +7,7 @@ import { InView } from "react-intersection-observer";
 import "../css/DeleteComp.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { isIOSorMacDevice } from './uitls/isIOS';
 
 function DeleteVideos({storage}) {
 
@@ -21,7 +22,7 @@ function DeleteVideos({storage}) {
     const [isOpened, setIsOpened] = useState(false);
     const [data, setData] = useState({ video: '', i: 0 });
     const [isIOS, setIsIos] = useState(true); // for safety we will assume its IOS
-
+    
     useEffect(()=>{
       const i = isIOSorMacDevice();
       setIsIos(i);
