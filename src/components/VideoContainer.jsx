@@ -41,19 +41,30 @@ function VideoContainer({storage}) {
   // Function to handle video actions (next, previous, close)
   const videoAction = (action) => {
     if (action === 'next-video') {
+      handleFullScreenEnded() // pause previous video
       let newIndex = data.i + 1;
       if (newIndex < videoUrls.length) {
-        setData({ video: videoUrls[newIndex].url, i: newIndex });
+        setData({ video: videoUrls[newIndex].videoUrl, i: newIndex });
       }
     } else if (action === 'previous-video') {
+      handleFullScreenEnded()
       let newIndex = data.i - 1;
       if (newIndex >= 0) {
-        setData({ video: videoUrls[newIndex].url, i: newIndex });
+        setData({ video: videoUrls[newIndex].videoUrl, i: newIndex });
       }
     } else if (action === 'close-video') {
+      handleFullScreenEnded()
       setIsOpened(false); // Close the full-screen view
     }
   }
+
+  const handleFullScreenEnded = () => {
+      const videoElement = document.querySelector('.full-screen-video');
+      if (videoElement) {
+          videoElement.pause();
+      }
+  };
+
 
   useEffect(() => {
     initialFetchVideos(); // Fetch videos on component mount
@@ -143,8 +154,7 @@ function VideoContainer({storage}) {
       if (!video.paused) {
           video.pause();
       }
-  };    
-
+  };
 
   return (
     <>
@@ -159,11 +169,13 @@ function VideoContainer({storage}) {
               <FontAwesomeIcon icon={faChevronLeft} />
             </button>
           )}
-          <video src={data.video}
+          <video 
+              src={data.video}
               className="full-screen-video"
               controls
               playsInline
-              onError={(e) => console.error('Error playing video while hover (click):', e.target.error)}>
+              onError={(e) => console.error('Error playing video while hover (click):', e.target.error)}
+          >
           </video>
           {data.i < videoUrls.length - 1 && (
             <button className="nav-btn next-btn" onClick={() => videoAction('next-video')}>
@@ -172,6 +184,7 @@ function VideoContainer({storage}) {
           )}
         </div>
       )}
+
       <div className={`video-container ${isOpened ? 'animate' : ''}`}>
         <ResponsiveMasonry columnsCountBreakPoints={{ 350: 2, 750: 2, 900: 3 }}>
           <Masonry gutter='17px'>

@@ -45,22 +45,32 @@ function DeleteVideos({storage}) {
         setIsOpened(true);
       }
     
-      // Function to handle video actions (next, previous, close)
-      const videoAction = (action) => {
+     // Function to handle video actions (next, previous, close)
+    const videoAction = (action) => {
         if (action === 'next-video') {
-          let newIndex = data.i + 1;
-          if (newIndex < videoUrls.length) {
-            setData({ video: videoUrls[newIndex].url, i: newIndex });
-          }
-        } else if (action === 'previous-video') {
-          let newIndex = data.i - 1;
-          if (newIndex >= 0) {
-            setData({ video: videoUrls[newIndex].url, i: newIndex });
-          }
-        } else if (action === 'close-video') {
-          setIsOpened(false); // Close the full-screen view
+        handleFullScreenEnded() // pause previous video
+        let newIndex = data.i + 1;
+        if (newIndex < videoUrls.length) {
+            setData({ video: videoUrls[newIndex].videoUrl, i: newIndex });
         }
-      }
+        } else if (action === 'previous-video') {
+        handleFullScreenEnded()
+        let newIndex = data.i - 1;
+        if (newIndex >= 0) {
+            setData({ video: videoUrls[newIndex].videoUrl, i: newIndex });
+        }
+        } else if (action === 'close-video') {
+        handleFullScreenEnded()
+        setIsOpened(false); // Close the full-screen view
+        }
+    }
+
+    const handleFullScreenEnded = () => {
+        const videoElement = document.querySelector('.full-screen-video');
+        if (videoElement) {
+            videoElement.pause();
+        }
+    };
 
     useEffect(() => {
         initialFetchVideos(); // Fetch videos on component mount
