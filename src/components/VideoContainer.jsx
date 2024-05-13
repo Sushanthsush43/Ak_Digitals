@@ -180,8 +180,11 @@ function VideoContainer({storage}) {
                     inView && loaded ? (videoUrl = videoUrl) : (videoUrl = '');
                   }
                 }}
+                
                 onMouseEnter={(e) => { handlePlay(e.target); videoUrl = videoUrl; thumbnailUrl = thumbnailUrl}}
                 onMouseLeave={(e) => { handlePause(e.target); videoUrl = ''; thumbnailUrl = false}}
+                onTouchStart={(e) => { handlePlay(e.target); videoUrl = videoUrl; thumbnailUrl = thumbnailUrl}}
+                onTouchEnd={(e) => { handlePause(e.target); videoUrl = ''; thumbnailUrl = false}}
                 onLoadedData={() => handleVideoLoad(index)}
                 src={videoUrl}
                 poster={thumbnailUrl}
