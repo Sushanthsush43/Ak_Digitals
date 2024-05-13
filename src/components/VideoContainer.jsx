@@ -57,7 +57,7 @@ function VideoContainer({storage}) {
   }, [page, videoRefs]);
 
   async function initialFetchVideos() {
-    console.log("Video Initial Component");
+    console.log("Video Initial Component2");
     setIsLoading(true);
     try {
       const videoRefsTemp = await listAll(ref(storage, 'videos')); // List items inside 'videos' folder
@@ -194,8 +194,9 @@ function VideoContainer({storage}) {
                 muted
                 playsInline
                 // controls
-                type="video/mp4"
+                type="video/mp4/mov"
               >
+                <source type="video/mp4/mov" src={videoUrl} />
               </InView>
 
             //   <video autoPlay={false} muted id="video-bg" className='image-video'
