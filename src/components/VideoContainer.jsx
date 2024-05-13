@@ -183,8 +183,8 @@ function VideoContainer({storage}) {
                 // onMouseEnter={(e) => { handlePlay(e.target); videoUrl = videoUrl; thumbnailUrl = thumbnailUrl}}
                 // onMouseLeave={(e) => { handlePause(e.target); videoUrl = ''; thumbnailUrl = false}}
                 // onLoadedData={() => handleVideoLoad(index)}
-                // poster={thumbnailUrl}
-                src="public\assets\back_heavy_snow.mp4"
+                // src={videoUrl}
+                poster={thumbnailUrl}
                 // onError={(e) => console.error('Error playing video while hover (hover):', e.target.error)}
                 alt={`Video ${index}`}
                 data-index={index}
@@ -196,7 +196,7 @@ function VideoContainer({storage}) {
                 // controls
                 type="video/mp4/mov"
               >
-                <source type="video/mp4/mov" src="public\assets\back_heavy_snow.mp4" />
+                <source type="video/mp4/mov" src={videoUrl} />
               </InView>
 
             //   <video autoPlay={false} muted id="video-bg" className='image-video'
