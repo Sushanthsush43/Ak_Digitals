@@ -201,11 +201,7 @@ function VideoContainer({storage}) {
               onMouseEnter={(e) => {handlePlay(e.target); }}
               onMouseLeave={(e) => {handlePause(e.target); }}
               onLoadedData={() => handleVideoLoad(index)} key={index}>
-              {isPlaying ? (
                 <source type="video/mp4" src={videoUrl} poster={thumbnailUrl} />
-              ) : (
-                <p>Sad, Your Browser does not support video tags!!!</p>
-              )}
             </video>
             ))}
           </Masonry>
