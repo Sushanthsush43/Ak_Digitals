@@ -174,29 +174,29 @@ function VideoContainer({storage}) {
                 as="video"
                 className='image-video'
                 key={index}
-                onChange={(inView, entry) => {
-                  // Trigger inView callback even before fully visible
-                  if (entry.isIntersecting || entry.boundingClientRect.top < 100) {
-                    inView && loaded ? (videoUrl = videoUrl) : (videoUrl = '');
-                  }
-                }}
-                onMouseEnter={(e) => { handlePlay(e.target); videoUrl = videoUrl; thumbnailUrl = thumbnailUrl}}
-                onMouseLeave={(e) => { handlePause(e.target); videoUrl = ''; thumbnailUrl = false}}
-                onLoadedData={() => handleVideoLoad(index)}
-                src={videoUrl}
-                poster={thumbnailUrl}
-                onError={(e) => console.error('Error playing video while hover (hover):', e.target.error)}
+                // onChange={(inView, entry) => {
+                //   // Trigger inView callback even before fully visible
+                //   if (entry.isIntersecting || entry.boundingClientRect.top < 100) {
+                //     inView && loaded ? (videoUrl = videoUrl) : (videoUrl = '');
+                //   }
+                // }}
+                // onMouseEnter={(e) => { handlePlay(e.target); videoUrl = videoUrl; thumbnailUrl = thumbnailUrl}}
+                // onMouseLeave={(e) => { handlePause(e.target); videoUrl = ''; thumbnailUrl = false}}
+                // onLoadedData={() => handleVideoLoad(index)}
+                // poster={thumbnailUrl}
+                src="public\assets\back_heavy_snow.mp4"
+                // onError={(e) => console.error('Error playing video while hover (hover):', e.target.error)}
                 alt={`Video ${index}`}
                 data-index={index}
                 onClick={() => viewVideo(videoUrl, index)} // Click to open video in full-screen
-                style={{ display: loaded ? 'inline' : 'none', cursor : 'pointer', backgroundColor:'white'}}
+                // style={{ display: loaded ? 'inline' : 'none', cursor : 'pointer', backgroundColor:'white'}}
                 autoPlay={false}
                 muted
                 playsInline
-                controls
+                // controls
                 type="video/mp4/mov"
               >
-                <source type="video/mp4/mov" src={videoUrl} />
+                <source type="video/mp4/mov" src="public\assets\back_heavy_snow.mp4" />
               </InView>
 
             //   <video autoPlay={false} muted id="video-bg" className='image-video'
