@@ -57,6 +57,7 @@ function VideoContainer({storage}) {
   }, [page, videoRefs]);
 
   async function initialFetchVideos() {
+    console.log("Video Initial Component");
     setIsLoading(true);
     try {
       const videoRefsTemp = await listAll(ref(storage, 'videos')); // List items inside 'videos' folder
