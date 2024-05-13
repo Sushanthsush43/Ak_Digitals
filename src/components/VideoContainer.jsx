@@ -180,11 +180,8 @@ function VideoContainer({storage}) {
                     inView && loaded ? (videoUrl = videoUrl) : (videoUrl = '');
                   }
                 }}
-                
                 onMouseEnter={(e) => { handlePlay(e.target); videoUrl = videoUrl; thumbnailUrl = thumbnailUrl}}
                 onMouseLeave={(e) => { handlePause(e.target); videoUrl = ''; thumbnailUrl = false}}
-                onTouchStart={(e) => {  e.preventDefault(); handlePlay(e.target); videoUrl = videoUrl; thumbnailUrl = thumbnailUrl}}
-                onTouchEnd={(e) => {  e.preventDefault(); handlePause(e.target); videoUrl = ''; thumbnailUrl = false}}
                 onLoadedData={() => handleVideoLoad(index)}
                 src={videoUrl}
                 poster={thumbnailUrl}
@@ -196,7 +193,7 @@ function VideoContainer({storage}) {
                 autoPlay={false}
                 muted
                 playsInline
-                // controls
+                controls
                 type="video/mp4/mov"
               >
                 <source type="video/mp4/mov" src={videoUrl} />
