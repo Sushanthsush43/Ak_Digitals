@@ -20,6 +20,12 @@ function DeleteVideos({storage}) {
     const [videoRefs, setVideoRefs] = useState([]);
     const [isOpened, setIsOpened] = useState(false);
     const [data, setData] = useState({ video: '', i: 0 });
+    const [isIOS, setIsIos] = useState(true); // for safety we will assume its IOS
+
+    useEffect(()=>{
+      const i = isIOSorMacDevice();
+      setIsIos(i);
+    },[])
 
     useEffect(() => {
         const timeout = setTimeout(() => {
@@ -189,6 +195,7 @@ function DeleteVideos({storage}) {
                 <video src={data.video}
                     className="full-screen-video"
                     controls
+                    playsInline
                     onError={(e) => console.error('Error playing video while hover:', e.target.error)}>
                 </video>
                 {data.i < videoUrls.length - 1 && (
@@ -222,10 +229,12 @@ function DeleteVideos({storage}) {
                           }}
                         onClick={() => viewVideo(url, index)} // Click to open video in full-screen
                         onError={(e) => console.error('Error playing video while hover:', e.target.error)}
-                        style={{ display: loaded ? 'block' : 'none' }}
+                        style={{ display: isIOS ? 'inline' : loaded ? 'inline' : 'none'}}  
                         onLoadedData={() => handleVideoLoad(index)}
                         autoPlay={false}
+                        playsInline
                         muted
+                        type="video/mp4/mov"
                     ></InView>
                     {/* Delete Selection */}
                     <label
