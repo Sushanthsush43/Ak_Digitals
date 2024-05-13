@@ -17,7 +17,7 @@ function VideoContainer({storage}) {
   const videosPerPage = 9;
   const [isLoading, setIsLoading] = useState(false);
   const [videoRefs, setVideoRefs] = useState([]);
-  const [isIOS, setIsIos] = useState(true); // for safety we will assume its IOS
+  const [isIOS, setIsIos] = useState(true); // for safety we will assume its IOS intialy
 
   useEffect(()=>{
     const i = isIOSorMacDevice();
@@ -64,7 +64,6 @@ function VideoContainer({storage}) {
   }, [page, videoRefs]);
 
   async function initialFetchVideos() {
-    console.log("Video Initial Component2");
     setIsLoading(true);
     try {
       const videoRefsTemp = await listAll(ref(storage, 'videos')); // List items inside 'videos' folder
@@ -100,7 +99,7 @@ function VideoContainer({storage}) {
             return { videoUrl, thumbnailUrl, loaded: false };
           } catch (error) {
             console.error('Error getting download URL for itemRef:', error);
-            return { videoUrl : null, thumbnailUrl : null, loaded: false };
+            return null;
           }
         }));
   
@@ -110,7 +109,6 @@ function VideoContainer({storage}) {
         }
   
         setVideoUrls(prevUrls => [...prevUrls, ...urls.filter(url => url !== null)]);
-  
       } catch (error) {
         toast.error("Something went wrong, Please try again!", toastErrorStyle());
         console.error('Error listing items in storage:', error);
@@ -182,6 +180,7 @@ function VideoContainer({storage}) {
                 as="video"
                 className='image-video'
                 key={index}
+                data-index={index}
                 onChange={(inView, entry) => {
                   // Trigger inView callback even before fully visible
                   if (entry.isIntersecting || entry.boundingClientRect.top < 100) {
@@ -195,7 +194,6 @@ function VideoContainer({storage}) {
                 poster={thumbnailUrl}
                 onError={(e) => console.error('Error playing video while hover (hover):', e.target.error)}
                 alt={`Video ${index}`}
-                data-index={index}
                 onClick={() => viewVideo(videoUrl, index)} // Click to open video in full-screen
                 style={{ display: isIOS ? 'inline' : loaded ? 'inline' : 'none',
                          cursor: 'pointer' }}                
