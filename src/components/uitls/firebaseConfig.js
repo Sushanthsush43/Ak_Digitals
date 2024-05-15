@@ -18,5 +18,5 @@ export const getFirebaseConfig = () =>
     const analytics = getAnalytics(app);
     const storage = getStorage(app);
 
-    return { storage };
+    return { storage, app };
 }

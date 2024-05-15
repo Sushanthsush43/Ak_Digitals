@@ -7,14 +7,15 @@
   margin-top: 150px;
 } */
 
-.tab-bar {  flex-direction: column;
+.tab-bar {  
   overflow: hidden;
+  display: flex;
   flex-direction: row;
-align-items: center;
+  /* align-items: center; */
+  /* justify-content: center; */
   /* margin: 30px auto; */
   left: 41%;
   margin-top: 220px;
-  display: flex;
   list-style-type: none;
   padding-left: 0;
   /* box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); */
@@ -37,6 +38,9 @@ align-items: center;
 .indicator {
   width: 150px;
   height: 5px;
+  display: flex;
+  /* justify-content: center; */
+  /* align-items: center; */
   background: #2196F3;
   position: absolute;
   top: calc(100% - 3px);

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import '../css/HomePage.css';
 import "./ContactPage"
 import '../components/PhotoUpload';
@@ -9,11 +8,13 @@ import DeleteVideos from '../components/DeleteVideos';
 import PhotoUpload from '../components/PhotoUpload';
 import VideoUpload from '../components/VideoUpload';
 import { getFirebaseConfig } from '../components/uitls/firebaseConfig';
+import AdminLoginForm from '../components/AdminLoginForm';
+import Header from '../components/Header';
 
 function HomePage() {
 
   // Firebase stuff ( Important )
-  const { storage } = getFirebaseConfig();
+  const { storage, app } = getFirebaseConfig();
 
   const [showHoverText, setShowHoverText] = useState(false);
 
@@ -26,26 +27,22 @@ function HomePage() {
 
   return (
     <div className={`Maindiv`}>
-      <header>
-        <div className="heading-container">
-          <h1 className="sofia-regular">sushanth sherigar</h1>
-        </div>
+      <Header />
 
-        <div className='header-links'>
-          <Link to='/ContactPage' className="teko-headings">CONTACT</Link>
-        </div>
-      </header>
+      <div className='home-text-main'>
+        <p className={`hoverText ${showHoverText ? 'show' : ''}`}>
+          <h4 style={{ textAlign: 'center' }}>WE CAPTURE THE MOMENTS</h4>
+          <ul style={{ listStyleType: 'none', padding: '' }}>
+            <li>Trust us to capture the magic of your life's journey, one frame at a time, freezing fleeting
+              moments into extraordinary memories with our passion and keen eye for detail.</li>
+          </ul>
+        </p>
+      </div>
 
-      <p className={`hoverText ${showHoverText ? 'show' : ''}`}>
-        <h4 style={{ textAlign: 'center' }}>WE CAPTURE THE MOMENTS</h4>
-        <ul style={{ listStyleType: 'none', padding: '' }}>
-          <li>Trust us to capture the magic of your life's journey, one frame at a time, freezing fleeting
-            moments into extraordinary memories with our passion and keen eye for detail.</li>
-        </ul>
-      </p>
-      {/* <PhotoVideoTab storage={storage}/> */}
+      {/* <AdminLoginForm app={app}/> */}
+      <PhotoVideoTab storage={storage}/>
       {/* <DeletePhotos storage={storage}/> */}
-      <DeleteVideos storage={storage}/>
+      {/* <DeleteVideos storage={storage}/> */}
       {/* <PhotoUpload storage={storage}/> */}
       {/* <VideoUpload storage={storage}/> */}
     </div>
