@@ -4,6 +4,7 @@
 
 html {
   padding: 0 !important;
+  background-color: #F5F5F5;
 }
 
 .Maindiv {
@@ -14,7 +15,6 @@ html {
   margin-top: 10px;
   height: 0px;
 }
-
 
 
 .sofia-regular {
