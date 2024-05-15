@@ -125,11 +125,16 @@ function DeletePhotos({storage}) {
     };
 
     const handleSelect = async (imgUrl) => {
-            if (toDelete.includes(imgUrl)) 
-                setToDelete(prevToDelete => prevToDelete.filter(url => url !== imgUrl)); // If imgUrl is already in toDelete, remove it
-            else
-                setToDelete(prevToDelete => [...prevToDelete, imgUrl]); // If imgUrl is not in toDelete, add it
+        if (toDelete.includes(imgUrl))
+            setToDelete(prevToDelete => prevToDelete.filter(url => url !== imgUrl)); // If imgUrl is already in toDelete, remove it
+        else
+            setToDelete(prevToDelete => [...prevToDelete, imgUrl]); // If imgUrl is not in toDelete, add it
     };
+
+    // handle delete icon color change
+    const getColor = (imgUrl) => {
+        return toDelete.includes(imgUrl) ? 'red' : 'black';
+    }
 
     const handleDeleteImages = async () => {
         try {
@@ -186,6 +191,9 @@ function DeletePhotos({storage}) {
                 {/* Delete Images Button */}
                 <button onClick={() => handleDeleteImages()}>Delete</button>
 
+                {/* Selection Count */}
+                <label>{toDelete.length}</label>
+
                 {/* Photo container */}
                 <div className='delete-container'>
                     {imageUrls.map(({ url, loaded }, index) => (
@@ -210,10 +218,10 @@ function DeletePhotos({storage}) {
                         {/* Delete Selection */}
                         <label
                             className='delete-button'
-                            style={{ color: toDelete.includes(url) ? 'red' : 'black' }}
+                            style={{color : getColor(url)}}
                             onClick={() => handleSelect(url)}
                         >
-                            <RiDeleteBinLine />
+                            <RiDeleteBinLine/>
                         </label>
                     </div>
                     ))}

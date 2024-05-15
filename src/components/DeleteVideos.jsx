@@ -151,6 +151,7 @@ function DeleteVideos({storage}) {
     };
 
     const handleSelect = async (videoUrl, thumbnailUrl) => {
+        
         let vidVal = false;
         let thumbVal = false;
         
@@ -160,7 +161,7 @@ function DeleteVideos({storage}) {
         if (toDeleteThumbnails.includes(thumbnailUrl))
             thumbVal = true;
 
-        // check if video selection & thumbnail selection are syncing
+        // check if video selection & thumbnail selection(happens automatic) are syncing
         if(vidVal !== thumbVal){
             toast.error("Something went wrong, Please try selecting again.", toastErrorStyle());
             return;
@@ -176,6 +177,11 @@ function DeleteVideos({storage}) {
         else
             setToDeleteThumbnails(prevToDelete => [...prevToDelete, thumbnailUrl]); // If thumbnailUrl is not in toDelete, add it
     };
+
+    // handle delete icon color change
+    const getColor = (videoUrl) => {
+        return toDeleteVideos.includes(videoUrl) ? 'red' : 'black';
+    }
     
 
     const handleDeleteVideos = async () => {
@@ -279,6 +285,9 @@ function DeleteVideos({storage}) {
             {/* Delete Videos Button */}
             <button onClick={() => handleDeleteVideos()}>Delete</button>
 
+            {/* Selection Count */}
+            <label>{toDeleteVideos.length}</label>
+
             {/* Video container */}
             <div className='delete-container'>
                 {videoUrls.map(({ videoUrl, thumbnailUrl, loaded }, index) => (
@@ -310,7 +319,7 @@ function DeleteVideos({storage}) {
                     {/* Delete Selection */}
                     <label
                         className='delete-button'
-                        style={{ color: toDeleteVideos.includes(videoUrl) ? 'red' : 'black' }}
+                        style={{color : getColor(videoUrl)}}
                         onClick={() => handleSelect(videoUrl, thumbnailUrl)}
                     >
                         <RiDeleteBinLine />

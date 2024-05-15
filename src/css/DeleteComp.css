@@ -25,7 +25,8 @@
     position: absolute;
     top: 5px;
     right: 5px;
-    background: none;
+    background-color: white;
+    border-radius: 2px;
     border: none;
     cursor: pointer;
   }
