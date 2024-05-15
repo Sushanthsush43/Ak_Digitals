@@ -45,7 +45,7 @@ function VideoUpload({storage}) {
                 const file = selectedFiles[i];
                 try {
                     const thumbnail = await generateThumbnail(file);
-                    const thumbnailName = file.name.slice(0, -4) + '.png';
+                    const thumbnailName = file.name.slice(0, file.name.lastIndexOf('.')) + '.png';
 
                     if(thumbnail === null)
                         throw new Error(`Thumbnail creation failed for video ${file.name}`);

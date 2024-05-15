@@ -99,7 +99,7 @@ function VideoContainer({storage}) {
         const urls = await Promise.all(videoRefs.items.slice(startIndex, endIndex).map(async (itemRef) => {
           try {
             const videoUrl = await getDownloadURL(itemRef);
-            const thumbnailName = itemRef.name.slice(0, -4) + '.png';
+            const thumbnailName = itemRef.name.slice(0, itemRef.name.lastIndexOf('.')) + '.png';
 
             const thumbnailRef = ref(storage, `thumbnails/${thumbnailName}`);
             // console.log(videoUrl)
