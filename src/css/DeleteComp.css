@@ -30,3 +30,12 @@
     border: none;
     cursor: pointer;
   }
+  .delete-button {
+    cursor: pointer;
+    transform: scale(1);
+    transition: transform 0.3s ease;
+  }
+  
+  .delete-button:active {
+    transform: scale(1.5);
+  }

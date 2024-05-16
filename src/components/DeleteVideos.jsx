@@ -114,7 +114,7 @@ function DeleteVideos({storage}) {
                         const thumbnailUrl = await getDownloadURL(thumbnailRef);
                         // console.log(thumbnailUrl)
 
-                        return { videoUrl, thumbnailUrl, loaded: false };
+                        return { videoUrl, thumbnailUrl, loaded: false, constVideoUrl : videoUrl, constThumbnailUrl : thumbnailUrl};
                     } catch (error) {
                         console.error('Error getting download URL for itemRef:', error);
                         return null;
@@ -122,7 +122,6 @@ function DeleteVideos({storage}) {
                 }));
 
                 setVideoUrls(urls.filter(item => item !== null));
-
             } catch (error) {
                 toast.error("Something went wrong, Please try again!", toastErrorStyle());
                 console.error('Error listing items in storage:', error);
@@ -150,15 +149,15 @@ function DeleteVideos({storage}) {
         });
     };
 
-    const handleSelect = async (videoUrl, thumbnailUrl) => {
+    const handleSelect = async (constVideoUrl, constThumbnailUrl) => {
         
         let vidVal = false;
         let thumbVal = false;
-        
-        if (toDeleteVideos.includes(videoUrl))
+
+        if (toDeleteVideos.includes(constVideoUrl))
             vidVal = true;
 
-        if (toDeleteThumbnails.includes(thumbnailUrl))
+        if (toDeleteThumbnails.includes(constThumbnailUrl))
             thumbVal = true;
 
         // check if video selection & thumbnail selection(happens automatic) are syncing
@@ -167,20 +166,25 @@ function DeleteVideos({storage}) {
             return;
         }
 
-        if (vidVal)
-            setToDeleteVideos(prevToDelete => prevToDelete.filter(url => url !== videoUrl)); // If videoUrl is already in toDelete, remove it
-        else
-            setToDeleteVideos(prevToDelete => [...prevToDelete, videoUrl]); // If videoUrl is not in toDelete, add it
+        if (vidVal){
+            setToDeleteVideos(prevToDelete => prevToDelete.filter(url => url !== constVideoUrl)); // If videoUrl is already in toDelete, remove it
+        }
+        else{
+            setToDeleteVideos(prevToDelete => [...prevToDelete, constVideoUrl]); // If videoUrl is not in toDelete, add it
+        }
 
-        if (thumbVal)
-            setToDeleteThumbnails(prevToDelete => prevToDelete.filter(url => url !== thumbnailUrl)); // If thumbnailUrl is already in toDelete, remove it
-        else
-            setToDeleteThumbnails(prevToDelete => [...prevToDelete, thumbnailUrl]); // If thumbnailUrl is not in toDelete, add it
+        if (thumbVal){
+            setToDeleteThumbnails(prevToDelete => prevToDelete.filter(url => url !== constThumbnailUrl)); // If thumbnailUrl is already in toDelete, remove it
+        }
+        else{
+            setToDeleteThumbnails(prevToDelete => [...prevToDelete, constThumbnailUrl]); // If thumbnailUrl is not in toDelete, add it
+        }
+
     };
 
     // handle delete icon color change
-    const getColor = (videoUrl) => {
-        return toDeleteVideos.includes(videoUrl) ? 'red' : 'black';
+    const getColor = (constVideoUrl) => {
+        return toDeleteVideos.includes(constVideoUrl) ? 'red' : 'black';
     }
     
 
@@ -290,7 +294,7 @@ function DeleteVideos({storage}) {
 
             {/* Video container */}
             <div className='delete-container'>
-                {videoUrls.map(({ videoUrl, thumbnailUrl, loaded }, index) => (
+                {videoUrls.map(({ videoUrl, thumbnailUrl, loaded, constVideoUrl, constThumbnailUrl }, index) => (
                     <div key={index} className='delete-item-div'>
                     <InView
                         as="video"
@@ -319,10 +323,10 @@ function DeleteVideos({storage}) {
                     {/* Delete Selection */}
                     <label
                         className='delete-button'
-                        style={{color : getColor(videoUrl)}}
-                        onClick={() => handleSelect(videoUrl, thumbnailUrl)}
+                        style={{color : getColor(constVideoUrl)}}
+                        onClick={() => { handleSelect(constVideoUrl, constThumbnailUrl); }}
                     >
-                        <RiDeleteBinLine />
+                        <RiDeleteBinLine  />
                     </label>
                     </div>
                 ))}
