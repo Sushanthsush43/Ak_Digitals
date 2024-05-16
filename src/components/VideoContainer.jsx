@@ -15,9 +15,9 @@ function VideoContainer({storage}) {
   const [videoUrls, setVideoUrls] = useState([]);
   const [page, setPage] = useState(1);
   const videosPerPage = 9;
-  const [isLoading, setIsLoading] = useState(false);
   const [videoRefs, setVideoRefs] = useState([]);
   const [isIOS, setIsIos] = useState(true); // for safety we will assume its IOS intialy
+  const [viewMorePaused, setViewMorePaused] = useState(false);
 
   useEffect(()=>{
     const i = isIOSorMacDevice();
@@ -75,21 +75,17 @@ function VideoContainer({storage}) {
   }, [page, videoRefs]);
 
   async function initialFetchVideos() {
-    setIsLoading(true);
     try {
       const videoRefsTemp = await listAll(ref(storage, 'videos')); // List items inside 'videos' folder
       setVideoRefs(videoRefsTemp);
     } catch (error) {
       toast.error("Something went wrong, Please try again!", toastErrorStyle());
       console.error('Error listing items in storage:', error);
-    } finally {
-      setIsLoading(false);
     }
   }
 
   async function fetchVideos() {
     if (videoRefs && videoRefs.items && videoRefs.items.length >= 1) {
-      setIsLoading(true);
       try {
         const startIndex = (page - 1) * videosPerPage;
         const endIndex = startIndex + videosPerPage;
@@ -123,14 +119,19 @@ function VideoContainer({storage}) {
       } catch (error) {
         toast.error("Something went wrong, Please try again!", toastErrorStyle());
         console.error('Error listing items in storage:', error);
-      } finally {
-        setIsLoading(false);
       }
     }
   }
 
   const handleViewMore = () => {
-    setPage(prevPage => prevPage + 1);
+    if (viewMorePaused)
+        return;
+
+    setViewMorePaused(true);
+    setTimeout(() => {
+        setPage(prevPage => prevPage + 1);
+        setViewMorePaused(false);
+    }, [3000]);
   };
 
   const handleVideoLoad = (index) => {
@@ -196,7 +197,7 @@ function VideoContainer({storage}) {
                 data-index={index}
                 onChange={(inView, entry) => {
                   // Trigger inView callback even before fully visible
-                  if (entry.isIntersecting || entry.boundingClientRect.top < 100) {
+                  if (entry.isIntersecting || entry.boundingClientRect.top < 200) {
                     inView && loaded ? (videoUrl = videoUrl) : (videoUrl = '');
                   }
                 }}
@@ -222,21 +223,14 @@ function VideoContainer({storage}) {
         </ResponsiveMasonry>
       </div>
       <div className='loading-viewMore' style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', }}>
-        {/* Loading animation */}
-        {isLoading && <div className='loading'></div>}
-
-        {/* Loading Button */}
+        {/* Loading & ViewMore */}
         {videoUrls.length > 0 && (
-          <InView
-              as="div"
-              onChange={(inView) => inView? handleViewMore()  : ''}
-              style={{
-              position: 'relative',
-              width: '100px',
-              height:'25px'
-              }}>
-              <div className='line'></div>
-          </InView>
+            <InView
+                as="div"
+                className='loading'
+                onChange={(inView) => inView? handleViewMore()  : ''}>
+                <div className='line'></div>
+            </InView>
         )}
       </div>
     </>

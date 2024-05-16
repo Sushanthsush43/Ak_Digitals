@@ -15,8 +15,8 @@ function PhotoContainer({storage}) {
   const [imageUrls, setImageUrls] = useState([]);
   const [page, setPage] = useState(1);
   const imagesPerPage = 12;
-  const [isLoading, setIsLoading] = useState(false);
   const [imageRefs, setImageRefs] = useState([]);
+  const [viewMorePaused, setViewMorePaused] = useState(false);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -59,21 +59,17 @@ function PhotoContainer({storage}) {
 
     async function initialFetchImages()
     {
-        setIsLoading(true);
         try {
             const imageRefs_temp = await listAll(ref(storage, 'images')); // List items inside 'images' folder
             setImageRefs(imageRefs_temp);
         } catch (error) {
             toast.error("Something went wrong, Please try again!",toastErrorStyle());
             console.error('Error listing items in storage:', error);
-        } finally {
-            setIsLoading(false);
         }
     }
 
     async function fetchImages() {
         if(imageRefs && imageRefs.items && imageRefs.items.length >= 1){
-            setIsLoading(true);
             try {
                 const startIndex = (page - 1) * imagesPerPage;
                 const endIndex = startIndex + imagesPerPage;
@@ -100,14 +96,19 @@ function PhotoContainer({storage}) {
             } catch (error) {
                 toast.error("Something went wrong, Please try again!",toastErrorStyle());
                 console.error('Error listing items in storage:', error);
-            } finally {
-                setIsLoading(false);
             }
         } 
     }
 
     const handleViewMore = () => {
-        setPage(prevPage => prevPage + 1);
+        if (viewMorePaused)
+            return;
+
+        setViewMorePaused(true);
+        setTimeout(() => {
+            setPage(prevPage => prevPage + 1);
+            setViewMorePaused(false);
+        }, [3000]);
     };
 
     const handleImageLoad = (index) => {
@@ -151,7 +152,7 @@ function PhotoContainer({storage}) {
                             key={index}
                             onChange={(inView, entry) => {
                                 // Trigger inView callback even before fully visible
-                                if (entry.isIntersecting || entry.boundingClientRect.top < 100) {
+                                if (entry.isIntersecting || entry.boundingClientRect.top < 300) {
                                   inView && loaded ? (url = url) : (url = '');
                                 }
                               }}
@@ -168,19 +169,12 @@ function PhotoContainer({storage}) {
                 </ResponsiveMasonry>
             </div>
             <div className='loading-viewMore' style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', }}>
-                {/* Loading animation */}
-                {isLoading && <div className='loading'></div>}
-
-                {/* Loading Button */}
+                {/* Loading & ViewMore */}
                 {imageUrls.length > 0 && (
                 <InView
                     as="div"
-                    onChange={(inView) => inView? handleViewMore()  : ''}
-                    style={{
-                    position: 'relative',
-                    width: '100px',
-                    height:'25px'
-                    }}>
+                    className='loading'
+                    onChange={(inView) => inView? handleViewMore()  : ''}>
                     <div className='line'></div>
                 </InView>
                 )}

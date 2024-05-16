@@ -29,7 +29,6 @@ html {
   color: #3F2305;
 }
 
-
 .teko-heading {
   position: absolute;
   display: flex;
@@ -39,7 +38,6 @@ html {
   text-decoration: none;
   font-size: 19px;
   margin-right: 35px;
-
 }
 
 .teko-headings {
@@ -152,8 +150,6 @@ html {
   padding: 15px;
   margin-top: -30px; /* Adjust as needed */
 }
-
-
 
 @media screen and (max-width: 768px) {
   .header-text {
