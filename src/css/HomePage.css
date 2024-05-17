@@ -4,18 +4,17 @@
 
 html {
   padding: 0 !important;
+  background-color: #F5F5F5;
 }
 
 .Maindiv {
   background-color: #F5F5F5;
-  margin: 0px;
 }
 .heading-container {
   display: flex;
   margin-top: 10px;
-  height: 100px;
+  height: 0px;
 }
-
 
 
 .sofia-regular {
@@ -30,7 +29,6 @@ html {
   color: #3F2305;
 }
 
-
 .teko-heading {
   position: absolute;
   display: flex;
@@ -40,14 +38,13 @@ html {
   text-decoration: none;
   font-size: 19px;
   margin-right: 35px;
-
 }
 
 .teko-headings {
   position: absolute;
   display: flex;
-  top: 0px;
-  right: 75px;
+  top: 10px;
+  right: 20px;
   color: #3F2305;
   text-decoration: none;
   font-size: 19px;
@@ -89,28 +86,16 @@ html {
     font-size: 25px;
   }
 
-  .teko-heading {
+  /* .teko-heading {
     font-size: 24px;
-  }
+  } */
 }
 
 .header-links {
-  position: absolute;
+  position: relative;
   display: flex;
-  top: 30px;
-  right: 15px;
 }
 
-.header-link {
-  color: #3F2305;
-  text-decoration: none;
-  font-size: 20px;
-  margin-right: 35px;
-}
-
-.header-link:hover {
-  color: #555;
-}
 
 .animate {
   animation-name: slideIn;
@@ -136,165 +121,26 @@ html {
   font-family: 'Roboto', sans-serif;
 }
 
-.photo-container img {
-  box-shadow: 10px;
-  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.photo-container img:hover {
-  border-color: #F5F5F5;
-  transform: scale(1.05);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-.photo-container {
-  padding: 15px;
-  margin-top: 170px; /* Adjust as needed */
-}
-
-.video-container video {
-  box-shadow: 10px;
-  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.video-container video:hover {
-  border-color: #F6F5F2;
-  transform: scale(1.05);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-.video-container {
-  padding: 15px;
-  margin-top: 170px; /* Adjust as needed */
-}
-
-
 
 @media screen and (max-width: 768px) {
-  .header-links {
-    position: static;
-    display: block;
-    text-align: right;
-    margin-top: -25px;
-    margin-bottom: -25px;
-  }
-
-  .header-link {
-    display: block;
-    margin: 0 auto;
-    margin-bottom: 15px;
-    font-size: 18px;
-    margin-right: 15px;
-  }
-
   .header-text {
     font-size: 24px;
     margin-top: 50px;
   }
-  .photo-container {
-    margin-top: 6px; /* Remove margin-top on small screens */
+
+  .teko-headings {
+    color: #3F2305;
+    font-size: 15px;
+    right: 10px;
   }
-
-  .photo-container img {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .video-container {
-    margin-top: 6px; /* Remove margin-top on small screens */
-  }
-
-  .video-container video {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .hoverText {
-    display: none;
-    /* Hide hoverText on small screens */
-  }
-}
-
-.full-screen-image-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.8);
-  display: flex;
-  z-index: 2;
-  justify-content: center;
-  align-items: center;
-}
-
-.full-screen-image {
-  max-width: 90%;
-  max-height: 90%;
-}
-
-.full-screen-video-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.8);
-  display: flex;
-  z-index: 2;
-  justify-content: center;
-  align-items: center;
-}
-
-.full-screen-video {
-  max-width: 90%;
-  max-height: 90%;
-}
-
-
-.nav-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: transparent;
-  color: white;
-  border: none;
-  font-size: 48px;
-  cursor: pointer;
-}
-.close{
-  display: none;
-}
-
-.close-btn {
-  right: 15px;
-  position: absolute;
-  top: 4%;
-  transform: translateY(-50%);
-  background: transparent;
-  color: white;
-  font-size: 28px;
-  cursor: pointer;
-  border: none;
-}
-
-.nav-btn {
-  width: 50px;
-  height: 50px;
-}
-
-.prev-btn {
-  left: 10px;
-}
-
-.next-btn {
-  right: 10px;
 }
 
 .hoverText {
   position: absolute;
-  top: 220px;
+  top: 180px;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 20px;
+  font-size: 17px;
   color: #3F2305;
   opacity: 0;
   z-index: 1;
@@ -319,70 +165,96 @@ html {
   }
 }
 
-.loading-viewMore {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.loading {
-  border: 5px solid #f3f3f3;
-  border-top: 5px solid #3498db;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  animation: spin 1s linear infinite;
-  margin-bottom: 10px;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-.line {
-  position: absolute;
-  bottom: -8px;
-  left: 6;
-  width: 79%;
-  height: 6px;
-  background-color: #f3f3f3;
-  transition: background-color 0.3s ease;
-}
-
 button:hover .line {
   background-color: #cac7c7;
 }
 
-/* Styles for the menu icon */
-.menu-icon {
-  display: none;
-  margin-top: -100px;
-}
-@media screen and (max-width: 768px) {
-  /* Show menu icon on small screens */
-  .header-links {
-    display: none; /* Hide the links */
-  }
-  .menu-icon {
-    display: block; /* Show the menu icon */
-    /* Add styles for the menu icon */
-  }
-  .header-links.open {
-    display: flex; /* Show the links when the menu is open */
-    /* Add styles for the open menu links */
-  }
-  .sofia-regular {
-    position: relative;
-    top: 100%;
-    left: 45%;
-    font-size: 25px;
+
+/* @media screen and (max-width: 768px) {
+  
+  .hoverText {
+    font-size: 6px;
+    top: 100px;
     transform: translate(-50%, -50%);
+    right: px;
+    align-items: center;
+    align-content: center;
+    width: 240px;
+  }
+  
+  .sofia-regular {
+    font-size: 20px;
+    position: absolute;
+    top: 10px;
+    left: 1px;
+    transform: none; 
+  }
+  
+  h4 {
+    font-size: 8px;
+    transform: translate(7%, -10%);
+    right: 135px;
+   
+  }
+  
+  .header-links {
+    display: flex;
+    position: absolute;
+    top: 10px;
+    left: 480px;
+  }
+
+  .teko-headings {
+    color: #3F2305;
+    font-size: 15px;
+  }
+}
+
+
+ */
+ /* Original CSS code goes here */
+
+@media screen and (max-width: 768px) {
+  .sofia-regular {
+    font-size: 20px;
+    position: absolute;
+    top: 10px;
+    margin-left: 10px;
+    transform: none; 
+  }
+
+  .header-links {
+    display: flex;
+    position: absolute;
+    top: 10px;
+    right:0px;
+  }
+
+  .teko-headings {
+    color: #3F2305;
+    font-size: 11px;
+  }
+  h4 {
+    font-size: 10px;
+    transform: translate(7%, -10%);
+    right: 135px;
+   
+  }
+
+ 
+  .hoverText {
+    font-size: 8px;
+    top: 110px;
+    transform: translate(-50%, -50%);
+    background-color: transparent;
+    width: 290px;
+    left: 45%;
+    right: 50%;
+  }
+
+  .heading-container {
+    display: flex;
+    margin-top: 0px;
+    height: 0px;
   }
 }

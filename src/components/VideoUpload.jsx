@@ -1,26 +1,13 @@
-import './../css/PhotoUpload.css';
+import './../css/Upload.css';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { initializeApp } from "firebase/app";
-import { getStorage, ref, uploadBytes } from 'firebase/storage';
+import { ref, uploadBytes, getDownloadURL, updateMetadata } from 'firebase/storage';
 import { toast } from "react-toastify";
 import { toastSuccessStyle, toastErrorStyle } from './uitls/toastStyle.js';
+import { VideoToFrames, VideoToFramesMethod } from './uitls/ThumbnailGenerator';
 
-const firebaseConfig = {
-    apiKey: process.env.REACT_APP_API_KEY,
-    authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-    projectId: process.env.REACT_APP_PROJECT_ID,
-    storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-    messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
-    appId: process.env.REACT_APP_APP_ID,
-    measurementId: process.env.REACT_APP_MEASUREMENT_ID
-};
+function VideoUpload({storage}) {
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const storage = getStorage(app);
-
-function VideoUpload() {
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [selectedFilesCopy, setSelectedFilesCopy] = useState([]);
     const [uploading, setUploading] = useState(false);
@@ -57,12 +44,28 @@ function VideoUpload() {
             for (let i = 0; i < selectedFiles.length; i++) {
                 const file = selectedFiles[i];
                 try {
-                    // if (i % 2 === 0) {
-                    //     throw new Error('Simulated error: i equals 2');
-                    // }
+                    const thumbnail = await generateThumbnail(file);
+                    const thumbnailName = file.name.slice(0, file.name.lastIndexOf('.')) + '.png';
 
-                    const storageRef = ref(storage, `videos/${file.name}`);
-                    await uploadBytes(storageRef, file);
+                    if(thumbnail === null)
+                        throw new Error(`Thumbnail creation failed for video ${file.name}`);
+            
+                    const thumbnailRef = ref(storage, `thumbnails/${thumbnailName}`);
+                    await uploadBytes(thumbnailRef, thumbnail, { contentType: 'image/png' });
+            
+                    const thumbnailUrl = await getDownloadURL(thumbnailRef);
+
+                    const videoRef = ref(storage, `videos/${file.name}`);
+                    await uploadBytes(videoRef, file);
+            
+                    const metadata = {
+                        contentType: file.type,
+                        customMetadata: {
+                            thumbnailUrl: thumbnailUrl
+                        }
+                    };
+            
+                    await updateMetadata(videoRef, metadata);
                 } catch (error) {
                     updatedArray[i] = false; // if upload failed, then set failed for that file
                     console.error(`Error uploading file "${file.name}":`, error);
@@ -93,6 +96,42 @@ function VideoUpload() {
         }
 
     };
+
+    const generateThumbnail = async (file) => {
+        try {
+          const videoUrl = URL.createObjectURL(file);
+      
+          const frames = await VideoToFrames.getFrames(videoUrl, 1, VideoToFramesMethod.totalFrames);
+          const frameData = frames[0];
+      
+          // Remove the data URL prefix
+          const base64WithoutPrefix = frameData.split(",")[1];
+      
+          // Decode the base64 string to binary data
+          const binaryData = atob(base64WithoutPrefix);
+      
+          // Create an ArrayBuffer to store the binary data
+          const arrayBuffer = new ArrayBuffer(binaryData.length);
+      
+          // Create a typed array to represent the binary data
+          const uint8Array = new Uint8Array(arrayBuffer);
+      
+          // Fill the typed array with the binary data
+          for (let i = 0; i < binaryData.length; i++) {
+            uint8Array[i] = binaryData.charCodeAt(i);
+          }
+      
+          // Create a Blob object from the binary data
+          const blob = new Blob([uint8Array], { type: 'image/png' });
+      
+          // Create an object URL for the Blob
+          return blob;
+        } catch (error) {
+          console.error('Error generating thumbnail:', error);
+          return null;
+        }
+      };
+      
     return (
 
         <div className='mainBody'>

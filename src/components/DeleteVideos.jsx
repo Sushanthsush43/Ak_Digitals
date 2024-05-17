@@ -1,32 +1,76 @@
 import React, { useState, useEffect } from 'react';
-import { initializeApp } from "firebase/app";
-import { getStorage, ref, listAll, getDownloadURL, deleteObject } from 'firebase/storage';
+import { ref, listAll, getDownloadURL, deleteObject } from 'firebase/storage';
 import { toast } from 'react-toastify';
-import { RiDeleteBinLine } from 'react-icons/ri'; // Import delete icon from react-icons
+import { RiDeleteBinLine } from 'react-icons/ri';
 import { toastErrorStyle, toastSuccessStyle } from './uitls/toastStyle';
+import { InView } from "react-intersection-observer";
+import "../css/DeleteComp.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft, faChevronRight, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { isIOSorMacDevice } from './uitls/isIOS';
 
-const firebaseConfig = {
-    apiKey: process.env.REACT_APP_API_KEY,
-    authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-    projectId: process.env.REACT_APP_PROJECT_ID,
-    storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-    messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
-    appId: process.env.REACT_APP_APP_ID,
-    measurementId: process.env.REACT_APP_MEASUREMENT_ID
-};
+function DeleteVideos({storage}) {
 
-const app = initializeApp(firebaseConfig);
-const storage = getStorage(app);
-
-function DeleteVideos() {
     const [videoUrls, setVideoUrls] = useState([]);
     const [page, setPage] = useState(1);
-    const videosPerPage = 25;
+    const videosPerPage = 27;
     const [isLoading, setIsLoading] = useState(false);
     const [totalPages, setTotalPages] = useState(0);
     const [displayedPages, setDisplayedPages] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
-    const [toDelete, setToDelete] = useState([]);
+    const [toDeleteVideos, setToDeleteVideos] = useState([]);
+    const [toDeleteThumbnails, setToDeleteThumbnails] = useState([]);
     const [videoRefs, setVideoRefs] = useState([]);
+    const [isOpened, setIsOpened] = useState(false);
+    const [data, setData] = useState({ video: '', i: 0 });
+    const [isIOS, setIsIos] = useState(true); // for safety we will assume its IOS initialy
+    let isSomeFailed = false;
+    let isCompleteFailed = false;
+    
+    useEffect(()=>{
+      const i = isIOSorMacDevice();
+      setIsIos(i);
+    },[])
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+          setIsOpened(true);
+        }, 1000);
+        setIsOpened(true);
+        return () => clearTimeout(timeout);
+      }, []);
+    
+      // Function to view video
+      const viewVideo = (video, i) => {
+        setData({ video, i });
+        setIsOpened(true);
+      }
+    
+     // Function to handle video actions (next, previous, close)
+    const videoAction = (action) => {
+        if (action === 'next-video') {
+        handleFullScreenEnded() // pause previous video
+        let newIndex = data.i + 1;
+        if (newIndex < videoUrls.length) {
+            setData({ video: videoUrls[newIndex].videoUrl, i: newIndex });
+        }
+        } else if (action === 'previous-video') {
+        handleFullScreenEnded()
+        let newIndex = data.i - 1;
+        if (newIndex >= 0) {
+            setData({ video: videoUrls[newIndex].videoUrl, i: newIndex });
+        }
+        } else if (action === 'close-video') {
+        handleFullScreenEnded()
+        setIsOpened(false); // Close the full-screen view
+        }
+    }
+
+    const handleFullScreenEnded = () => {
+        const videoElement = document.querySelector('.full-screen-video');
+        if (videoElement) {
+            videoElement.pause();
+        }
+    };
 
     useEffect(() => {
         initialFetchVideos(); // Fetch videos on component mount
@@ -61,8 +105,16 @@ function DeleteVideos() {
 
                 const urls = await Promise.all(videoRefs.items.slice(startIndex, endIndex).map(async (itemRef) => {
                     try {
-                        const url = await getDownloadURL(itemRef);
-                        return { url, loaded: false };
+                        const videoUrl = await getDownloadURL(itemRef);
+                        const thumbnailName = itemRef.name.slice(0, -4) + '.png';
+
+                        const thumbnailRef = ref(storage, `thumbnails/${thumbnailName}`);
+                        // console.log(videoUrl)
+
+                        const thumbnailUrl = await getDownloadURL(thumbnailRef);
+                        // console.log(thumbnailUrl)
+
+                        return { videoUrl, thumbnailUrl, loaded: false, constVideoUrl : videoUrl, constThumbnailUrl : thumbnailUrl};
                     } catch (error) {
                         console.error('Error getting download URL for itemRef:', error);
                         return null;
@@ -70,7 +122,6 @@ function DeleteVideos() {
                 }));
 
                 setVideoUrls(urls.filter(item => item !== null));
-
             } catch (error) {
                 toast.error("Something went wrong, Please try again!", toastErrorStyle());
                 console.error('Error listing items in storage:', error);
@@ -98,85 +149,191 @@ function DeleteVideos() {
         });
     };
 
-    const handleSelect = async (videoUrl) => {
-        if (toDelete.includes(videoUrl))
-            setToDelete(prevToDelete => prevToDelete.filter(url => url !== videoUrl)); // If videoUrl is already in toDelete, remove it
-        else
-            setToDelete(prevToDelete => [...prevToDelete, videoUrl]); // If videoUrl is not in toDelete, add it
+    const handleSelect = async (constVideoUrl, constThumbnailUrl) => {
+        
+        let vidVal = false;
+        let thumbVal = false;
+
+        if (toDeleteVideos.includes(constVideoUrl))
+            vidVal = true;
+
+        if (toDeleteThumbnails.includes(constThumbnailUrl))
+            thumbVal = true;
+
+        // check if video selection & thumbnail selection(happens automatic) are syncing
+        if(vidVal !== thumbVal){
+            toast.error("Something went wrong, Please try selecting again.", toastErrorStyle());
+            return;
+        }
+
+        if (vidVal){
+            setToDeleteVideos(prevToDelete => prevToDelete.filter(url => url !== constVideoUrl)); // If videoUrl is already in toDelete, remove it
+        }
+        else{
+            setToDeleteVideos(prevToDelete => [...prevToDelete, constVideoUrl]); // If videoUrl is not in toDelete, add it
+        }
+
+        if (thumbVal){
+            setToDeleteThumbnails(prevToDelete => prevToDelete.filter(url => url !== constThumbnailUrl)); // If thumbnailUrl is already in toDelete, remove it
+        }
+        else{
+            setToDeleteThumbnails(prevToDelete => [...prevToDelete, constThumbnailUrl]); // If thumbnailUrl is not in toDelete, add it
+        }
+
     };
 
+    // handle delete icon color change
+    const getColor = (constVideoUrl) => {
+        return toDeleteVideos.includes(constVideoUrl) ? 'red' : 'black';
+    }
+    
+
     const handleDeleteVideos = async () => {
+        // video checking is enough, since they will always be synced in handleSelect()
+        if (toDeleteVideos.length <= 0) {
+            toast.error("No video selected", toastErrorStyle());
+            return;
+        }
+
+        // Display confirmation dialog
+        const confirmed = window.confirm("Are you sure you want to delete the selected videos?");
+        if (!confirmed) { // User canceled 
+            setToDeleteVideos([]); // clear selection
+            setToDeleteThumbnails([]); // clear selection
+            return;
+        }
         try {
-            if (toDelete.length <= 0) {
-                toast.error("No video selected", toastErrorStyle());
-                return;
+            isSomeFailed = false;
+            isCompleteFailed = false;
+
+            for(let i=0;i<toDeleteVideos.length;i++){
+                try{
+                     // Delete video
+                    const videoUrl = toDeleteVideos[i];
+                    const videoRef = ref(storage, videoUrl);
+                    await deleteObject(videoRef);
+                    
+                    // Delete thumbnail
+                    const thumbnailUrl = toDeleteThumbnails[i];
+                    const thumbnailRef = ref(storage, thumbnailUrl);
+                    await deleteObject(thumbnailRef);
+
+                    // Remove the deleted video URL & thumbnail URL from the state
+                    setVideoUrls(prevVideoUrls => prevVideoUrls.filter(item => item.videoUrl !== videoUrl && item.thumbnailUrl !== thumbnailUrl));
+                }catch(error){
+                    console.error(`Error deleting one video or thumbnail : `, error);
+                    isSomeFailed = true;
+                }
             }
-
-            // Display confirmation dialog
-            const confirmed = window.confirm("Are you sure you want to delete the selected videos?");
-            if (!confirmed) { // User canceled 
-                setToDelete([]); // clear selection
-                return;
-            }
-
-            await Promise.all(toDelete.map(async (url) => {
-                const videoRef = ref(storage, url);
-                await deleteObject(videoRef);
-                // Remove the deleted video URL from the state
-                setVideoUrls(prevVideoUrls => prevVideoUrls.filter(item => item.url !== url));
-            }));
-
-            // Clear the toDelete array
-            setToDelete([]);
-            toast.success("Videos deleted successfully", toastSuccessStyle());
         } catch (error) {
             console.error('Error deleting videos:', error);
-            toast.error("Failed to delete videos. Please try again.", toastErrorStyle());
+            toast.error("Failed to delete videos. Please try again.", {...toastErrorStyle(), autoClose:false});
+            isCompleteFailed = true;
+            return;
+        } finally {
+            // Clear the toDelete array
+            setToDeleteVideos([]);
+            setToDeleteThumbnails([]);
+
+             // display appropriate toast message
+             if (!isCompleteFailed && isSomeFailed)
+                toast.error("Some files could not be deleted", {...toastErrorStyle(), autoClose:false}); // if some files couldn't be deleted
+            else if (!isCompleteFailed && !isSomeFailed)
+                toast.success("Videos deleted successfully", {...toastSuccessStyle(), autoClose:false}); // if all files are deleted
         }
     };
 
+
+    const handlePlay = (video) => {
+        if (video.paused) {
+            video.play()
+            .catch(error => {
+                console.error('Error playing video:', error);
+            });
+        }
+    };
+
+    const handlePause = (video) => {
+        if (!video.paused) {
+            video.pause();
+        }
+    };    
+    
     return (
         <>
+             {data.video && (
+                <div className={`full-screen-video-container ${isOpened ? 'open' : 'close'}`}>
+                <button className="close-btn" onClick={() => videoAction('close-video')}>
+                    <FontAwesomeIcon icon={faTimes} />
+                </button>
+
+                {data.i > 0 && (
+                    <button className="nav-btn prev-btn" onClick={() => videoAction('previous-video')}>
+                    <FontAwesomeIcon icon={faChevronLeft} />
+                    </button>
+                )}
+                 <video src={data.video}
+                    className="full-screen-video"
+                    controls
+                    playsInline
+                    onError={(e) => console.error('Error playing video while hover (click):', e.target.error)}>
+                </video>
+                {data.i < videoUrls.length - 1 && (
+                    <button className="nav-btn next-btn" onClick={() => videoAction('next-video')}>
+                    <FontAwesomeIcon icon={faChevronRight} />
+                    </button>
+                )}
+                </div>
+            )}
+        <div className='delete-main'>
             {/* Delete Videos Button */}
             <button onClick={() => handleDeleteVideos()}>Delete</button>
 
+            {/* Selection Count */}
+            <label>{toDeleteVideos.length}</label>
+
             {/* Video container */}
-            <div className='video-container'>
-                {videoUrls.map(({ url, loaded }, index) => (
-                    <div key={index} style={{
-                        position: 'relative',
-                        display: 'inline-block',
-                        marginRight: '10px',
-                        marginBottom: '10px'
-                    }}>
-                        <video
-                            src={url}
-                            controls
-                            style={{ display: loaded ? 'block' : 'none', cursor: 'pointer' }}
-                            onLoadedData={() => handleVideoLoad(index)}
-                            onClick={() => handleSelect(url)}
-                        />
-                        {/* Delete Selection */}
-                        <label
-                            style={{
-                                display: loaded ? 'inline' : 'none',
-                                position: 'absolute',
-                                top: '0',
-                                right: '0',
-                                background: 'none',
-                                border: 'none',
-                                cursor: 'pointer',
-                                color: toDelete.includes(url) ? 'red' : 'black' // Change color if URL is in toDelete array
-                            }}
-                            onClick={() => handleSelect(url)}>
-                            <RiDeleteBinLine />
-                        </label>
+            <div className='delete-container'>
+                {videoUrls.map(({ videoUrl, thumbnailUrl, loaded, constVideoUrl, constThumbnailUrl }, index) => (
+                    <div key={index} className='delete-item-div'>
+                    <InView
+                        as="video"
+                        className='delete-item image-video'
+                        key={index}
+                        data-index={index}
+                        onMouseEnter={(e) => { handlePlay(e.target); videoUrl = videoUrl; thumbnailUrl = thumbnailUrl}}
+                        onMouseLeave={(e) => { handlePause(e.target); videoUrl = ''; thumbnailUrl = false}}
+                        onChange={(inView, entry) => {
+                            // Trigger inView callback even before fully visible
+                            if (entry.isIntersecting || entry.boundingClientRect.top < 100) {
+                              inView && loaded ? (videoUrl = videoUrl) : (videoUrl = '');
+                            }
+                          }}
+                        src={videoUrl}
+                        poster={thumbnailUrl}
+                        onClick={() => viewVideo(videoUrl, index)} // Click to open video in full-screen
+                        onError={(e) => console.error('Error playing video while hover (hover):', e.target.error)}
+                        style={{ display: isIOS ? 'inline' : loaded ? 'inline' : 'none'}}  
+                        onLoadedData={() => handleVideoLoad(index)}
+                        autoPlay={false}
+                        playsInline
+                        muted
+                        type="video/mp4/mov"
+                    ></InView>
+                    {/* Delete Selection */}
+                    <label
+                        className='delete-button'
+                        style={{color : getColor(constVideoUrl)}}
+                        onClick={() => { handleSelect(constVideoUrl, constThumbnailUrl); }}
+                    >
+                        <RiDeleteBinLine  />
+                    </label>
                     </div>
                 ))}
-
                 {/* Loading animation */}
                 {isLoading && <div>Loading ...</div>}
             </div>
+
 
             <div className='pagination'>
                 {totalPages > 10 ?
@@ -201,6 +358,7 @@ function DeleteVideos() {
                     ))
                 }
             </div>
+         </div>
         </>
     );
 }

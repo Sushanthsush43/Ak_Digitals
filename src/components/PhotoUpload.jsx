@@ -1,26 +1,25 @@
-import './../css/PhotoUpload.css';
-import React, { useState } from 'react';
+import './../css/Upload.css';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { initializeApp } from "firebase/app";
-import { getStorage, ref, uploadBytes } from 'firebase/storage';
+import { ref, uploadBytes } from 'firebase/storage';
 import { toast } from "react-toastify";
 import { toastSuccessStyle, toastErrorStyle } from './uitls/toastStyle';
+import { CheckAdminLogin } from './uitls/checkAdminLogin';
+import { useHistory } from 'react-router-dom';
 
-const firebaseConfig = {
-    apiKey: process.env.REACT_APP_API_KEY,
-    authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-    projectId: process.env.REACT_APP_PROJECT_ID,
-    storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-    messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
-    appId: process.env.REACT_APP_APP_ID,
-    measurementId: process.env.REACT_APP_MEASUREMENT_ID
-};
+function PhotoUpload({storage,app}) {
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const storage = getStorage(app);
+    // Check admin Login  section ====================================================
+    const { isAdminLoggedIn, adminLoading } = CheckAdminLogin(app);
+    const history = useHistory();
 
-function PhotoUpload() {
+    useEffect(()=>{
+        if (!isAdminLoggedIn) {
+            history.push('/'); // Redirect to home page if admin is not logged in
+        }
+    },[adminLoading]);
+    // ===============================================================================
+
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [selectedFilesCopy, setSelectedFilesCopy] = useState([]);
     const [uploading, setUploading] = useState(false);
