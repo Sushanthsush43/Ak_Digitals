@@ -1,7 +1,4 @@
-import { BsFillCloudSlashFill } from 'react-icons/bs';
 import { FcApproval, FcCancel } from "react-icons/fc";
-import { GrInstagram } from "react-icons/gr";
-
 
 export const toastSuccessStyle = () => {
   return {
@@ -13,8 +10,8 @@ export const toastSuccessStyle = () => {
     draggable: true,
     progress: undefined,
     style: {
-      background: '#3E3232',
-      color: '#F6F5F2',
+      background: '#3F2305',
+      color: '#F5F5F5',
       fontWeight: 'bold',
       fontSize: '18px',
       fontFamily: 'Arial, sans-serif',

@@ -1,67 +1,148 @@
 /* Dashboard.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Oleo+Script:wght@400;700&family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Oleo+Script:wght@400;700&family=Pacifico&family=Teko:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sofia&display=swap');
+
+
+.Navigation {
+    background-color: #F5F5F5;
+    margin: 0px;
+  }
+  .heading-container {
+    display: flex;
+    margin-top: 10px;
+    height: 100px;
+  }
+  
+  .sofia-regular {
+    font-family: "Sofia", cursive;
+    font-weight: 400;
+    font-style: normal;
+    font-weight: 400;
+    font-style: normal;
+    margin: 0;
+    margin-left: 20px;
+    font-size: 40px;
+    color: #3F2305;
+  }
+  
+  
+  .teko-heading {
+    position: absolute;
+    display: flex;
+    top: 0px;
+    right: 145px;
+    color: #3F2305;
+    text-decoration: none;
+    font-size: 19px;
+    margin-right: 35px;
+  
+  }
+  
+  .teko-headings {
+    position: absolute;
+    display: flex;
+    top: 0px;
+    right: 75px;
+    color: #3F2305;
+    text-decoration: none;
+    font-size: 19px;
+    margin-right: px;
+  }
+  
+
 .MainDashBoardDiv {
     margin-top: 50px;
 }
 .CountDiv{
     position: relative; /* Make the container relative */
     display: flex;
+    justify-content: center;
     flex-direction: row;
+    column-gap: 100px;
+}
+.PhotoCountDiv{
+    position: relative; /* Make the container relative */
+    display: flex;
+    flex-direction: column;
+    padding-left: 50px;
+    justify-content: center;
+    align-items: center; /* Align items vertically */
+    row-gap: 20px;
+
 }
 
-.PhotoCount {
+.PhotoCountCircle {
     position: relative; /* Make the container relative */
     display: flex;
     flex-direction: row; /* Change direction to row */
     justify-content: center;
     align-items: center; /* Align items vertically */
-    width: 150px; /* Adjust width as needed */
+    width: 400px; /* Adjust width as needed */
     height: 150px; /* Adjust height as needed */
+    border-radius: 5%;
     background-color: #ffffff; /* Background color */
-    border-radius: 50%; /* Rounded corners */
     box-shadow: 0 4px 8px 10px rgba(0, 0, 0, 0.1); /* Box shadow */
-    padding: 16px; /* Padding */
+    padding: 0; /* Padding */
     margin: 0 auto; /* Center align horizontally */
 }
-.PhotoCount span {
-    font-size: 40px; /* Adjust font size */
-   
+.PhotoCountCircle span {
+    font-size: 50px; /* Adjust font size */
+    background-color: transparent;
+}
+.PhotoCountDiv p {
+    font-size: 30px;
+    background-color: transparent;
 }
 
-.VideoCount {
+.cameraIcon {
+    position: relative;
+    font-size: 70px; /* Adjust the size as needed */
+    right: 70px;
+    background-color: transparent;
+  }
+
+.VideoCountDiv{
+    position: relative; /* Make the container relative */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; /* Align items vertically */
+    row-gap: 20px;
+
+}
+.VideoCountCircle {
     position: relative; /* Make the container relative */
     display: flex;
     flex-direction: row; /* Change direction to row */
     justify-content: center;
     align-items: center; /* Align items vertically */
-    width: 150px; /* Adjust width as needed */
+    width: 400px; /* Adjust width as needed */
     height: 150px; /* Adjust height as needed */
+    border-radius: 5%;
     background-color: #ffffff; /* Background color */
-    border-radius: 50%; /* Rounded corners */
     box-shadow: 0 4px 8px 10px rgba(0, 0, 0, 0.1); /* Box shadow */
-    padding: 16px; /* Padding */
+    padding: 0; /* Padding */
     margin: 0 auto; /* Center align horizontally */
 }
-.VideoCount span {
-    font-size: 40px; /* Adjust font size */
+.VideoCountCircle span {
+    font-size: 50px; /* Adjust font size */
+    background-color: transparent;
    
+}
+.VideoCountDiv p {
+    font-size: 30px;
+    background-color: transparent;
+
 }
 
-.VisitorCount {
-    position: relative; /* Make the container relative */
-    display: flex;
-    flex-direction: row; /* Change direction to row */
-    justify-content: center;
-    align-items: center; /* Align items vertically */
-    width: 150px; /* Adjust width as needed */
-    height: 150px; /* Adjust height as needed */
-    background-color: #ffffff; /* Background color */
-    border-radius: 50%; /* Rounded corners */
-    box-shadow: 0 4px 8px 10px rgba(0, 0, 0, 0.1); /* Box shadow */
-    padding: 16px; /* Padding */
-    margin: 0 auto; /* Center align horizontally */
-}
-.VisitorCount span {
-    font-size: 40px; /* Adjust font size */
-   
-}
+.VideoIcon {
+    position: relative;
+    font-size: 70px; /* Adjust the size as needed */
+    right: 70px;
+    background-color: transparent;
+  }
+
+
 

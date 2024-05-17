@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { GrInstagram } from 'react-icons/gr'; // Assuming GrInstagram is imported
-import { AiFillCamera } from "react-icons/ai";
+import { IoMdImages,IoIosVideocam } from "react-icons/io";
 import '../css/Dashboard.css';
 
 function DashBoard(){
@@ -23,14 +23,17 @@ function DashBoard(){
             </div>
             <div className='MainDashBoardDiv'>
                 <div className='CountDiv'>
-                    <div className='PhotoCount'>
-                        <span>100</span>
+                    <div className='PhotoCountDiv'>
+                        <div className='PhotoCountCircle'>
+                        <IoMdImages className='cameraIcon'/>
+                        <p>PHOTOS<br/><span>100</span></p>
+                        </div>
                     </div>
-                    <div className='VideoCount'>
-                        <span>100</span>
-                    </div>
-                    <div className='VisitorCount'>
-                        <span>100</span>
+                    <div className='VideoCountDiv'>
+                        <div className='VideoCountCircle'>
+                        <IoIosVideocam className='VideoIcon'/>
+                        <p>VIDEOS<br/><span>100</span></p>  
+                        </div>
                     </div>
                 </div>
             </div>
