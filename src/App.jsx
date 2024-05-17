@@ -6,12 +6,14 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import UploadTab from './../src/pages/UploadingTab';
 import ContactPage from './pages/ContactPage';
 import DashBoard from './pages/DashBoard';
+import HoomePage from './pages/HomePage';
+import HomePage from './pages/HomePage';
 
 function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/" exact component={DashBoard} />
+        <Route path="/" exact component={HomePage} />
         <Route path="/UploadingTab" exact component={UploadTab} />
         <Route path="/ContactPage" exact component={ContactPage} />
       </Switch>
