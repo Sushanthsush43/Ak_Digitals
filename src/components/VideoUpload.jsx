@@ -1,4 +1,4 @@
-import './../css/PhotoUpload.css';
+import './../css/Upload.css';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ref, uploadBytes, getDownloadURL, updateMetadata } from 'firebase/storage';

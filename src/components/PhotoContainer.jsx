@@ -6,6 +6,7 @@ import { ref, listAll, getDownloadURL } from 'firebase/storage';
 import { toast } from 'react-toastify';
 import { toastErrorStyle } from '../components/uitls/toastStyle';
 import { InView } from "react-intersection-observer";
+import './../css/PhotoContainer.css';
 
 function PhotoContainer({storage}) {
 

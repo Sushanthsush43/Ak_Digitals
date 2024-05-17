@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import { toastErrorStyle } from './uitls/toastStyle';
 import { InView } from "react-intersection-observer";
 import { isIOSorMacDevice } from './uitls/isIOS';
+import './../css/VideoContainer.css';
 
 function VideoContainer({storage}) {
 
