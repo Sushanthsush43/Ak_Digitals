@@ -67,7 +67,6 @@ function PhotoContainer({storage}) {
             const imagesWithMetadata = await Promise.all(
                 imageRefs.map(async (imageRef) => {
                     const metadata = await getMetadata(imageRef);
-                    console.log(metadata.timeCreated)
                     return { ref: imageRef, timeCreated: metadata.timeCreated };
                 })
             );

@@ -44,10 +44,10 @@ function HomePage() {
       {/* <VideoContainer /> */}
       {/* <AdminLoginForm app={app}/> */}
       {/* <PhotoVideoTab storage={storage}/> */}
-      {/* <DeletePhotos storage={storage}/> */}
+      <DeletePhotos storage={storage}/>
       {/* <DeleteVideos storage={storage}/> */}
       {/* <PhotoUpload storage={storage} app={app}/> */}
-      <VideoUpload storage={storage}/>
+      {/* <VideoUpload storage={storage}/> */}
     </div>
   );
 }

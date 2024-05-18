@@ -66,7 +66,6 @@ function VideoContainer({storage}) {
       }
   };
 
-
   useEffect(() => {
     initialFetchVideos(); // Fetch videos on component mount
   }, []);
@@ -84,7 +83,6 @@ function VideoContainer({storage}) {
         const videosWithMetadata = await Promise.all(
             videoRefs.map(async (videoRef) => {
                 const metadata = await getMetadata(videoRef);
-                console.log(metadata.timeCreated)
                 return { ref: videoRef, timeCreated: metadata.timeCreated };
             })
         );
