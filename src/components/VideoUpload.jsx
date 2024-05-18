@@ -153,6 +153,8 @@ function VideoUpload({storage}) {
                      multiple 
                      style={{ display: 'none' }} />
                 </form>
+                {selectedFiles.length > 0 ?
+                     selectedFiles.length : ''}
 
                 <section className="progress-area">
 

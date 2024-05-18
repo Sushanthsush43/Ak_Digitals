@@ -47,9 +47,9 @@ function PhotoUpload({storage,app}) {
             for (let i = 0; i < selectedFiles.length; i++) {
                 const file = selectedFiles[i];
                 try {
-                    // if (i % 2 === 0) {
-                    //     throw new Error('Simulated error: i equals 2');
-                    // }
+                    if (i % 2 === 0) {
+                        throw new Error('Simulated error: i equals 2');
+                    }
 
                     const storageRef = ref(storage, `images/${file.name}`);
                     await uploadBytes(storageRef, file);

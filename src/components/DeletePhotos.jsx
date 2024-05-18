@@ -88,7 +88,7 @@ function DeletePhotos({storage}) {
                 const urls = await Promise.all(imageRefs.items.slice(startIndex, endIndex).map(async (itemRef) => {
                     try {
                         const url = await getDownloadURL(itemRef);
-                        return { url, loaded: false };
+                        return { url, loaded: false, constUrl : url };
                     } catch (error) {
                         console.error('Error getting download URL for itemRef:', error);
                         return null;
@@ -136,16 +136,18 @@ function DeletePhotos({storage}) {
         });
     };
 
-    const handleSelect = async (imgUrl) => {
-        if (toDelete.includes(imgUrl))
-            setToDelete(prevToDelete => prevToDelete.filter(url => url !== imgUrl)); // If imgUrl is already in toDelete, remove it
+    const handleSelect = async (constUrl) => {
+        if (toDelete.includes(constUrl))
+            setToDelete(prevToDelete => prevToDelete.filter(url => url !== constUrl)); // If imgUrl is already in toDelete, remove it
         else
-            setToDelete(prevToDelete => [...prevToDelete, imgUrl]); // If imgUrl is not in toDelete, add it
+            setToDelete(prevToDelete => [...prevToDelete, constUrl]); // If imgUrl is not in toDelete, add it
     };
 
+    useEffect(()=>{console.log("HERE = ",toDelete)},[toDelete]);
+
     // handle delete icon color change
-    const getColor = (imgUrl) => {
-        return toDelete.includes(imgUrl) ? 'red' : 'black';
+    const getColor = (constUrl) => {
+        return toDelete.includes(constUrl) ? 'red' : 'black';
     }
 
     const handleDeleteImages = async () => {
@@ -208,7 +210,7 @@ function DeletePhotos({storage}) {
 
                 {/* Photo container */}
                 <div className='delete-container row'>
-                    {imageUrls.map(({ url, loaded }, index) => (
+                    {imageUrls.map(({ url, loaded, constUrl }, index) => (
                         <div key={index} className='delete-item-div col-12 col-sm-6 col-md-6 col-lg-3'>
                             <InView
                                 as="img"
@@ -230,8 +232,8 @@ function DeletePhotos({storage}) {
                             {/* Delete Selection */}
                             <label
                                 className='delete-button'
-                                style={{ color: getColor(url) }}
-                                onClick={() => handleSelect(url)}
+                                style={{ color: getColor(constUrl) }}
+                                onClick={() => handleSelect(constUrl)}
                             >
                                 <RiDeleteBinLine />
                             </label>
