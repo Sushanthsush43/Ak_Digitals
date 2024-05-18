@@ -144,13 +144,20 @@ function VideoUpload({storage}) {
                         <i className="fas fa-cloud-upload-alt"></i>
                         <p>Browse file to upload</p>
                     </label>
-                    <input type="file" id="upload-input" onChange={handleFileChange} accept="video/*" multiple style={{ display: 'none' }} />
+                    <input type="file" id="upload-input"
+                     onClick={(e) => { if (uploading){
+                        e.preventDefault();
+                        toast.error("Please wait until the current files finish uploading.",toastErrorStyle()) }}}
+                     onChange={handleFileChange} 
+                     accept="video/*" 
+                     multiple 
+                     style={{ display: 'none' }} />
                 </form>
 
                 <section className="progress-area">
 
                     <button onClick={handleUpload} className="upload-button">Upload</button>
-                    {uploading && <div className="loading-animation">Uploading...</div>}
+                    {uploading && <div className="upload-loading-animation">Uploading...</div>}
                     <div className="remaing-css" style={{ marginTop: '10px' }}>
                         <span>Remaining: {uploadTrack}</span>
                     </div>

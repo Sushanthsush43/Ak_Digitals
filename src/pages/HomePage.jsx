@@ -21,7 +21,6 @@ function HomePage() {
     }, 1000);
     return () => clearTimeout(timeout);
   }, []);
-
   return (
     <div className='Main-div'>
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PhotoContainer from './../components/PhotoContainer';
-import VideoContainer from './..//components/VideoContainer';
+import VideoContainer from './../components/VideoContainer';
 import './../css/PhotoVideoTab.css';
 
 const Tabs = ({storage}) => {
