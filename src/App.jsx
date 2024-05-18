@@ -6,6 +6,8 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import HomePage from './pages/HomePage';
 import PhotoVideoTab from './../src/components/PhotoVideoTab';
 import ContactPage from './pages/ContactPage';
+import DashBoard from './pages/DashBoard';
+
 
 function App() {
   return (

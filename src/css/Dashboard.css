@@ -1,0 +1,103 @@
+/* Dashboard.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Oleo+Script:wght@400;700&family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Oleo+Script:wght@400;700&family=Pacifico&family=Teko:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sofia&display=swap');
+
+
+  
+
+.MainDashBoardDiv {
+    margin-top: 50px;
+}
+.CountDiv{
+    position: relative; /* Make the container relative */
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    column-gap: 100px;
+}
+.PhotoCountDiv{
+    position: relative; /* Make the container relative */
+    display: flex;
+    flex-direction: column;
+    padding-left: 50px;
+    justify-content: center;
+    align-items: center; /* Align items vertically */
+    row-gap: 20px;
+
+}
+
+.PhotoCountCircle {
+    position: relative; /* Make the container relative */
+    display: flex;
+    flex-direction: row; /* Change direction to row */
+    justify-content: center;
+    align-items: center; /* Align items vertically */
+    width: 400px; /* Adjust width as needed */
+    height: 150px; /* Adjust height as needed */
+    border-radius: 5%;
+    background-color: #ffffff; /* Background color */
+    box-shadow: 0 4px 8px 10px rgba(0, 0, 0, 0.1); /* Box shadow */
+    padding: 0; /* Padding */
+    margin: 0 auto; /* Center align horizontally */
+}
+.PhotoCountCircle span {
+    font-size: 50px; /* Adjust font size */
+    background-color: transparent;
+}
+.PhotoCountDiv p {
+    font-size: 30px;
+    background-color: transparent;
+}
+
+.cameraIcon {
+    position: relative;
+    font-size: 70px; /* Adjust the size as needed */
+    right: 70px;
+    background-color: transparent;
+  }
+
+.VideoCountDiv{
+    position: relative; /* Make the container relative */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; /* Align items vertically */
+    row-gap: 20px;
+
+}
+.VideoCountCircle {
+    position: relative; /* Make the container relative */
+    display: flex;
+    flex-direction: row; /* Change direction to row */
+    justify-content: center;
+    align-items: center; /* Align items vertically */
+    width: 400px; /* Adjust width as needed */
+    height: 150px; /* Adjust height as needed */
+    border-radius: 5%;
+    background-color: #ffffff; /* Background color */
+    box-shadow: 0 4px 8px 10px rgba(0, 0, 0, 0.1); /* Box shadow */
+    padding: 0; /* Padding */
+    margin: 0 auto; /* Center align horizontally */
+}
+.VideoCountCircle span {
+    font-size: 50px; /* Adjust font size */
+    background-color: transparent;
+   
+}
+.VideoCountDiv p {
+    font-size: 30px;
+    background-color: transparent;
+
+}
+
+.VideoIcon {
+    position: relative;
+    font-size: 70px; /* Adjust the size as needed */
+    right: 70px;
+    background-color: transparent;
+  }
+
+
+
