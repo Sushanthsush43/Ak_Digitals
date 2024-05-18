@@ -28,7 +28,7 @@ function HomePage() {
     <div className={`Maindiv`}>
       <Header />
 
-      {/* <div className='home-text-main'>
+      <div className='home-text-main'>
         <p className={`hoverText ${showHoverText ? 'show' : ''}`}>
           <h4 style={{ textAlign: 'center' }}>WE CAPTURE THE MOMENTS</h4>
           <ul style={{ listStyleType: 'none', padding: '' }}>
@@ -36,12 +36,12 @@ function HomePage() {
               moments into extraordinary memories with our passion and keen eye for detail.</li>
           </ul>
         </p>
-      </div> */}
+      </div>
 
       {/* <AdminLoginForm app={app}/> */}
-      {/* <PhotoVideoTab storage={storage}/> */}
+      <PhotoVideoTab storage={storage}/>
       {/* <DeletePhotos storage={storage}/> */}
-      <DeleteVideos storage={storage}/>
+      {/* <DeleteVideos storage={storage}/> */}
       {/* <PhotoUpload storage={storage} app={app}/> */}
       {/* <VideoUpload storage={storage}/> */}
     </div>

@@ -265,4 +265,3 @@ function DeletePhotos({storage}) {
 }
 
 export default DeletePhotos;
-

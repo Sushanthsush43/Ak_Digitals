@@ -364,9 +364,9 @@ function DeleteVideos({storage}) {
                     ))
                 }
             </div>
-         </div>
-        </>
-    );
+        </div>
+    </>
+);
 }
 
 export default DeleteVideos;
