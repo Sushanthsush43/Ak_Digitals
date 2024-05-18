@@ -5,20 +5,11 @@ import { ref, uploadBytes } from 'firebase/storage';
 import { toast } from "react-toastify";
 import { toastSuccessStyle, toastErrorStyle } from './uitls/toastStyle';
 import { CheckAdminLogin } from './uitls/checkAdminLogin';
-import { useHistory } from 'react-router-dom';
 
 function PhotoUpload({storage,app}) {
 
-    // Check admin Login  section ====================================================
-    const { isAdminLoggedIn, adminLoading } = CheckAdminLogin(app);
-    const history = useHistory();
-
-    useEffect(()=>{
-        if (!isAdminLoggedIn) {
-            history.push('/'); // Redirect to home page if admin is not logged in
-        }
-    },[adminLoading]);
-    // ===============================================================================
+    // Check if authorized user
+    CheckAdminLogin(app);
 
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [selectedFilesCopy, setSelectedFilesCopy] = useState([]);
