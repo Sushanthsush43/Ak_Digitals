@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { ref, listAll, getDownloadURL } from 'firebase/storage';
+import { ref, listAll, getDownloadURL, getMetadata } from 'firebase/storage';
 import { toast } from 'react-toastify';
 import { toastErrorStyle } from './uitls/toastStyle';
 import { InView } from "react-intersection-observer";
@@ -77,23 +77,40 @@ function VideoContainer({storage}) {
 
   async function initialFetchVideos() {
     try {
-      const videoRefsTemp = await listAll(ref(storage, 'videos')); // List items inside 'videos' folder
-      setVideoRefs(videoRefsTemp);
+        const videoRefsTemp = await listAll(ref(storage, 'videos')); // List items inside 'videos' folder
+        const videoRefs = videoRefsTemp.items;
+
+        // Fetch metadata for each video to get the upload time
+        const videosWithMetadata = await Promise.all(
+            videoRefs.map(async (videoRef) => {
+                const metadata = await getMetadata(videoRef);
+                console.log(metadata.timeCreated)
+                return { ref: videoRef, timeCreated: metadata.timeCreated };
+            })
+        );
+
+        // Sort videos by upload time, newest first
+        videosWithMetadata.sort((a, b) => new Date(b.timeCreated) - new Date(a.timeCreated));
+
+        // Remove the uploadTime from the final array
+        const sortedVideoRefs = videosWithMetadata.map(video => video.ref);
+
+        setVideoRefs(sortedVideoRefs);
     } catch (error) {
-      toast.error("Something went wrong, Please try again!", toastErrorStyle());
-      console.error('Error listing items in storage:', error);
+        toast.error("Something went wrong, Please try again!", toastErrorStyle());
+        console.error('Error listing items in storage:', error);
     }
   }
 
   async function fetchVideos() {
-    if (videoRefs && videoRefs.items && videoRefs.items.length >= 1) {
+    if (videoRefs && videoRefs.length >= 1) {
       try {
         const startIndex = (page - 1) * videosPerPage;
         const endIndex = startIndex + videosPerPage;
   
-        const totalPages = Math.ceil(videoRefs.items.length / videosPerPage);
+        const totalPages = Math.ceil(videoRefs.length / videosPerPage);
   
-        const urls = await Promise.all(videoRefs.items.slice(startIndex, endIndex).map(async (itemRef) => {
+        const urls = await Promise.all(videoRefs.slice(startIndex, endIndex).map(async (itemRef) => {
           try {
             const videoUrl = await getDownloadURL(itemRef);
             const thumbnailName = itemRef.name.slice(0, itemRef.name.lastIndexOf('.')) + '.png';

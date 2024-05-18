@@ -53,13 +53,13 @@ function PhotoUpload({storage,app}) {
 
                     const storageRef = ref(storage, `images/${file.name}`);
 
-                    const metadata = {
-                        contentType: file.type,
-                        customMetadata: {
-                            uploadTime: Date.now()
-                        }
-                    };
-                    await uploadBytes(storageRef, file, metadata);
+                    // const metadata = {
+                    //     contentType: file.type,
+                    //     customMetadata: {
+                    //         uploadTime: Date.now()
+                    //     }
+                    // };
+                    await uploadBytes(storageRef, file);
             
                     // console.log(`File "${file.name}" uploaded successfully.`);
                 } catch (error) {

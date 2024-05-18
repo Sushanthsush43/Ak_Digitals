@@ -74,8 +74,7 @@ function VideoUpload({storage}) {
                     const metadata = {
                         contentType: file.type,
                         customMetadata: {
-                            thumbnailUrl: thumbnailUrl,
-                            uploadTime: Date.now()
+                            thumbnailUrl: thumbnailUrl
                         }
                     };
                     await uploadBytes(videoRef, file, metadata);
