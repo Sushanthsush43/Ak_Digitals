@@ -5,51 +5,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Sofia&display=swap');
 
 
-.Navigation {
-    background-color: #F5F5F5;
-    margin: 0px;
-  }
-  .heading-container {
-    display: flex;
-    margin-top: 10px;
-    height: 100px;
-  }
-  
-  .sofia-regular {
-    font-family: "Sofia", cursive;
-    font-weight: 400;
-    font-style: normal;
-    font-weight: 400;
-    font-style: normal;
-    margin: 0;
-    margin-left: 20px;
-    font-size: 40px;
-    color: #3F2305;
-  }
-  
-  
-  .teko-heading {
-    position: absolute;
-    display: flex;
-    top: 0px;
-    right: 145px;
-    color: #3F2305;
-    text-decoration: none;
-    font-size: 19px;
-    margin-right: 35px;
-  
-  }
-  
-  .teko-headings {
-    position: absolute;
-    display: flex;
-    top: 0px;
-    right: 75px;
-    color: #3F2305;
-    text-decoration: none;
-    font-size: 19px;
-    margin-right: px;
-  }
   
 
 .MainDashBoardDiv {
