@@ -3,7 +3,7 @@ import '../css/HomePage.css';
 import "./ContactPage"
 import '../components/PhotoUpload';
 import PhotoVideoTab from '../components/PhotoVideoTab';
-
+import DeletePhotos from '../components/DeletePhotos';
 import { getFirebaseConfig } from '../components/uitls/firebaseConfig';
 import AdminLoginForm from '../components/AdminLoginForm';
 import Header from '../components/Header';
@@ -24,7 +24,7 @@ function HomePage() {
   return (
     <div className='Main-div'>
 
-      <div>
+      <div className='header-div'>
         <Header />
       </div>
       

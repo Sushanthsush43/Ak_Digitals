@@ -70,10 +70,13 @@
 
 .homePage-textBox p{
   width: 60%;
+  padding-top: 10px;
   color: #3F2305;
   opacity: 0; /* Initial opacity */
+  font-size: 18px;
   animation: fadeIn 2.5s ease-in-out forwards; /* Apply animation */
 }
+
 
 /* Keyframes for fadeIn animation */
 @keyframes fadeIn {
@@ -82,5 +85,22 @@
   }
   to {
     opacity: 1;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+
+  .sofia-regular{
+    font-size: 20px;
+  }
+  .teko-headings{
+    font-size: 11.5px;
+  }
+  .homePage-textBox p{
+    font-size: 9px;
+    width: 80%;
+  }
+  .homePage-textBox p h4{
+    font-size: 12px;
   }
 }
