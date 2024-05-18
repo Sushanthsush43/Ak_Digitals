@@ -143,8 +143,6 @@ function DeletePhotos({storage}) {
             setToDelete(prevToDelete => [...prevToDelete, constUrl]); // If imgUrl is not in toDelete, add it
     };
 
-    useEffect(()=>{console.log("HERE = ",toDelete)},[toDelete]);
-
     // handle delete icon color change
     const getColor = (constUrl) => {
         return toDelete.includes(constUrl) ? 'red' : 'black';

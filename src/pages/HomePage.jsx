@@ -7,6 +7,8 @@ import DeletePhotos from '../components/DeletePhotos';
 import { getFirebaseConfig } from '../components/uitls/firebaseConfig';
 import AdminLoginForm from '../components/AdminLoginForm';
 import Header from '../components/Header';
+import VideoUpload from '../components/VideoUpload';
+import PhotoUpload from '../components/PhotoUpload';
 
 function HomePage() {
 
@@ -42,10 +44,10 @@ function HomePage() {
       {/* <VideoContainer /> */}
       {/* <AdminLoginForm app={app}/> */}
       {/* <PhotoVideoTab storage={storage}/> */}
-      <DeletePhotos storage={storage}/>
+      {/* <DeletePhotos storage={storage}/> */}
       {/* <DeleteVideos storage={storage}/> */}
       {/* <PhotoUpload storage={storage} app={app}/> */}
-      {/* <VideoUpload storage={storage}/> */}
+      <VideoUpload storage={storage}/>
     </div>
   );
 }
