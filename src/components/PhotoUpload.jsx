@@ -108,11 +108,13 @@ function PhotoUpload({storage,app}) {
                     </label>
                     <input type="file" id="upload-input" onChange={handleFileChange} accept="image/*" multiple style={{ display: 'none' }} />
                 </form>
+                {selectedFiles.length > 0 ?
+                     selectedFiles.length : ''}
 
                 <section className="progress-area">
 
                     <button onClick={handleUpload} className="upload-button">Upload</button>
-                    {uploading && <div className="loading-animation">Uploading...</div>}
+                    {uploading && <div className="upload-loading-animation">Uploading...</div>}
                     <div className="remaing-css" style={{ marginTop: '10px' }}>
                         <span>Remaining: {uploadTrack}</span>
                     </div>
