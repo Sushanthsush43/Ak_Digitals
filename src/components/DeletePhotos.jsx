@@ -107,6 +107,18 @@ function DeletePhotos({storage}) {
     }
 
     const handlePageChange = (newPage) => {
+
+        // Display confirmation dialog
+        if(toDelete.length !== 0){
+            const confirmed = window.confirm("Moving to another page will clear the selected photos. Are you sure you want to proceed?");
+            if (!confirmed) { // User canceled 
+                return;
+            }
+        }
+        
+        // before moving to other page, clear the selection
+        setToDelete([]); // clear selection
+
         setPage(newPage);
 
         if (totalPages > 10) {
@@ -196,44 +208,44 @@ function DeletePhotos({storage}) {
 
                 {/* Photo container */}
                 <div className='delete-container row'>
-    {imageUrls.map(({ url, loaded }, index) => (
-        <div key={index} className='delete-item-div col-12 col-sm-6 col-md-6 col-lg-3'>
-            <InView
-                as="img"
-                className='delete-item image-video'
-                key={index}
-                onChange={(inView, entry) => {
-                    // Trigger inView callback even before fully visible
-                    if (entry.isIntersecting || entry.boundingClientRect.top < 100) {
-                        inView && loaded ? (url = url) : (url = '');
-                    }
-                }}
-                onLoad={() => handleImageLoad(index)}
-                src={url}
-                data-index={index}
-                alt={`Img ${index}`}
-                onClick={() => viewImage(url, index)} // Click to open image in full-screen
-                style={{ display: loaded ? 'block' : 'none' }}
-            />
-            {/* Delete Selection */}
-            <label
-                className='delete-button'
-                style={{ color: getColor(url) }}
-                onClick={() => handleSelect(url)}
-            >
-                <RiDeleteBinLine />
-            </label>
-        </div>
-    ))}
-    {/* Loading animation */}
-    {isLoading && 
-    <div className="loading-container">
-    <div className="spinner-border text-primary" role="status">
-        <span className="visually-hidden">Loading...</span>
-    </div>
-</div>
-}
-</div>
+                    {imageUrls.map(({ url, loaded }, index) => (
+                        <div key={index} className='delete-item-div col-12 col-sm-6 col-md-6 col-lg-3'>
+                            <InView
+                                as="img"
+                                className='delete-item image-video'
+                                key={index}
+                                onChange={(inView, entry) => {
+                                    // Trigger inView callback even before fully visible
+                                    if (entry.isIntersecting || entry.boundingClientRect.top < 100) {
+                                        inView && loaded ? (url = url) : (url = '');
+                                    }
+                                }}
+                                onLoad={() => handleImageLoad(index)}
+                                src={url}
+                                data-index={index}
+                                alt={`Img ${index}`}
+                                onClick={() => viewImage(url, index)} // Click to open image in full-screen
+                                style={{ display: loaded ? 'block' : 'none' }}
+                            />
+                            {/* Delete Selection */}
+                            <label
+                                className='delete-button'
+                                style={{ color: getColor(url) }}
+                                onClick={() => handleSelect(url)}
+                            >
+                                <RiDeleteBinLine />
+                            </label>
+                        </div>
+                    ))}
+                    {/* Loading animation */}
+                    {isLoading && 
+                    <div className="loading-container">
+                    <div className="spinner-border text-primary" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+                }
+                </div>
                 <div className='pagination d-flex justify-content-center mt-4 mb-4'>
                     {totalPages > 10 ?
                         displayedPages.map((pageNum) => (

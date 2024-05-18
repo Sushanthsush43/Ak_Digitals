@@ -13,7 +13,7 @@ function DeleteVideos({storage}) {
 
     const [videoUrls, setVideoUrls] = useState([]);
     const [page, setPage] = useState(1);
-    const videosPerPage = 27;
+    const videosPerPage = 15;
     const [isLoading, setIsLoading] = useState(false);
     const [totalPages, setTotalPages] = useState(0);
     const [displayedPages, setDisplayedPages] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
@@ -132,6 +132,19 @@ function DeleteVideos({storage}) {
     }
 
     const handlePageChange = (newPage) => {
+
+        // Display confirmation dialog
+        if(toDeleteVideos.length !== 0){
+            const confirmed = window.confirm("Moving to another page will clear the selected videos. Are you sure you want to proceed?");
+            if (!confirmed) { // User canceled 
+                return;
+            }
+        }
+
+        // before moving to other page, clear the selection
+        setToDeleteVideos([]); // clear selection
+        setToDeleteThumbnails([]); // clear selection
+
         setPage(newPage);
 
         if (totalPages > 10) {
