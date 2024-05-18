@@ -1,0 +1,45 @@
+.about-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.photo-containers {
+    margin-right: 70px;
+}
+
+.photo-containers img {
+    width: 550px;
+    /* Adjust as needed */
+    height: 700px;
+    margin-top: 65px;
+    border: 20px solid #3F2305;
+    border-radius: 5%;
+}
+
+.about-content {
+    max-width: 500px;
+    margin-right: 120px;
+    font-size: 20px;
+    color: #3F2305;
+}
+
+.contact-info {
+    margin-top: 20px;
+}
+
+.social-media {
+    margin-bottom: 10px;
+}
+
+.social-media a {
+    margin-right: 10px;
+    font-size: 24px;
+    color: #333;
+    text-decoration: none;
+}
+
+.social-media a:hover {
+    color: #007bff;
+}
