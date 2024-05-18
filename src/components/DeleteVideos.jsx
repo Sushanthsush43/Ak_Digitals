@@ -285,17 +285,16 @@ function DeleteVideos({storage}) {
                 )}
                 </div>
             )}
-        <div className='delete-main'>
-            {/* Delete Videos Button */}
-            <button onClick={() => handleDeleteVideos()}>Delete</button>
-
-            {/* Selection Count */}
-            <label>{toDeleteVideos.length}</label>
+        <div className='delete-main container mt-5'>
+            <div className="d-flex justify-content-between align-items-center mb-3">
+            <label className='lead'><span className='text-danger'>{toDeleteVideos.length}</span> items selected</label>
+                <button className="btn btn-danger" onClick={() => handleDeleteVideos()}>Delete</button>
+            </div>
 
             {/* Video container */}
-            <div className='delete-container'>
+            <div className='delete-container row '>
                 {videoUrls.map(({ videoUrl, thumbnailUrl, loaded, constVideoUrl, constThumbnailUrl }, index) => (
-                    <div key={index} className='delete-item-div'>
+                    <div key={index} className='delete-item-div col-12 col-sm-6 col-md-6 col-lg-3'>
                     <InView
                         as="video"
                         className='delete-item image-video'
@@ -331,15 +330,21 @@ function DeleteVideos({storage}) {
                     </div>
                 ))}
                 {/* Loading animation */}
-                {isLoading && <div>Loading ...</div>}
+                {isLoading && 
+                <div className="loading-container">
+                    <div className="spinner-border text-primary" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                </div>}
             </div>
 
 
-            <div className='pagination'>
+            <div className='pagination d-flex justify-content-center mt-4 mb-4'>
                 {totalPages > 10 ?
                     displayedPages.map((pageNum) => (
                         <button
                             key={pageNum}
+                            className={`btn mx-1 ${pageNum === page ? 'btn-primary' : 'btn-outline-primary'}`}
                             onClick={() => handlePageChange(pageNum)}
                             disabled={isLoading || pageNum === page}
                         >
@@ -350,6 +355,7 @@ function DeleteVideos({storage}) {
                     Array.from({ length: totalPages }, (_, i) => (
                         <button
                             key={i + 1}
+                            className={`btn mx-1 ${i + 1 === page ? 'btn-primary' : 'btn-outline-primary'}`}
                             onClick={() => handlePageChange(i + 1)}
                             disabled={isLoading || (i + 1 === page)}
                         >
@@ -358,9 +364,9 @@ function DeleteVideos({storage}) {
                     ))
                 }
             </div>
-         </div>
-        </>
-    );
+        </div>
+    </>
+);
 }
 
 export default DeleteVideos;

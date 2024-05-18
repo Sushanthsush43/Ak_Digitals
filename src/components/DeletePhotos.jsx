@@ -187,53 +187,59 @@ function DeletePhotos({storage}) {
                     )}
                 </div>
             )}
-            <div className='delete-main'>
+            <div className='delete-main container mt-5'>
                 {/* Delete Images Button */}
-                <button onClick={() => handleDeleteImages()}>Delete</button>
-
-                {/* Selection Count */}
-                <label>{toDelete.length}</label>
-
-                {/* Photo container */}
-                <div className='delete-container'>
-                    {imageUrls.map(({ url, loaded }, index) => (
-                    <div key={index} className='delete-item-div'>
-                        <InView
-                            as="img"
-                            className='delete-item image-video'
-                            key={index}
-                            onChange={(inView, entry) => {
-                                // Trigger inView callback even before fully visible
-                                if (entry.isIntersecting || entry.boundingClientRect.top < 100) {
-                                  inView && loaded ? (url = url) : (url = '');
-                                }
-                              }}
-                            onLoad={() => handleImageLoad(index)}
-                            src={url}
-                            data-index={index}
-                            alt={`Img ${index}`}
-                            onClick={() => viewImage(url, index)} // Click to open image in full-screen
-                            style={{ display: loaded ? 'block' : 'none' }}>
-                        </InView>
-                        {/* Delete Selection */}
-                        <label
-                            className='delete-button'
-                            style={{color : getColor(url)}}
-                            onClick={() => handleSelect(url)}
-                        >
-                            <RiDeleteBinLine/>
-                        </label>
-                    </div>
-                    ))}
-                    {/* Loading animation */}
-                    {isLoading && <div>Loading ...</div>}
+                <div className="d-flex justify-content-between align-items-center mb-3">
+                <label className='lead'><span className='text-danger'>{toDelete.length}</span> items selected</label>
+                    <button className="btn btn-danger" onClick={() => handleDeleteImages()}>Delete</button>
                 </div>
 
-                <div className='pagination'>
+                {/* Photo container */}
+                <div className='delete-container row'>
+    {imageUrls.map(({ url, loaded }, index) => (
+        <div key={index} className='delete-item-div col-12 col-sm-6 col-md-6 col-lg-3'>
+            <InView
+                as="img"
+                className='delete-item image-video'
+                key={index}
+                onChange={(inView, entry) => {
+                    // Trigger inView callback even before fully visible
+                    if (entry.isIntersecting || entry.boundingClientRect.top < 100) {
+                        inView && loaded ? (url = url) : (url = '');
+                    }
+                }}
+                onLoad={() => handleImageLoad(index)}
+                src={url}
+                data-index={index}
+                alt={`Img ${index}`}
+                onClick={() => viewImage(url, index)} // Click to open image in full-screen
+                style={{ display: loaded ? 'block' : 'none' }}
+            />
+            {/* Delete Selection */}
+            <label
+                className='delete-button'
+                style={{ color: getColor(url) }}
+                onClick={() => handleSelect(url)}
+            >
+                <RiDeleteBinLine />
+            </label>
+        </div>
+    ))}
+    {/* Loading animation */}
+    {isLoading && 
+    <div className="loading-container">
+    <div className="spinner-border text-primary" role="status">
+        <span className="visually-hidden">Loading...</span>
+    </div>
+</div>
+}
+</div>
+                <div className='pagination d-flex justify-content-center mt-4 mb-4'>
                     {totalPages > 10 ?
                         displayedPages.map((pageNum) => (
                             <button
                                 key={pageNum}
+                                className={`btn mx-1 ${pageNum === page ? 'btn-primary' : 'btn-outline-primary'}`}
                                 onClick={() => handlePageChange(pageNum)}
                                 disabled={isLoading || pageNum === page}
                             >
@@ -244,6 +250,7 @@ function DeletePhotos({storage}) {
                         Array.from({ length: totalPages }, (_, i) => (
                             <button
                                 key={i + 1}
+                                className={`btn mx-1 ${i + 1 === page ? 'btn-primary' : 'btn-outline-primary'}`}
                                 onClick={() => handlePageChange(i + 1)}
                                 disabled={isLoading || (i + 1 === page)}
                             >
@@ -252,7 +259,7 @@ function DeletePhotos({storage}) {
                         ))
                     }
                 </div>
-        </div>
+            </div>
         </>
     );
 }
