@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ref, listAll, getDownloadURL, deleteObject } from 'firebase/storage';
+import { ref, listAll, getDownloadURL, deleteObject, getMetadata } from 'firebase/storage';
 import { toast } from 'react-toastify';
 import { RiDeleteBinLine } from 'react-icons/ri';
 import { toastErrorStyle, toastSuccessStyle } from './uitls/toastStyle';
@@ -84,14 +84,30 @@ function DeleteVideos({storage}) {
         setIsLoading(true);
         try {
             const videoRefsTemp = await listAll(ref(storage, 'videos')); // List items inside 'videos' folder
-            setVideoRefs(videoRefsTemp);
+            const videoRefs = videoRefsTemp.items;
+    
+            // Fetch metadata for each video to get the upload time
+            const videosWithMetadata = await Promise.all(
+                videoRefs.map(async (videoRef) => {
+                    const metadata = await getMetadata(videoRef);
+                    return { ref: videoRef, timeCreated: metadata.timeCreated };
+                })
+            );
+    
+            // Sort videos by upload time, newest first
+            videosWithMetadata.sort((a, b) => new Date(b.timeCreated) - new Date(a.timeCreated));
+    
+            // Remove the uploadTime from the final array
+            const sortedVideoRefs = videosWithMetadata.map(video => video.ref);
+    
+            setVideoRefs(sortedVideoRefs);
         } catch (error) {
             toast.error("Something went wrong, Please try again!", toastErrorStyle());
             console.error('Error listing items in storage:', error);
         } finally {
             setIsLoading(false);
         }
-    }
+      }
 
     async function fetchVideos() {
         if (videoRefs && videoRefs.items && videoRefs.items.length >= 1) {

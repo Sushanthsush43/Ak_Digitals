@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ref, listAll, getDownloadURL, deleteObject } from 'firebase/storage';
+import { ref, listAll, getDownloadURL, deleteObject, getMetadata } from 'firebase/storage';
 import { toast } from 'react-toastify';
 import { RiDeleteBinLine } from 'react-icons/ri'; // Import delete icon from react-icons
 import { toastErrorStyle, toastSuccessStyle } from './uitls/toastStyle';
@@ -7,7 +7,6 @@ import { InView } from "react-intersection-observer";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight, faTimes } from '@fortawesome/free-solid-svg-icons';
 import "../css/DeleteComp.css";
-
 
 function DeletePhotos({storage}) {
 
@@ -61,14 +60,29 @@ function DeletePhotos({storage}) {
         fetchImages();
     }, [page,imageRefs]);
 
-    async function initialFetchImages()
-    {
+    async function initialFetchImages() {
         setIsLoading(true);
         try {
-            const imageRefs_temp = await listAll(ref(storage, 'images')); // List items inside 'images' folder
-            setImageRefs(imageRefs_temp);
+            const imageRefsTemp = await listAll(ref(storage, 'images')); // List items inside 'images' folder
+            const imageRefs = imageRefsTemp.items;
+
+            // Fetch metadata for each image to get the upload time
+            const imagesWithMetadata = await Promise.all(
+                imageRefs.map(async (imageRef) => {
+                    const metadata = await getMetadata(imageRef);
+                    return { ref: imageRef, timeCreated: metadata.timeCreated };
+                })
+            );
+
+            // Sort images by upload time, newest first
+            imagesWithMetadata.sort((a, b) => new Date(b.timeCreated) - new Date(a.timeCreated));
+
+            // Remove the uploadTime from the final array
+            const sortedImageRefs = imagesWithMetadata.map(image => image.ref);
+
+            setImageRefs(sortedImageRefs);
         } catch (error) {
-            toast.error("Something went wrong, Please try again!",toastErrorStyle());
+            toast.error("Something went wrong, Please try again!", toastErrorStyle());
             console.error('Error listing items in storage:', error);
         } finally {
             setIsLoading(false);
@@ -76,19 +90,19 @@ function DeletePhotos({storage}) {
     }
 
     async function fetchImages() {
-        if(imageRefs && imageRefs.items && imageRefs.items.length >= 1){
+        if(imageRefs && imageRefs.length >= 1){
             setIsLoading(true);
             try {
                 const startIndex = (page - 1) * imagesPerPage;
                 const endIndex = startIndex + imagesPerPage;
 
-                const totalPages = Math.ceil(imageRefs.items.length / imagesPerPage);
+                const totalPages = Math.ceil(imageRefs.length / imagesPerPage);
                 setTotalPages(totalPages);
 
-                const urls = await Promise.all(imageRefs.items.slice(startIndex, endIndex).map(async (itemRef) => {
+                const urls = await Promise.all(imageRefs.slice(startIndex, endIndex).map(async (itemRef) => {
                     try {
                         const url = await getDownloadURL(itemRef);
-                        return { url, loaded: false };
+                        return { url, loaded: false, constUrl : url };
                     } catch (error) {
                         console.error('Error getting download URL for itemRef:', error);
                         return null;
@@ -136,16 +150,16 @@ function DeletePhotos({storage}) {
         });
     };
 
-    const handleSelect = async (imgUrl) => {
-        if (toDelete.includes(imgUrl))
-            setToDelete(prevToDelete => prevToDelete.filter(url => url !== imgUrl)); // If imgUrl is already in toDelete, remove it
+    const handleSelect = async (constUrl) => {
+        if (toDelete.includes(constUrl))
+            setToDelete(prevToDelete => prevToDelete.filter(url => url !== constUrl)); // If imgUrl is already in toDelete, remove it
         else
-            setToDelete(prevToDelete => [...prevToDelete, imgUrl]); // If imgUrl is not in toDelete, add it
+            setToDelete(prevToDelete => [...prevToDelete, constUrl]); // If imgUrl is not in toDelete, add it
     };
 
     // handle delete icon color change
-    const getColor = (imgUrl) => {
-        return toDelete.includes(imgUrl) ? 'red' : 'black';
+    const getColor = (constUrl) => {
+        return toDelete.includes(constUrl) ? 'red' : 'black';
     }
 
     const handleDeleteImages = async () => {
@@ -208,7 +222,7 @@ function DeletePhotos({storage}) {
 
                 {/* Photo container */}
                 <div className='delete-container row'>
-                    {imageUrls.map(({ url, loaded }, index) => (
+                    {imageUrls.map(({ url, loaded, constUrl }, index) => (
                         <div key={index} className='delete-item-div col-12 col-sm-6 col-md-6 col-lg-3'>
                             <InView
                                 as="img"
@@ -230,8 +244,8 @@ function DeletePhotos({storage}) {
                             {/* Delete Selection */}
                             <label
                                 className='delete-button'
-                                style={{ color: getColor(url) }}
-                                onClick={() => handleSelect(url)}
+                                style={{ color: getColor(constUrl) }}
+                                onClick={() => handleSelect(constUrl)}
                             >
                                 <RiDeleteBinLine />
                             </label>

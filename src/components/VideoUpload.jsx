@@ -1,7 +1,7 @@
 import './../css/Upload.css';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ref, uploadBytes, getDownloadURL, updateMetadata } from 'firebase/storage';
+import { ref, uploadBytes, getDownloadURL, updateMetadata, deleteObject } from 'firebase/storage';
 import { toast } from "react-toastify";
 import { toastSuccessStyle, toastErrorStyle } from './uitls/toastStyle.js';
 import { VideoToFrames, VideoToFramesMethod } from './uitls/ThumbnailGenerator';
@@ -24,6 +24,19 @@ function VideoUpload({storage}) {
         setSelectedFiles(files);
     };
 
+    async function revokeThumbnailUpload(thumbnailRef) {
+        try {
+          await deleteObject(thumbnailRef);
+          console.log('Thumbnail revoked successfully');
+        } catch (error) {
+          if (error.code === 'storage/object-not-found') {
+            console.log('The thumbnail you tried to delete does not exist.');
+          } else {
+            console.error('Error revoking thumbnail:', error);
+          }
+        }
+      }
+
     const handleUpload = async () => {
         if (selectedFiles.length === 0) {
             toast.error("No files selected", toastErrorStyle());
@@ -41,6 +54,7 @@ function VideoUpload({storage}) {
 
             setSelectedFilesCopy(selectedFiles);
 
+            let thumbnailRef; // needed as global for passing to revokeThumbnail function
             for (let i = 0; i < selectedFiles.length; i++) {
                 const file = selectedFiles[i];
                 try {
@@ -50,13 +64,12 @@ function VideoUpload({storage}) {
                     if(thumbnail === null)
                         throw new Error(`Thumbnail creation failed for video ${file.name}`);
             
-                    const thumbnailRef = ref(storage, `thumbnails/${thumbnailName}`);
+                    thumbnailRef = ref(storage, `thumbnails/${thumbnailName}`);
                     await uploadBytes(thumbnailRef, thumbnail, { contentType: 'image/png' });
             
                     const thumbnailUrl = await getDownloadURL(thumbnailRef);
 
                     const videoRef = ref(storage, `videos/${file.name}`);
-                    await uploadBytes(videoRef, file);
             
                     const metadata = {
                         contentType: file.type,
@@ -64,9 +77,11 @@ function VideoUpload({storage}) {
                             thumbnailUrl: thumbnailUrl
                         }
                     };
+                    await uploadBytes(videoRef, file, metadata);
             
-                    await updateMetadata(videoRef, metadata);
+                    // await updateMetadata(videoRef, metadata);
                 } catch (error) {
+                    await revokeThumbnailUpload(thumbnailRef); // Revoke video if upload fails
                     updatedArray[i] = false; // if upload failed, then set failed for that file
                     console.error(`Error uploading file "${file.name}":`, error);
                     isSomeFailed = true;
@@ -153,6 +168,8 @@ function VideoUpload({storage}) {
                      multiple 
                      style={{ display: 'none' }} />
                 </form>
+                {selectedFiles.length > 0 ?
+                     selectedFiles.length : ''}
 
                 <section className="progress-area">
 

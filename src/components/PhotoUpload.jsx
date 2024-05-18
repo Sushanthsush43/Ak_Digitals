@@ -1,7 +1,7 @@
 import './../css/Upload.css';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ref, uploadBytes } from 'firebase/storage';
+import { ref, uploadBytes, updateMetadata } from 'firebase/storage';
 import { toast } from "react-toastify";
 import { toastSuccessStyle, toastErrorStyle } from './uitls/toastStyle';
 import { CheckAdminLogin } from './uitls/checkAdminLogin';
@@ -52,7 +52,15 @@ function PhotoUpload({storage,app}) {
                     // }
 
                     const storageRef = ref(storage, `images/${file.name}`);
+
+                    // const metadata = {
+                    //     contentType: file.type,
+                    //     customMetadata: {
+                    //         uploadTime: Date.now()
+                    //     }
+                    // };
                     await uploadBytes(storageRef, file);
+            
                     // console.log(`File "${file.name}" uploaded successfully.`);
                 } catch (error) {
                     updatedArray[i] = false; // if upload failed, then set failed for that file

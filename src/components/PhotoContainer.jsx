@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { ref, listAll, getDownloadURL } from 'firebase/storage';
+import { ref, listAll, getDownloadURL, getMetadata } from 'firebase/storage';
 import { toast } from 'react-toastify';
 import { toastErrorStyle } from '../components/uitls/toastStyle';
 import { InView } from "react-intersection-observer";
@@ -58,26 +58,41 @@ function PhotoContainer({storage}) {
         fetchImages();
     }, [page, imageRefs]);
 
-    async function initialFetchImages()
-    {
+    async function initialFetchImages() {
         try {
-            const imageRefs_temp = await listAll(ref(storage, 'images')); // List items inside 'images' folder
-            setImageRefs(imageRefs_temp);
+            const imageRefsTemp = await listAll(ref(storage, 'images')); // List items inside 'images' folder
+            const imageRefs = imageRefsTemp.items;
+
+            // Fetch metadata for each image to get the upload time
+            const imagesWithMetadata = await Promise.all(
+                imageRefs.map(async (imageRef) => {
+                    const metadata = await getMetadata(imageRef);
+                    return { ref: imageRef, timeCreated: metadata.timeCreated };
+                })
+            );
+
+            // Sort images by upload time, newest first
+            imagesWithMetadata.sort((a, b) => new Date(b.timeCreated) - new Date(a.timeCreated));
+
+            // Remove the uploadTime from the final array
+            const sortedImageRefs = imagesWithMetadata.map(image => image.ref);
+
+            setImageRefs(sortedImageRefs);
         } catch (error) {
-            toast.error("Something went wrong, Please try again!",toastErrorStyle());
+            toast.error("Something went wrong, Please try again!", toastErrorStyle());
             console.error('Error listing items in storage:', error);
         }
     }
 
     async function fetchImages() {
-        if(imageRefs && imageRefs.items && imageRefs.items.length >= 1){
+        if(imageRefs && imageRefs.length >= 1){
             try {
                 const startIndex = (page - 1) * imagesPerPage;
                 const endIndex = startIndex + imagesPerPage;
     
-                const totalPages = Math.ceil(imageRefs.items.length / imagesPerPage);
+                const totalPages = Math.ceil(imageRefs.length / imagesPerPage);
     
-                const urls = await Promise.all(imageRefs.items.slice(startIndex, endIndex).map(async (itemRef) => {
+                const urls = await Promise.all(imageRefs.slice(startIndex, endIndex).map(async (itemRef) => {
                     try {
                         const url = await getDownloadURL(itemRef);
                         return { url, loaded: false };
