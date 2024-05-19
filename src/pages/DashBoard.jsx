@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { IoMdImages,IoIosVideocam } from "react-icons/io";
+import { IoMdImages, IoIosVideocam } from "react-icons/io";
 import '../css/Dashboard.css';
 import { getFirebaseConfig } from '../components/uitls/firebaseConfig';
 import TabsComponent from '../components/TabsComponent';
@@ -8,11 +8,12 @@ import PhotoUpload from '../components/PhotoUpload';
 import VideoUpload from '../components/VideoUpload';
 import { CheckAdminLogin } from '../components/uitls/checkAdminLogin';
 
+// Firebase stuff ( Important )
 const { storage, app } = getFirebaseConfig();
 
 function DashBoard(){
 
-    // Check if authorized user
+    // Check if authorized user, ie. admin
     CheckAdminLogin({app, getBool : false});
 
     return (

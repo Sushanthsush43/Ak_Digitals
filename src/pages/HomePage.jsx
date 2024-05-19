@@ -6,12 +6,11 @@ import Header from '../components/Header';
 import TabsComponent from '../components/TabsComponent';
 import PhotoContainer from '../components/PhotoContainer';
 import VideoContainer from '../components/VideoContainer';
-import { CheckAdminLogin } from '../components/uitls/checkAdminLogin';
+
+// Firebase stuff ( Important )
+const { storage, app } = getFirebaseConfig();
 
 function HomePage() {
-
-  // Firebase stuff ( Important )
-  const { storage, app } = getFirebaseConfig();
 
   const [showHoverText, setShowHoverText] = useState(false);
 
