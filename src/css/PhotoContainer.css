@@ -5,7 +5,6 @@
   
   .photo-container {
     padding: 10px;
-    /* margin-top:-30px;  */
   }
   
   .full-screen-image-container {
@@ -116,9 +115,6 @@
 
 
   @media screen and (max-width: 768px) {
-    .photo-container {
-      margin-top: 140px; /* Remove margin-top on small screens */
-    }
   
     .photo-container img {
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

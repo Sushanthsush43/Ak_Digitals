@@ -62,23 +62,25 @@ function AdminLoginForm({ app }) {
   };
 
   return (
-    <div>
+    <div className='admin-form'>
       <form onSubmit={handleLogin}>
         <input
+          className='admin-email'
           type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value.trim())}
         />
         <input
+          className='admin-password'
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value.trim())}
         />
-        <button type="submit">Login</button>
+        <button className='admin-submit' type="submit">Login</button>
       </form>
-      <button disabled={isButtonDisabled} onClick={handleForgotPassword}>
+      <button className='admin-ForgotPass' disabled={isButtonDisabled} onClick={handleForgotPassword}>
         Forgot Password?
       </button>
     </div>

@@ -46,7 +46,7 @@ function HomePage() {
       {/* <DeletePhotos storage={storage}/> */}
       {/* <DeleteVideos storage={storage}/> */}
       {/* <PhotoUpload storage={storage} app={app}/> */}
-      {/* <VideoUpload storage={storage}/> */}
+      {/* <VideoUpload storage={storage}/> */}``
     </div>
   );
 }

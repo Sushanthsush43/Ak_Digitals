@@ -11,6 +11,7 @@
   justify-content: space-between; /* Space out items evenly */
   padding: 0;
   margin: 0;
+  position: relative; /* Add position relative to parent div */
 }
 
 /* brandName div in navigation */
@@ -20,6 +21,7 @@
   left:1%;
   padding: 0;
   margin: 0;
+  cursor: pointer; /* Add pointer cursor to indicate clickable area */
 }
 
 /* contact div in navigation */
@@ -36,11 +38,10 @@
   font-family: "Sofia", cursive;
   font-weight: 400;
   font-style: normal;
-  font-weight: 400;
-  font-style: normal;
   margin: 0%;
   font-size: 40px;
   color: #3F2305;
+  position: relative; /* Required for positioning the signIn div */
 }
 
 /*css for the Contact text*/
@@ -52,31 +53,46 @@
 }
 
 /*css of main div*/
-.Main-div{
+.Main-div {
   display: flex; /* Ensure children are displayed inline */
   flex-direction: column; /* Ensure the direction is row */
   column-gap: 10px;
   padding: .1%;
-  margin: 0;
 }
 
 /*css of homePage-textBox*/
-.homePage-textBox{
+.homePage-textBox {
   display: flex;
   position: relative;
   justify-content: center;
   text-align: center;
 }
 
-.homePage-textBox p{
+.homePage-textBox p {
   width: 60%;
-  padding-top: 10px;
+  margin-top: 50px;
   color: #3F2305;
   opacity: 0; /* Initial opacity */
   font-size: 18px;
   animation: fadeIn 2.5s ease-in-out forwards; /* Apply animation */
 }
 
+/*css for signIn div */
+.signIn {
+  width: 400px;
+  height: 250px;
+  background-color: #9d9a96c7; /* Adjust background color as needed */
+  position: absolute;
+  left: 15px;
+  border-radius: 5%;
+  top: 9px; /* Align to the left of the heading-container */
+  z-index: 10; /* Ensure it is above all other content */
+  visibility: hidden;
+}
+
+.signIn.visible {
+  visibility: visible;
+}
 
 /* Keyframes for fadeIn animation */
 @keyframes fadeIn {
@@ -89,18 +105,72 @@
 }
 
 @media only screen and (max-width: 768px) {
-
-  .sofia-regular{
+  .sofia-regular {
     font-size: 20px;
   }
-  .teko-headings{
+  .teko-headings {
     font-size: 11.5px;
   }
-  .homePage-textBox p{
+  .homePage-textBox p {
     font-size: 9px;
     width: 80%;
   }
-  .homePage-textBox p h4{
+  .homePage-textBox p h4 {
     font-size: 12px;
   }
+}
+
+/*css of the close button of the signin div*/
+.close-SignIn{
+  background-color: red;
+  color: aliceblue;
+  position: absolute;
+  left: 370px;
+  top: 10px;
+  border-radius: 25%;
+}
+
+/* css of admin */
+
+/* css of admin form */
+.admin-form{
+  display: flex; /* Ensure children are displayed inline */
+  flex-direction:column;
+  justify-content: center;
+  gap: 10px;
+}
+.admin-form form{
+  display: flex; /* Ensure children are displayed inline */
+  flex-direction:column;
+  justify-content: center;
+  gap: 10px;
+}
+.admin-form input{
+  height: 50px;
+  width: 300px;
+  position: relative;
+  left: 30px;
+  border: none;
+  
+}
+
+.admin-email{
+  position: relative;
+  margin-top: 20px;
+}
+
+.admin-submit{
+  height: 50px;
+  width: 300px;
+  position: relative;
+  left: 30px;
+  border-color:white;
+  background-color: blue;
+  color: aliceblue;
+}
+
+.admin-ForgotPass{
+  background-color: transparent;
+  border: none;
+  color: blue;
 }
