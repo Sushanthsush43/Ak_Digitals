@@ -47,9 +47,9 @@ function PhotoUpload({storage,app}) {
             for (let i = 0; i < selectedFiles.length; i++) {
                 const file = selectedFiles[i];
                 try {
-                    if (i % 2 === 0) {
-                        throw new Error('Simulated error: i equals 2');
-                    }
+                    // if (i % 2 === 0) {
+                    //     throw new Error('Simulated error: i equals 2');
+                    // }
                         // throw new Error('Simulated error: i equals 2');
 
                     const storageRef = ref(storage, `images/${file.name}`);
@@ -101,12 +101,12 @@ function PhotoUpload({storage,app}) {
     };
     return (
 
-        <div className='mainBody'>
+        <div className='upload-mainBody'>
             {/* <Link to="/" className="back-button"><i className="fas fa-arrow-left"></i></Link> */}
 
-            <div className='wrapper'>
+            <div className='upload-wrapper'>
                 <header>Upload photos</header>
-                <form>
+                <form className='upload-form'>
                     <label htmlFor="upload-input">
                         <i className="fas fa-cloud-upload-alt"></i>
                         <p>Browse file to upload</p>
@@ -124,7 +124,7 @@ function PhotoUpload({storage,app}) {
                 {selectedFiles.length > 0 ?
                      `No of selected Files : ${selectedFiles.length}` : ''}
 
-                <section className="progress-area">
+                <section className="upload-progress-area">
 
                     <button onClick={handleUpload} className="upload-button">Upload</button>
                     {uploading && <div className="upload-loading-animation">Uploading...</div>}

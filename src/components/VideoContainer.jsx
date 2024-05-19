@@ -245,7 +245,6 @@ function VideoContainer({storage}) {
                 as="div"
                 className='loading'
                 onChange={(inView) => inView? handleViewMore()  : ''}>
-                <div className='line'></div>
             </InView>
         )}
       </div>

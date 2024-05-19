@@ -151,12 +151,12 @@ function VideoUpload({storage}) {
       
     return (
 
-        <div className='mainBody'>
+        <div className='upload-mainBody'>
             {/* <Link to="/" className="back-button"><i className="fas fa-arrow-left"></i></Link> */}
 
-            <div className='wrapper'>
+            <div className='upload-wrapper'>
                 <header>Upload videos</header>
-                <form>
+                <form className='upload-form'>
                     <label htmlFor="upload-input">
                         <i className="fas fa-cloud-upload-alt"></i>
                         <p>Browse file to upload</p>
@@ -173,7 +173,7 @@ function VideoUpload({storage}) {
                 {selectedFiles.length > 0 ?
                      `No of selected Files : ${selectedFiles.length}` : ''}
 
-                <section className="progress-area">
+                <section className="upload-progress-area">
 
                     <button onClick={handleUpload} className="upload-button">Upload</button>
                     {uploading && <div className="upload-loading-animation">Uploading...</div>}
