@@ -6,10 +6,14 @@ import { getFirebaseConfig } from '../components/uitls/firebaseConfig';
 import TabsComponent from '../components/TabsComponent';
 import PhotoUpload from '../components/PhotoUpload';
 import VideoUpload from '../components/VideoUpload';
+import { CheckAdminLogin } from '../components/uitls/checkAdminLogin';
 
 const { storage, app } = getFirebaseConfig();
 
 function DashBoard(){
+
+    // Check if authorized user
+    CheckAdminLogin({app, getBool : false});
 
     return (
         <div className='DashBoard-div'>

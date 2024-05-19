@@ -22,7 +22,7 @@ export const CheckAdminLogin = ({ app, getBool }) => {
 
   useEffect(() => {
     if (!adminLoading && !isAdminLoggedIn && !getBool) {
-      history.push('/dffd'); // Redirect to home page if admin is not logged in
+      history.push('/'); // Redirect to home page if admin is not logged in
     }
   }, [isAdminLoggedIn, adminLoading, getBool, history]);
 

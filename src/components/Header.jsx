@@ -6,7 +6,7 @@ import AdminLogout from './AdminLogout';
 
 const Header = ({app}) => {
   const [isVisible, setIsVisible] = useState(false);
-  const [close, setClose] = useState(false);
+  const [close, setClose] = useState(true);
 
   const { isAdminLoggedIn } = CheckAdminLogin({ app, getBool : true});
 
