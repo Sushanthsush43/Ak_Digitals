@@ -5,11 +5,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Sofia&display=swap');
 
 
-  
-
 .MainDashBoardDiv {
-    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Adds a gap of 20px between CountDiv and Dashbord-tab */
 }
+
+.DashBoard-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px; /* Adds a gap of 20px between header-Main and MainDashBoardDiv */
+    background-color: #f0f0f0; /* Optional: Set a background color */
+}
+
 .CountDiv{
     position: relative; /* Make the container relative */
     display: flex;
@@ -18,17 +27,6 @@
     column-gap: 100px;
 }
 .PhotoCountDiv{
-    position: relative; /* Make the container relative */
-    display: flex;
-    flex-direction: column;
-    padding-left: 50px;
-    justify-content: center;
-    align-items: center; /* Align items vertically */
-    row-gap: 20px;
-
-}
-
-.PhotoCountCircle {
     position: relative; /* Make the container relative */
     display: flex;
     flex-direction: row; /* Change direction to row */
@@ -40,9 +38,11 @@
     background-color: #ffffff; /* Background color */
     box-shadow: 0 4px 8px 10px rgba(0, 0, 0, 0.1); /* Box shadow */
     padding: 0; /* Padding */
-    margin: 0 auto; /* Center align horizontally */
+
 }
-.PhotoCountCircle span {
+
+
+.PhotoCountDiv span {
     font-size: 50px; /* Adjust font size */
     background-color: transparent;
 }
@@ -61,15 +61,6 @@
 .VideoCountDiv{
     position: relative; /* Make the container relative */
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center; /* Align items vertically */
-    row-gap: 20px;
-
-}
-.VideoCountCircle {
-    position: relative; /* Make the container relative */
-    display: flex;
     flex-direction: row; /* Change direction to row */
     justify-content: center;
     align-items: center; /* Align items vertically */
@@ -79,9 +70,10 @@
     background-color: #ffffff; /* Background color */
     box-shadow: 0 4px 8px 10px rgba(0, 0, 0, 0.1); /* Box shadow */
     padding: 0; /* Padding */
-    margin: 0 auto; /* Center align horizontally */
+
 }
-.VideoCountCircle span {
+
+.VideoCountDiv span {
     font-size: 50px; /* Adjust font size */
     background-color: transparent;
    
@@ -98,6 +90,8 @@
     right: 70px;
     background-color: transparent;
   }
+
+
 
 
 
