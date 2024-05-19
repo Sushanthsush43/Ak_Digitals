@@ -50,6 +50,7 @@ function PhotoUpload({storage,app}) {
                     // if (i % 2 === 0) {
                     //     throw new Error('Simulated error: i equals 2');
                     // }
+                        // throw new Error('Simulated error: i equals 2');
 
                     const storageRef = ref(storage, `images/${file.name}`);
 
@@ -85,6 +86,11 @@ function PhotoUpload({storage,app}) {
             const fileInput = document.getElementById('upload-input');
             fileInput && (fileInput.value = '');
 
+            // console.log("Initial array:", eachUpdated);
+            // const filteredArray = eachUpdated.filter(val => val === true);
+            // console.log("Filtered array:", filteredArray);
+            // console.log("Length of filtered array:", filteredArray.length);
+
             // display appropriate toast message
             if (!isCompleteFailed && isSomeFailed)
                 toast.error("Some files could not be uploaded", {...toastErrorStyle(), autoClose:false}); // if some files couldnt be uploaded
@@ -95,12 +101,12 @@ function PhotoUpload({storage,app}) {
     };
     return (
 
-        <div className='mainBody'>
-            <Link to="/" className="back-button"><i className="fas fa-arrow-left"></i></Link>
+        <div className='upload-mainBody'>
+            {/* <Link to="/" className="back-button"><i className="fas fa-arrow-left"></i></Link> */}
 
-            <div className='wrapper'>
+            <div className='upload-wrapper'>
                 <header>Upload photos</header>
-                <form>
+                <form className='upload-form'>
                     <label htmlFor="upload-input">
                         <i className="fas fa-cloud-upload-alt"></i>
                         <p>Browse file to upload</p>
@@ -116,9 +122,9 @@ function PhotoUpload({storage,app}) {
                      style={{ display: 'none' }} />
                 </form>
                 {selectedFiles.length > 0 ?
-                     selectedFiles.length : ''}
+                     `No of selected Files : ${selectedFiles.length}` : ''}
 
-                <section className="progress-area">
+                <section className="upload-progress-area">
 
                     <button onClick={handleUpload} className="upload-button">Upload</button>
                     {uploading && <div className="upload-loading-animation">Uploading...</div>}
@@ -126,16 +132,19 @@ function PhotoUpload({storage,app}) {
                         <span>Remaining: {uploadTrack}</span>
                     </div>
 
+                    <div className="failed-uploads-container">
                     {allUploadDone &&
                         eachUpdated.map((value, i) => value !== true ?
-                            <div className='failed-file-upload' style={{ backgroundColor: "red", display: "flex" }} key={i}>
+                            <div className='failed-file-upload' style={{ backgroundColor: "red", display: "flex" }}
+                            key={`${i}-failed-img-upload`}>
                                 {/* display these in row style */}
-                                <div>{selectedFilesCopy[i].name}</div>
+                                <div className='failed-upload-file-name'>{selectedFilesCopy[i].name}</div>
                                 <div>Failed</div>
                             </div>
                             : null
                         )
                     }
+                    </div>
                 </section>
             </div>
         </div>

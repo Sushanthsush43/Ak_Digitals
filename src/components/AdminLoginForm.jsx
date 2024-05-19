@@ -56,7 +56,11 @@ function AdminLoginForm({ app }) {
         setIsButtonDisabled(false);
       }, 5000); // 5 sec
     } catch (error) {
-      toast.error("Failed to send password reset email. Please try again later.", toastErrorStyle());
+      if (error.code === 'auth/invalid-email')
+        toast.error("Invalid email", toastErrorStyle());
+      else
+        toast.error("Failed to send password reset email. Please try again later.", toastErrorStyle());
+
       console.error('Error sending password reset email:', error.message);
     }
   };
@@ -81,7 +85,7 @@ function AdminLoginForm({ app }) {
         <button className='admin-submit' type="submit">Login</button>
       </form>
       <button className='admin-ForgotPass' disabled={isButtonDisabled} onClick={handleForgotPassword}>
-        Forgot Password?
+        { isButtonDisabled? 'Please wait for 5 seconds...' : 'Forgot Password?'}
       </button>
     </div>
   );

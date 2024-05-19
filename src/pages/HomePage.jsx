@@ -36,18 +36,17 @@ function HomePage() {
           <ul style={{ listStyleType: 'none', padding: '' }}>
             <li>Trust us to capture the magic of your life's journey, one frame at a time, freezing fleeting
              moments into extraordinary memories with our passion and keen eye for detail.</li>
-
           </ul>
         </p>
       </div>
-
+      
       {/* <VideoContainer /> */}
       {/* <AdminLoginForm app={app}/> */}
       <PhotoVideoTab storage={storage}/>
       {/* <DeletePhotos storage={storage}/> */}
       {/* <DeleteVideos storage={storage}/> */}
       {/* <PhotoUpload storage={storage} app={app}/> */}
-      {/* <VideoUpload storage={storage}/> */}``
+      {/* <VideoUpload storage={storage}/> */}
     </div>
   );
 }

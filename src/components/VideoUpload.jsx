@@ -58,6 +58,8 @@ function VideoUpload({storage}) {
             for (let i = 0; i < selectedFiles.length; i++) {
                 const file = selectedFiles[i];
                 try {
+                        // throw new Error('Simulated error: i equals 2');
+
                     const thumbnail = await generateThumbnail(file);
                     const thumbnailName = file.name.slice(0, file.name.lastIndexOf('.')) + '.png';
 
@@ -149,12 +151,12 @@ function VideoUpload({storage}) {
       
     return (
 
-        <div className='mainBody'>
-            <Link to="/" className="back-button"><i className="fas fa-arrow-left"></i></Link>
+        <div className='upload-mainBody'>
+            {/* <Link to="/" className="back-button"><i className="fas fa-arrow-left"></i></Link> */}
 
-            <div className='wrapper'>
+            <div className='upload-wrapper'>
                 <header>Upload videos</header>
-                <form>
+                <form className='upload-form'>
                     <label htmlFor="upload-input">
                         <i className="fas fa-cloud-upload-alt"></i>
                         <p>Browse file to upload</p>
@@ -169,9 +171,9 @@ function VideoUpload({storage}) {
                      style={{ display: 'none' }} />
                 </form>
                 {selectedFiles.length > 0 ?
-                     selectedFiles.length : ''}
+                     `No of selected Files : ${selectedFiles.length}` : ''}
 
-                <section className="progress-area">
+                <section className="upload-progress-area">
 
                     <button onClick={handleUpload} className="upload-button">Upload</button>
                     {uploading && <div className="upload-loading-animation">Uploading...</div>}
@@ -179,16 +181,19 @@ function VideoUpload({storage}) {
                         <span>Remaining: {uploadTrack}</span>
                     </div>
 
+                    <div className="failed-uploads-container">
                     {allUploadDone &&
                         eachUpdated.map((value, i) => value !== true ?
-                            <div className='failed-file-upload' style={{ backgroundColor: "red", display: "flex" }} key={i}>
+                            <div className='failed-file-upload' style={{ backgroundColor: "red", display: "flex" }} 
+                            key={`${i}-failed-vid-upload`}>
                                 {/* display these in row style */}
-                                <div>{selectedFilesCopy[i].name}</div>
+                                <div className='failed-upload-file-name'>{selectedFilesCopy[i].name}</div>
                                 <div>Failed</div>
                             </div>
                             : null
                         )
                     }
+                    </div>
                 </section>
             </div>
         </div>
