@@ -79,8 +79,8 @@
 
 /*css for signIn div */
 .signIn {
-  width: 400px;
-  height: 250px;
+  width: 0;
+  height: 0;
   background-color: #9d9a96c7; /* Adjust background color as needed */
   position: absolute;
   left: 15px;
@@ -88,10 +88,13 @@
   top: 9px; /* Align to the left of the heading-container */
   z-index: 10; /* Ensure it is above all other content */
   visibility: hidden;
+  transition: visibility 0s, width 0.5s ease-in-out, height 0.5s ease-in-out;
 }
 
 .signIn.visible {
   visibility: visible;
+  width: 400px;
+  height: 250px;
 }
 
 /* Keyframes for fadeIn animation */
