@@ -9,7 +9,7 @@ import { CheckAdminLogin } from './uitls/checkAdminLogin';
 function PhotoUpload({storage,app}) {
 
     // Check if authorized user
-    CheckAdminLogin(app);
+    // CheckAdminLogin(app);
 
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [selectedFilesCopy, setSelectedFilesCopy] = useState([]);
@@ -50,7 +50,7 @@ function PhotoUpload({storage,app}) {
                     // if (i % 2 === 0) {
                     //     throw new Error('Simulated error: i equals 2');
                     // }
-                        // throw new Error('Simulated error: i equals 2');
+                        throw new Error('Simulated error: i equals 2');
 
                     const storageRef = ref(storage, `images/${file.name}`);
 

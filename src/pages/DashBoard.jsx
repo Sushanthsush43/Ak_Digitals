@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { GrInstagram } from 'react-icons/gr'; // Assuming GrInstagram is imported
 import { IoMdImages,IoIosVideocam } from "react-icons/io";
 import '../css/Dashboard.css';
-import Header from '../components/Header';
-import PhotoVideoTab from '../components/PhotoVideoTab';
+import UploadTab from '../components/PhotoVideoUploadTab';
+import { getFirebaseConfig } from '../components/uitls/firebaseConfig';
+const { storage, app } = getFirebaseConfig();
 
 function DashBoard(){
 
@@ -30,12 +30,10 @@ function DashBoard(){
                         <p>VIDEOS<br/><span>100</span></p>  
                     </div>
                 </div>
-                <div className='Dashbord-tab'>
-                    <PhotoVideoTab/>
+                <div className='Update-div'>
+                    <UploadTab/>
                 </div>
-                <div className='Update-Div'>
-                    
-                </div>
+    
             </div>
         </div>
     );
