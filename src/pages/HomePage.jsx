@@ -39,14 +39,14 @@ function HomePage() {
           </ul>
         </p>
       </div>
-
+      
       {/* <VideoContainer /> */}
       {/* <AdminLoginForm app={app}/> */}
-      <PhotoVideoTab storage={storage}/>
+      {/* <PhotoVideoTab storage={storage}/> */}
       {/* <DeletePhotos storage={storage}/> */}
       {/* <DeleteVideos storage={storage}/> */}
-      {/* <PhotoUpload storage={storage} app={app}/> */}
-      {/* <VideoUpload storage={storage}/> */}``
+      <PhotoUpload storage={storage} app={app}/>
+      {/* <VideoUpload storage={storage}/> */}
     </div>
   );
 }

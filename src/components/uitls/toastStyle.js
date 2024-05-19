@@ -43,7 +43,7 @@ export const toastErrorStyle = () => {
       fontWeight: 'bold',
       fontSize: '18px',
       fontFamily: 'Arial, sans-serif',
-      marging: '7px',
+      margin: '7px',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',

@@ -87,6 +87,22 @@ form p {
     100% { transform: rotate(360deg); }
 }
 
+.failed-uploads-container {
+    max-height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 5px;
+  }
+  
+  .failed-uploads-container::-webkit-scrollbar {
+    width: 10px;
+}
+
+.failed-uploads-container::-webkit-scrollbar-thumb {
+    background-color: #000;
+    border-radius: 5px;
+  }
+    
 .failed-file-upload {
     display: flex;
     justify-content: space-between;
@@ -97,12 +113,7 @@ form p {
     margin-bottom: 5px;
 }
 
-.back-button {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    color: #3F2305;
-    font-size: 24px;
-    cursor: pointer;
-    text-decoration: none;
+.failed-upload-file-name {
+    word-break: break-word;
+    padding-right: 15px;
 }
