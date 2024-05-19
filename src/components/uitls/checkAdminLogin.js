@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useHistory } from 'react-router-dom';
 
-export const CheckAdminLogin = ({app}) => {
+export const CheckAdminLogin = ({ app, getBool }) => {
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
   const [adminLoading, setAdminLoading] = useState(true);
   const history = useHistory();
-
+  
   useEffect(() => {
     const auth = getAuth(app);
     const unsubscribeAuthListener = onAuthStateChanged(auth, (user) => {
@@ -20,11 +20,15 @@ export const CheckAdminLogin = ({app}) => {
     return unsubscribeAuthListener;
   }, [app]);
 
-   useEffect(()=>{
-       if (!adminLoading && !isAdminLoggedIn) {
-           history.push('/dffd'); // Redirect to home page if admin is not logged in
-       }
-   },[isAdminLoggedIn, adminLoading]);
+  useEffect(() => {
+    if (!adminLoading && !isAdminLoggedIn && !getBool) {
+      history.push('/dffd'); // Redirect to home page if admin is not logged in
+    }
+  }, [isAdminLoggedIn, adminLoading, getBool, history]);
 
-   return null;
+  if (getBool)
+    return { isAdminLoggedIn, adminLoading };
+  else
+    return null;
+  
 }

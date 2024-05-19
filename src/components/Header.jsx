@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import AdminLoginForm from './AdminLoginForm';
+import { CheckAdminLogin } from './uitls/checkAdminLogin';
+import AdminLogout from './AdminLogout';
 
-const Header = () => {
+const Header = ({app}) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [close, setClose] = useState(false);
+
+  const { isAdminLoggedIn } = CheckAdminLogin({ app, getBool : true});
 
   const handleSignUpClick = () => {
     setIsVisible(!isVisible);
@@ -12,6 +17,14 @@ const Header = () => {
   const closeSignIN = () => {
     setIsVisible(false)
   }
+  
+  const handleClose = (status) => {
+    setClose(status);
+  };
+
+  useEffect(()=>{
+    setIsVisible(!close); // reverse the close variable ( needed )
+  },[close]);
 
   return (
     <div>
@@ -20,13 +33,24 @@ const Header = () => {
           <h1 className="sofia-regular">AK DIGITALS</h1>
         </div>
 
+        { isAdminLoggedIn &&
+          <div className='header-links'>
+            <Link to='/dashboard' className="teko-headings">DASHBOARD</Link>
+          </div>
+        }
+
         <div className='header-links'>
-          <Link to='/ContactPage' className="teko-headings">CONTACT</Link>
+          <Link to='/contactpage' className="teko-headings">CONTACT</Link>
         </div>
       </div>
       <div className={`signIn ${isVisible ? 'visible' : ''}`}>
           <button className='close-SignIn' onClick={closeSignIN}>X</button>
-          <AdminLoginForm />
+
+          { isAdminLoggedIn ?
+                <AdminLogout app={app} closeStatus={handleClose}/> 
+              :
+                <AdminLoginForm app={app}  closeStatus={handleClose}/>
+          }
       </div>
     </div>
   );

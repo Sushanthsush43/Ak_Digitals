@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import '../css/HomePage.css';
 import "./ContactPage"
-import '../components/PhotoUpload';
-import PhotoVideoTab from '../components/PhotoVideoTab';
-import DeletePhotos from '../components/DeletePhotos';
 import { getFirebaseConfig } from '../components/uitls/firebaseConfig';
-import AdminLoginForm from '../components/AdminLoginForm';
 import Header from '../components/Header';
-import VideoUpload from '../components/VideoUpload';
-import PhotoUpload from '../components/PhotoUpload';
+import TabsComponent from '../components/TabsComponent';
+import PhotoContainer from '../components/PhotoContainer';
+import VideoContainer from '../components/VideoContainer';
+import { CheckAdminLogin } from '../components/uitls/checkAdminLogin';
 
 function HomePage() {
 
@@ -27,7 +25,7 @@ function HomePage() {
     <div className='Main-div'>
 
       <div className='header-div'>
-        <Header />
+        <Header app={app}/>
       </div>
       
       <div className='homePage-textBox'>
@@ -42,7 +40,7 @@ function HomePage() {
       
       {/* <VideoContainer /> */}
       {/* <AdminLoginForm app={app}/> */}
-      <PhotoVideoTab storage={storage}/>
+      <TabsComponent storage={storage} Tab1={PhotoContainer} Tab2={VideoContainer}/>
       {/* <DeletePhotos storage={storage}/> */}
       {/* <DeleteVideos storage={storage}/> */}
       {/* <PhotoUpload storage={storage} app={app}/> */}

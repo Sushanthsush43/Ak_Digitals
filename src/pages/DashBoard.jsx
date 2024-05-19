@@ -2,8 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { IoMdImages,IoIosVideocam } from "react-icons/io";
 import '../css/Dashboard.css';
-import UploadTab from '../components/PhotoVideoUploadTab';
 import { getFirebaseConfig } from '../components/uitls/firebaseConfig';
+import TabsComponent from '../components/TabsComponent';
+import PhotoUpload from '../components/PhotoUpload';
+import VideoUpload from '../components/VideoUpload';
+
 const { storage, app } = getFirebaseConfig();
 
 function DashBoard(){
@@ -31,7 +34,7 @@ function DashBoard(){
                     </div>
                 </div>
                 <div className='Update-div'>
-                    <UploadTab/>
+                    <TabsComponent storage={storage} Tab1={PhotoUpload} Tab2={VideoUpload}/>
                 </div>
     
             </div>

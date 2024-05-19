@@ -203,7 +203,7 @@ function VideoContainer({storage}) {
       )}
 
       <div className={`video-container ${isOpened ? 'animate' : ''}`}>
-        <ResponsiveMasonry columnsCountBreakPoints={{ 350: 2, 750: 2, 900: 3 }}>
+        <ResponsiveMasonry columnsCountBreakPoints={{ 380: 1, 750: 2, 900: 3 }}>
           <Masonry gutter='17px'>
             {videoUrls.map(({ videoUrl, thumbnailUrl, loaded }, index) => (
               <InView
