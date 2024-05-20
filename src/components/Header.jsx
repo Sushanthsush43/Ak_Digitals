@@ -32,14 +32,11 @@ const Header = ({app}) => {
         <div className="heading-container" onClick={handleSignUpClick}>
           <h1 className="sofia-regular">AK DIGITALS</h1>
         </div>
-
-        { isAdminLoggedIn &&
-          <div className='header-links'>
-            <Link to='/dashboard' className="teko-headings">DASHBOARD</Link>
-          </div>
-        }
-
+        
         <div className='header-links'>
+          { isAdminLoggedIn &&
+            <Link to='/dashboard' className="teko-headings">DASHBOARD</Link>
+          }
           <Link to='/contactpage' className="teko-headings">CONTACT</Link>
         </div>
       </div>

@@ -93,17 +93,6 @@
     }
   }
   
-  .line {
-    position: absolute;
-    bottom: -8px;
-    left: 6;
-    width: 79%;
-    height: 6px;
-    background-color: #f3f3f3;
-    transition: background-color 0.3s ease;
-  }
-  
-  
 .image-video {
     box-shadow: 0 0 9px rgba(0, 0, 0, 0.5);
   }
@@ -115,10 +104,8 @@
 
 
   @media screen and (max-width: 768px) {
-  
     .photo-container img {
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    
+    }   
   }
