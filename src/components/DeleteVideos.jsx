@@ -8,8 +8,12 @@ import "../css/DeleteComp.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { isIOSorMacDevice } from './uitls/deviceUtils';
+import { CheckAdminLogin } from './uitls/checkAdminLogin';
 
-function DeleteVideos({storage}) {
+function DeleteVideos({storage, app}) {
+
+    // Check if authorized user, ie. admin
+    CheckAdminLogin({app, getBool : false});
 
     const [videoUrls, setVideoUrls] = useState([]);
     const [page, setPage] = useState(1);

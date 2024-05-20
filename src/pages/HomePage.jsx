@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../css/HomePage.css';
 import "./ContactPage"
-import { getFirebaseConfig } from '../components/uitls/firebaseConfig';
 import Header from '../components/Header';
 import TabsComponent from '../components/TabsComponent';
 import PhotoContainer from '../components/PhotoContainer';
@@ -9,10 +8,8 @@ import VideoContainer from '../components/VideoContainer';
 import DeleteVideos from '../components/DeleteVideos';
 import DeletePhotos from '../components/DeletePhotos';
 import AboutUs  from '../components/AboutUs';
-// Firebase stuff ( Important )
-const { storage, app } = getFirebaseConfig();
 
-function HomePage() {
+function HomePage({storage, app}) {
 
   const [showHoverText, setShowHoverText] = useState(false);
 

@@ -7,8 +7,12 @@ import { InView } from "react-intersection-observer";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight, faTimes } from '@fortawesome/free-solid-svg-icons';
 import "../css/DeleteComp.css";
+import { CheckAdminLogin } from './uitls/checkAdminLogin';
 
-function DeletePhotos({storage}) {
+function DeletePhotos({storage, app}) {
+
+    // Check if authorized user, ie. admin
+    CheckAdminLogin({app, getBool : false});
 
     const [imageUrls, setImageUrls] = useState([]);
     const [page, setPage] = useState(1);
