@@ -110,25 +110,25 @@ function DeleteVideos({storage}) {
       }
 
     async function fetchVideos() {
-        if (videoRefs && videoRefs.items && videoRefs.items.length >= 1) {
+        if (videoRefs && videoRefs.length >= 1) {
             setIsLoading(true);
             try {
                 const startIndex = (page - 1) * videosPerPage;
                 const endIndex = startIndex + videosPerPage;
 
-                const totalPages = Math.ceil(videoRefs.items.length / videosPerPage);
+                const totalPages = Math.ceil(videoRefs.length / videosPerPage);
                 setTotalPages(totalPages);
 
-                const urls = await Promise.all(videoRefs.items.slice(startIndex, endIndex).map(async (itemRef) => {
+                const urls = await Promise.all(videoRefs.slice(startIndex, endIndex).map(async (itemRef) => {
                     try {
                         const videoUrl = await getDownloadURL(itemRef);
                         const thumbnailName = itemRef.name.slice(0, -4) + '.png';
 
                         const thumbnailRef = ref(storage, `thumbnails/${thumbnailName}`);
-                        // console.log(videoUrl)
+                        // console.log("video = ",videoUrl)
 
                         const thumbnailUrl = await getDownloadURL(thumbnailRef);
-                        // console.log(thumbnailUrl)
+                        // console.log("thumbnail ",thumbnailUrl)
 
                         return { videoUrl, thumbnailUrl, loaded: false, constVideoUrl : videoUrl, constThumbnailUrl : thumbnailUrl};
                     } catch (error) {
