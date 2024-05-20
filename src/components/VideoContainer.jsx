@@ -216,7 +216,6 @@ function VideoContainer({storage}) {
                   if (entry.isIntersecting || entry.boundingClientRect.top < 200) {
                     inView && loaded ? (videoUrl = videoUrl) : (videoUrl = '');
                   }
-
                 }}
                 onContextMenu={(e)=> e.preventDefault()}
                 onMouseEnter={(e) => { handlePlay(e.target); videoUrl = videoUrl; thumbnailUrl = thumbnailUrl}}
