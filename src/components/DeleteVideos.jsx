@@ -330,8 +330,8 @@ function DeleteVideos({storage}) {
                         key={index}
                         data-index={index}
                         onContextMenu={(e)=> e.preventDefault()}
-                        onMouseEnter={(e) => { handlePlay(e.target); videoUrl = videoUrl; thumbnailUrl = thumbnailUrl}}
-                        onMouseLeave={(e) => { handlePause(e.target); videoUrl = ''; thumbnailUrl = false}}
+                        onMouseEnter={(e) => { handlePlay(e.target); videoUrl = videoUrl; thumbnailUrl = false}}
+                        onMouseLeave={(e) => { handlePause(e.target); videoUrl = ''; thumbnailUrl = thumbnailUrl}}
                         onChange={(inView, entry) => {
                             // Trigger inView callback even before fully visible
                             if (entry.isIntersecting || entry.boundingClientRect.top < 100) {
@@ -340,7 +340,7 @@ function DeleteVideos({storage}) {
                           }}
                         src={videoUrl}
                         poster={thumbnailUrl}
-                        onClick={() => viewVideo(videoUrl, index)} // Click to open video in full-screen
+                        onClick={()=>viewVideo(videoUrl, index)} // Click to open video in full-screen
                         onError={(e) => console.error('Error playing video while hover (hover):', e.target.error)}
                         style={{ display: isIOS ? 'inline' : loaded ? 'inline' : 'none'}}  
                         onLoadedData={() => handleVideoLoad(index)}
