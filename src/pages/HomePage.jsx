@@ -6,6 +6,9 @@ import Header from '../components/Header';
 import TabsComponent from '../components/TabsComponent';
 import PhotoContainer from '../components/PhotoContainer';
 import VideoContainer from '../components/VideoContainer';
+import DeletePhotos from '../components/DeletePhotos';
+import DeleteVideos from '../components/DeleteVideos';
+import AboutUs from '../components/AboutUs';
 
 // Firebase stuff ( Important )
 const { storage, app } = getFirebaseConfig();
@@ -39,9 +42,10 @@ function HomePage() {
       
       {/* <VideoContainer /> */}
       {/* <AdminLoginForm app={app}/> */}
-      <TabsComponent storage={storage} Tab1={PhotoContainer} Tab2={VideoContainer}/>
+      {/* <TabsComponent storage={storage} Tab1={PhotoContainer} Tab2={VideoContainer}/> */}
       {/* <DeletePhotos storage={storage}/> */}
-      {/* <DeleteVideos storage={storage}/> */}
+      <DeleteVideos storage={storage}/>
+      {/* <AboutUs /> */}
       {/* <PhotoUpload storage={storage} app={app}/> */}
       {/* <VideoUpload storage={storage}/> */}
     </div>

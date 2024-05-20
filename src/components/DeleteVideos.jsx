@@ -7,7 +7,7 @@ import { InView } from "react-intersection-observer";
 import "../css/DeleteComp.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { isIOSorMacDevice } from './uitls/isIOS';
+import { isIOSorMacDevice } from './uitls/deviceUtils';
 
 function DeleteVideos({storage}) {
 
