@@ -173,21 +173,6 @@ function VideoContainer({storage}) {
       }
   };
 
-  let touchTimeout;
-
-  const onTouchStart = (e) => {
-
-      touchTimeout = setTimeout(() => {
-          handlePlay(e.target);
-      }, 500); // Adjust the delay as needed
-  };
-
-  const onTouchEnd = (e) => {
-      // If the user releases the touch before the delay, clear the timer
-      handlePause(e.target);
-      clearTimeout(touchTimeout);
-  };
-
   return (
     <>
       {data.video && (
@@ -233,8 +218,7 @@ function VideoContainer({storage}) {
                   }
 
                 }}
-                onTouchStart={(e)=>{ onTouchStart(e); videoUrl = videoUrl; thumbnailUrl = thumbnailUrl;}}
-                onTouchEnd={(e)=>{ onTouchEnd(e); videoUrl = ''; thumbnailUrl = false;}}
+                onContextMenu={(e)=> e.preventDefault()}
                 onMouseEnter={(e) => { handlePlay(e.target); videoUrl = videoUrl; thumbnailUrl = thumbnailUrl}}
                 onMouseLeave={(e) => { handlePause(e.target); videoUrl = ''; thumbnailUrl = false}}
                 onLoadedData={() => handleVideoLoad(index)}
@@ -242,7 +226,7 @@ function VideoContainer({storage}) {
                 poster={thumbnailUrl}
                 onError={(e) => console.error('Error playing video while hover (hover):', e.target.error)}
                 alt={`Video ${index}`}
-                onClick={() => viewVideo(videoUrl, index)} // Click to open video in full-screen
+                onClick={(e) => {viewVideo(videoUrl, index)}} // Click to open video in full-screen
                 style={{ display: isIOS ? 'inline' : loaded ? 'inline' : 'none',
                          cursor: 'pointer' }}                
                 autoPlay={false}

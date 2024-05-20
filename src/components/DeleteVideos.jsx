@@ -329,6 +329,7 @@ function DeleteVideos({storage}) {
                         className='delete-item image-video'
                         key={index}
                         data-index={index}
+                        onContextMenu={(e)=> e.preventDefault()}
                         onMouseEnter={(e) => { handlePlay(e.target); videoUrl = videoUrl; thumbnailUrl = thumbnailUrl}}
                         onMouseLeave={(e) => { handlePause(e.target); videoUrl = ''; thumbnailUrl = false}}
                         onChange={(inView, entry) => {
