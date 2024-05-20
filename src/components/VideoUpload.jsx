@@ -1,7 +1,6 @@
 import './../css/Upload.css';
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { ref, uploadBytes, getDownloadURL, updateMetadata, deleteObject } from 'firebase/storage';
+import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
 import { toast } from "react-toastify";
 import { toastSuccessStyle, toastErrorStyle } from './uitls/toastStyle.js';
 import { VideoToFrames, VideoToFramesMethod } from './uitls/ThumbnailGenerator';

@@ -81,6 +81,7 @@
 .signIn {
   width: 0;
   height: 0;
+  overflow-x: hidden; /* needed */
   background-color: #9d9a96c7; /* Adjust background color as needed */
   position: absolute;
   left: 15px;

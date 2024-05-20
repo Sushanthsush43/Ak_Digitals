@@ -6,6 +6,8 @@ import Header from '../components/Header';
 import TabsComponent from '../components/TabsComponent';
 import PhotoContainer from '../components/PhotoContainer';
 import VideoContainer from '../components/VideoContainer';
+import DeleteVideos from '../components/DeleteVideos';
+import DeletePhotos from '../components/DeletePhotos';
 
 // Firebase stuff ( Important )
 const { storage, app } = getFirebaseConfig();
@@ -36,13 +38,14 @@ function HomePage() {
           </ul>
         </p>
       </div>
+
       
       {/* <VideoContainer /> */}
       {/* <AdminLoginForm app={app}/> */}
       <TabsComponent storage={storage} Tab1={PhotoContainer} Tab2={VideoContainer}/>
       {/* <DeletePhotos storage={storage}/> */}
       {/* <DeleteVideos storage={storage}/> */}
-      {/* <PhotoUpload storage={storage} app={app}/> */}
+      {/* <PhotoUpload storage={storage}/> */}
       {/* <VideoUpload storage={storage}/> */}
     </div>
   );

@@ -1,15 +1,10 @@
 import './../css/Upload.css';
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { ref, uploadBytes, updateMetadata } from 'firebase/storage';
+import React, { useState } from 'react';
+import { ref, uploadBytes } from 'firebase/storage';
 import { toast } from "react-toastify";
 import { toastSuccessStyle, toastErrorStyle } from './uitls/toastStyle';
-import { CheckAdminLogin } from './uitls/checkAdminLogin';
 
-function PhotoUpload({storage,app}) {
-
-    // Check if authorized user
-    // CheckAdminLogin(app);
+function PhotoUpload({storage}) {
 
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [selectedFilesCopy, setSelectedFilesCopy] = useState([]);
