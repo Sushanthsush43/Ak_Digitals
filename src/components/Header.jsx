@@ -7,8 +7,23 @@ import AdminLogout from './AdminLogout';
 const Header = ({app}) => {
   const [isVisible, setIsVisible] = useState(false);
   const [close, setClose] = useState(true);
-
   const { isAdminLoggedIn } = CheckAdminLogin({ app, getBool : true});
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  const handleScroll = () => {
+    if (window.scrollY > 200) {
+      setIsScrolled(true);
+    } else {
+      setIsScrolled(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   const handleSignUpClick = () => {
     setIsVisible(!isVisible);
@@ -28,7 +43,7 @@ const Header = ({app}) => {
 
   return (
     <div>
-      <div className='header-Main'>
+      <div className={`header-Main ${isScrolled ? 'scroll-shadow' : ''}`}>
         <div className="heading-container" onClick={handleSignUpClick}>
           <h1 className="sofia-regular">AK DIGITALS</h1>
         </div>

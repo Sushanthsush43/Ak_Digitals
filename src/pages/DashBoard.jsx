@@ -20,12 +20,16 @@ function DashBoard(){
         <div className='DashBoard-div'>
         
             <div className='header-Main'>
+
                 <div className="heading-container">
                     <h1 className="sofia-regular">AK DIGITALS</h1>
                 </div>
+                
                 <div className='header-links'>
                     <Link to='/ContactPage' className="teko-headings">CONTACT</Link>
                 </div>
+
+              
             </div>
             <div className='MainDashBoardDiv'>
                 <div className='CountDiv'>
@@ -40,6 +44,11 @@ function DashBoard(){
                 </div>
                 <div className='Update-div'>
                     <TabsComponent storage={storage} Tab1={PhotoUpload} Tab2={VideoUpload}/>
+                </div>
+
+                <div className='dashboard-delete-section'>
+                    <button >Delete Photos</button>
+                    <button >Delete Videos</button>
                 </div>
     
             </div>

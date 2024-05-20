@@ -10,8 +10,18 @@
   align-items: center; /* Align items vertically in the center */
   justify-content: space-between; /* Space out items evenly */
   padding: 0;
-  margin-top: 10px;
-  position: relative; /* Add position relative to parent div */
+  /* margin-top: 10px; */
+  width: 100vw;
+  position: fixed;
+  background-color: white;
+  /* background: linear-gradient(180deg, white, rgba(255, 255, 255, 0.7)); */
+  z-index: 12;
+  padding: .2%;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.header-Main.scroll-shadow {
+  box-shadow: 0 2px 5px 2px rgba(0, 0, 0, 0.7);
 }
 
 /* brandName div in navigation */
@@ -61,11 +71,12 @@
   display: flex; /* Ensure children are displayed inline */
   flex-direction: column; /* Ensure the direction is row */
   column-gap: 10px;
-  padding: .1%;
+  padding: 0 .1% .1% .1%;
 }
 
 /*css of homePage-textBox*/
 .homePage-textBox {
+  margin-top: 2%;
   display: flex;
   position: relative;
   justify-content: center;
@@ -125,6 +136,9 @@
   }
   .homePage-textBox p h4 {
     font-size: 12px;
+  }
+  .header-Main {
+    padding: 1%;
   }
   .header-links > * {
     padding-left: 10px;
