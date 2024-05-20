@@ -6,7 +6,7 @@ import { ref, listAll, getDownloadURL, getMetadata } from 'firebase/storage';
 import { toast } from 'react-toastify';
 import { toastErrorStyle } from './uitls/toastStyle';
 import { InView } from "react-intersection-observer";
-import { isIOSorMacDevice } from './uitls/isIOS';
+import { isIOSorMacDevice } from './uitls/deviceUtils';
 import './../css/VideoContainer.css';
 
 function VideoContainer({storage}) {
@@ -173,6 +173,21 @@ function VideoContainer({storage}) {
       }
   };
 
+  let touchTimeout;
+
+  const onTouchStart = (e) => {
+
+      touchTimeout = setTimeout(() => {
+          handlePlay(e.target);
+      }, 500); // Adjust the delay as needed
+  };
+
+  const onTouchEnd = (e) => {
+      // If the user releases the touch before the delay, clear the timer
+      handlePause(e.target);
+      clearTimeout(touchTimeout);
+  };
+
   return (
     <>
       {data.video && (
@@ -216,11 +231,12 @@ function VideoContainer({storage}) {
                   if (entry.isIntersecting || entry.boundingClientRect.top < 200) {
                     inView && loaded ? (videoUrl = videoUrl) : (videoUrl = '');
                   }
+
                 }}
+                onTouchStart={(e)=>{ onTouchStart(e); videoUrl = videoUrl; thumbnailUrl = thumbnailUrl;}}
+                onTouchEnd={(e)=>{ onTouchEnd(e); videoUrl = ''; thumbnailUrl = false;}}
                 onMouseEnter={(e) => { handlePlay(e.target); videoUrl = videoUrl; thumbnailUrl = thumbnailUrl}}
                 onMouseLeave={(e) => { handlePause(e.target); videoUrl = ''; thumbnailUrl = false}}
-                onTouchStart={(e) => { handlePlay(e.target); videoUrl = videoUrl; thumbnailUrl = thumbnailUrl;}}
-                onTouchEnd={(e) => { handlePause(e.target); videoUrl = ''; thumbnailUrl = false; }}
                 onLoadedData={() => handleVideoLoad(index)}
                 src={videoUrl}
                 poster={thumbnailUrl}
@@ -240,6 +256,7 @@ function VideoContainer({storage}) {
           </Masonry>
         </ResponsiveMasonry>
       </div>
+
       <div className='loading-viewMore' style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', }}>
         {/* Loading & ViewMore */}
         {videoUrls.length > 0 && (
