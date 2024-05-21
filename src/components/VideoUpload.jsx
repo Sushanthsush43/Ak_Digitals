@@ -38,7 +38,7 @@ function VideoUpload({storage}) {
 
     const handleUpload = async () => {
         if (selectedFiles.length === 0) {
-            toast.error("No files selected", toastErrorStyle());
+            toast.error("No video selected", toastErrorStyle());
             return;
         }
         setAllUploadDone(false);
@@ -84,14 +84,14 @@ function VideoUpload({storage}) {
                 } catch (error) {
                     await revokeThumbnailUpload(thumbnailRef); // Revoke video if upload fails
                     updatedArray[i] = false; // if upload failed, then set failed for that file
-                    console.error(`Error uploading file "${file.name}":`, error);
+                    console.error(`Error uploading video "${file.name}":`, error);
                     isSomeFailed = true;
                 } finally {
                     setUploadTrack(prevCount => prevCount - 1);
                 }
             }
         } catch (error) {
-            console.error('Error uploading files:', error);
+            console.error('Error uploading videos:', error);
             toast.error("Something went wrong, Please try again.", {...toastErrorStyle(), autoClose:false});
             isCompleteFailed = true;
             return;
@@ -106,9 +106,9 @@ function VideoUpload({storage}) {
 
             // display appropriate toast message
             if (!isCompleteFailed && isSomeFailed)
-                toast.error("Some files could not be uploaded", {...toastErrorStyle(), autoClose:false}); // if some files couldn't be uploaded
+                toast.error("Some videos could not be uploaded", {...toastErrorStyle(), autoClose:false}); // if some files couldn't be uploaded
             else if (!isCompleteFailed && !isSomeFailed)
-                toast.success("Files successfully uploaded", {...toastSuccessStyle(), autoClose:false}); // if all files are uploaded
+                toast.success("Videos successfully uploaded", {...toastSuccessStyle(), autoClose:false}); // if all files are uploaded
         }
 
     };

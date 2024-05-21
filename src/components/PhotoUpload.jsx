@@ -24,7 +24,7 @@ function PhotoUpload({storage}) {
 
     const handleUpload = async () => {
         if (selectedFiles.length === 0) {
-            toast.error("No files selected", toastErrorStyle());
+            toast.error("No photo selected", toastErrorStyle());
             return;
         }
         setAllUploadDone(false);
@@ -60,7 +60,7 @@ function PhotoUpload({storage}) {
                     // console.log(`File "${file.name}" uploaded successfully.`);
                 } catch (error) {
                     updatedArray[i] = false; // if upload failed, then set failed for that file
-                    console.error(`Error uploading file "${file.name}":`, error);
+                    console.error(`Error uploading photo "${file.name}":`, error);
                     isSomeFailed = true;
                     // console.log("Error on ", i);
                 } finally {
@@ -68,7 +68,7 @@ function PhotoUpload({storage}) {
                 }
             }
         } catch (error) {
-            console.error('Error uploading files:', error);
+            console.error('Error uploading photos:', error);
             toast.error("Something went wrong, Please try again.", {...toastErrorStyle(), autoClose:false});
             isCompleteFailed = true;
             return;
@@ -88,9 +88,9 @@ function PhotoUpload({storage}) {
 
             // display appropriate toast message
             if (!isCompleteFailed && isSomeFailed)
-                toast.error("Some files could not be uploaded", {...toastErrorStyle(), autoClose:false}); // if some files couldnt be uploaded
+                toast.error("Some photos could not be uploaded", {...toastErrorStyle(), autoClose:false}); // if some files couldnt be uploaded
             else if (!isCompleteFailed && !isSomeFailed)
-                toast.success("Files successfully uploaded", {...toastSuccessStyle(), autoClose:false}); // if all files are uploaded
+                toast.success("Photos successfully uploaded", {...toastSuccessStyle(), autoClose:false}); // if all files are uploaded
         }
 
     };
@@ -110,7 +110,7 @@ function PhotoUpload({storage}) {
                      id="upload-input"
                      onClick={(e) => { if (uploading){
                         e.preventDefault();
-                        toast.error("Please wait until the current files finish uploading.",toastErrorStyle()) }}}
+                        toast.error("Please wait until the current photos finish uploading.",toastErrorStyle()) }}}
                      onChange={handleFileChange} 
                      accept="image/*" 
                      multiple 
