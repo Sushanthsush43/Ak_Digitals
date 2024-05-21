@@ -219,9 +219,9 @@ function DeletePhotos({storage, app}) {
             )}
             <div className='delete-main container mt-5'>
                 {/* Delete Images Button */}
-                <div className="d-flex justify-content-between align-items-center mb-3">
-                <label className='lead'><span className='text-danger'>{toDelete.length}</span> items selected</label>
-                    <button className="btn btn-danger" onClick={() => handleDeleteImages()}>Delete</button>
+                <div className="d-flex mb-3 delete-label-btn">
+                        <label className='lead'><span className='text-danger'>{toDelete.length}</span> items selected</label>
+                        <button className="btn btn-danger" onClick={() => handleDeleteImages()}>Delete</button>
                 </div>
 
                 {/* Photo container */}

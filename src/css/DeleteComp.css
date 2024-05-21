@@ -1,11 +1,24 @@
 .delete-main {
   margin-top: 10rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .delete-container {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
   gap: 0.8rem;
+}
+
+.delete-label-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
 .delete-item-div {
@@ -69,7 +82,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9999;
+  z-index: 13;
   transition: opacity 0.3s ease-in-out;
 }
 
@@ -103,7 +116,7 @@
   color: white;
   font-size: 2rem;
   cursor: pointer;
-  z-index: 10000;
+  z-index: 15;
   padding: 0.5rem;
   transition: color 0.2s ease-in-out;
 }

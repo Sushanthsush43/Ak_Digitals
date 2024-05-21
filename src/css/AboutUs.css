@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
 body {
     font-family: 'Roboto', sans-serif;
@@ -17,8 +17,8 @@ body {
   
   
 .small-img {
-    max-width: 80%; /* Adjust this value to make the image smaller */
-    margin: 0 auto; /* Center the image horizontally */
+    max-width: 80%;
+    margin: 0 auto; 
   }
   
   img:hover {
@@ -58,4 +58,4 @@ body {
       flex-direction: column-reverse;
     }
   }
-  
+   */
