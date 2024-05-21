@@ -85,9 +85,15 @@
 .signIn {
   width: 0;
   height: 0;
-  overflow-x: hidden; /* needed */
+  overflow-x: hidden;
+  overflow-y: hidden; /* needed */
   background-color: #9d9a96c7; /* Adjust background color as needed */
   position: absolute;
+  display: flex; /* Ensure children are displayed inline */
+  flex-direction:column;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px;
   left: 15px;
   border-radius: 5%;
   top: 9px; /* Align to the left of the heading-container */
@@ -99,7 +105,10 @@
 .signIn.visible {
   visibility: visible;
   width: 400px;
-  height: 250px;
+  height: 280px;
+  background-color: rgb(243, 243, 243);
+  box-shadow: 0 4px 8px 10px rgba(0, 0, 0, 0.397);
+
 }
 
 /* Keyframes for fadeIn animation */
@@ -110,6 +119,34 @@
   to {
     opacity: 1;
   }
+}
+
+/*css of the close div of the signin div*/
+.close-div{
+  display: flex; /* Ensure children are displayed inline */
+  flex-direction: row; /* Ensure the direction is row */
+  align-items: center; /* Align items vertically in the center */
+  justify-content: space-between; /* Space out items evenly */
+  padding: 10px;
+  top: 15px;
+  position: relative;
+}
+
+/* css of the admin login text in signin div */
+.signIn-text{
+  font-size: 24px;
+  font-family:sans-serif;
+  font-weight: bolder;
+}
+
+/*css of the close button of the signin div*/
+.close-SignIn{
+  color: grey;
+  position: relative;
+  font-size: 40px;
+}
+.close-SignIn:hover{
+  color: red;
 }
 
 @media only screen and (max-width: 768px) {
@@ -129,16 +166,31 @@
   .header-links > * {
     padding-left: 10px;
   }
-}
+    
+  .signIn.visible {
+    width: 60%; /* Make it responsive to the screen size */
+    height: 280px; /* Adjust height if needed */
+  }
 
-/*css of the close button of the signin div*/
-.close-SignIn{
-  background-color: red;
-  color: aliceblue;
-  position: absolute;
-  left: 370px;
-  top: 10px;
-  border-radius: 25%;
+  .close-div {
+    flex-direction: column; /* Stack items vertically */
+    align-items: flex-start; /* Align items to the start */
+    justify-content: flex-start; /* Start items at the beginning */
+    padding: 10px; /* Reduce padding */
+    top: 10px; /* Adjust top position */
+  }
+
+  .signIn-text {
+    font-size: 20px; /* Adjust font size */
+    text-align: center; /* Center text */
+  }
+
+  .close-SignIn {
+    font-size: 30px; /* Adjust font size */
+    align-self: flex-end; /* Align the close button to the end */
+  }
+  
+  
 }
 
 /* css of admin */
@@ -149,6 +201,8 @@
   flex-direction:column;
   justify-content: center;
   gap: 10px;
+  position: relative;
+  bottom: 12px;
 }
 .admin-form form{
   display: flex; /* Ensure children are displayed inline */
@@ -158,13 +212,24 @@
   
 }
 
-.admin-form input{
+.admin-form input {
+
   height: 50px;
-  width: 300px;
+  width: 100%;
   position: relative;
-  left: 30px;
   border: none;
-  
+  background-color: rgb(243, 243, 243);
+  border-bottom: 2px solid black;
+  border-right: 2px solid black;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 5px;
+}
+
+/* Optional: Adding focus styles to remove any default outline and add a custom focus effect */
+.admin-form input:focus {
+  outline: none; /* Remove default focus outline */
+  border-bottom-color: black; /* Change border color on focus, optional */
 }
 
 .admin-email{
@@ -174,9 +239,8 @@
 
 .admin-submit{
   height: 50px;
-  width: 300px;
+  width: 100%;
   position: relative;
-  left: 30px;
   border-color:white;
   background-color: blue;
   color: aliceblue;
@@ -186,4 +250,21 @@
   background-color: transparent;
   border: none;
   color: blue;
+}
+
+/* admin form Responsive styles for screens 768px and smaller */
+@media (max-width: 768px) {
+  .admin-form {
+    padding: 10px; /* Add padding for better spacing */
+  }
+
+  .admin-form input, 
+  .admin-submit {
+    width: 100%; /* Make inputs and button full width */
+    left: 0; /* Remove relative left positioning */
+  }
+
+  .admin-ForgotPass {
+    font-size: 14px; /* Adjust font size for smaller screens */
+  }
 }
