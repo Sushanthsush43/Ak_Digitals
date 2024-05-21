@@ -71,6 +71,7 @@ function AdminLoginForm({ app, closeStatus }) {
   return (
     <div className='admin-form'>
       <form onSubmit={handleLogin}>
+      <h4 className='signIn-text'>ADMIN LOGIN</h4>
         <input
           className='admin-email'
           type="email"
