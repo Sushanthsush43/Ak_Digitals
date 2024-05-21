@@ -248,6 +248,16 @@
   color: blue;
 }
 
+.logout-btn{
+  height: 50px;
+  width: 100%;
+  position: relative;
+  border-color:white;
+  background-color: #563410e5;;
+  color: aliceblue;
+  border-radius: 5px;
+}
+
 /* admin form Responsive styles for screens 768px and smaller */
 @media (max-width: 768px) {
   .admin-form {
@@ -255,7 +265,8 @@
   }
 
   .admin-form input, 
-  .admin-submit {
+  .admin-submit,
+  .logout-btn {
     width: 100%; /* Make inputs and button full width */
     left: 0; /* Remove relative left positioning */
   }
