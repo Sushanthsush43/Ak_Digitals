@@ -319,8 +319,8 @@ function DeleteVideos({storage, app}) {
                 </div>
             )}
         <div className='delete-main container mt-5'>
-            <div className="d-flex justify-content-between align-items-center mb-3">
-            <label className='lead'><span className='text-danger'>{toDeleteVideos.length}</span> items selected</label>
+            <div className="d-flex mb-3 delete-label-btn">
+                <label className='lead'><span className='text-danger'>{toDeleteVideos.length}</span> items selected</label>
                 <button className="btn btn-danger" onClick={() => handleDeleteVideos()}>Delete</button>
             </div>
 

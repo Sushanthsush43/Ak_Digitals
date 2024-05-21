@@ -97,11 +97,11 @@ function DashBoard({ storage, app }) {
                   <div className='count-div-main'>
                       <div className='count-div-tabs'>
                           <IoMdImages className='count-icon' />
-                          <p>PHOTOS<br /><span>{imgCount}</span></p>
+                          <p><span className='dashboard-count-text'>PHOTOS</span><br /><span className='dashboard-count'>{imgCount}</span></p>
                       </div>
                       <div className='count-div-tabs'>
                           <IoIosVideocam className='count-icon' />
-                          <p>VIDEOS<br /><span>{vidCount}</span></p>
+                          <p><span className='dashboard-count-text'>Videos</span><br /><span className='dashboard-count'>{vidCount}</span></p>
                       </div>
                   </div>
                   <div className='dashboard-upload-main'>
@@ -115,8 +115,8 @@ function DashBoard({ storage, app }) {
                             Delete
                       </div>
                       <div className='dashboard-delete-btns'>
-                        <Link to='/deletephotos' className="teko-headings">Delete Photos</Link>
-                        <Link to='/deletevideos' className="teko-headings">Delete Videos</Link>
+                        <Link to='/deletephotos' className="teko-headings">Photos</Link>
+                        <Link to='/deletevideos' className="teko-headings">Videos</Link>
                       </div>
                   </div>
               </div>
