@@ -4,7 +4,8 @@ import { ref, uploadBytes } from 'firebase/storage';
 import { toast } from "react-toastify";
 import { toastSuccessStyle, toastErrorStyle } from './uitls/toastStyle';
 
-function PhotoUpload({storage}) {
+// runCompleted is callback for tab component
+function PhotoUpload({storage, runCompleted}) {
 
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [selectedFilesCopy, setSelectedFilesCopy] = useState([]);
@@ -31,6 +32,7 @@ function PhotoUpload({storage}) {
         setUploading(true);
         isSomeFailed = false;
         isCompleteFailed = false;
+        runCompleted(false);
 
         try {
             const updatedArray = new Array(selectedFiles.length).fill(true); // set all file upload as successful initially
@@ -91,6 +93,9 @@ function PhotoUpload({storage}) {
                 toast.error("Some photos could not be uploaded", {...toastErrorStyle(), autoClose:false}); // if some files couldnt be uploaded
             else if (!isCompleteFailed && !isSomeFailed)
                 toast.success("Photos successfully uploaded", {...toastSuccessStyle(), autoClose:false}); // if all files are uploaded
+
+            // callback for tab component
+            runCompleted(true);
         }
 
     };

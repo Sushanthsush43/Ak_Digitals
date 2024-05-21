@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useHistory } from 'react-router-dom';
 
-export const CheckAdminLogin = ({ app, getBool }) => {
+export const CheckAdminLogin = ({ app, getBool = false }) => {
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
   const [adminLoading, setAdminLoading] = useState(true);
   const history = useHistory();

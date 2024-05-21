@@ -12,7 +12,7 @@ import { CheckAdminLogin } from './uitls/checkAdminLogin';
 function DeletePhotos({storage, app}) {
 
     // Check if authorized user, ie. admin
-    CheckAdminLogin({app, getBool : false});
+    CheckAdminLogin({app});
 
     const [imageUrls, setImageUrls] = useState([]);
     const [page, setPage] = useState(1);

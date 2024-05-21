@@ -14,7 +14,7 @@ import { CheckAdminLogin } from '../components/uitls/checkAdminLogin';
 
 function DashBoard({ storage, app }) {
   // Check if authorized user, ie. admin
-  CheckAdminLogin({ app, getBool: false });
+  CheckAdminLogin({app});
 
   const [imgCount, setImgCount] = useState(0);
   const [vidCount, setVidCount] = useState(0);
@@ -49,7 +49,7 @@ function DashBoard({ storage, app }) {
         if (imgCount >= imgsLength) {
           clearInterval(imgIntervalRef.current);
         }
-      }, 175);
+      }, 100);
     }
 
     if (vidsLength > 0) {
@@ -60,7 +60,7 @@ function DashBoard({ storage, app }) {
         if (vidCount >= vidsLength) {
           clearInterval(vidIntervalRef.current);
         }
-      }, 175);
+      }, 100);
     }
   };
 
@@ -106,7 +106,7 @@ function DashBoard({ storage, app }) {
             </div>
 
             <div className='Update-div'>
-                <TabsComponent storage={storage} Tab1={PhotoUpload} Tab2={VideoUpload} />
+                <TabsComponent storage={storage} Tab1={PhotoUpload} Tab2={VideoUpload} waitBeforeSwitch={true}/>
             </div>
             <div className='dashboard-delete-section'>
                 <Link to='/deletephotos' className="teko-headings">Delete Photos</Link>

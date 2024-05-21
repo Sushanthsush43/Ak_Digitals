@@ -13,7 +13,7 @@ import { CheckAdminLogin } from './uitls/checkAdminLogin';
 function DeleteVideos({storage, app}) {
 
     // Check if authorized user, ie. admin
-    CheckAdminLogin({app, getBool : false});
+    CheckAdminLogin({app});
 
     const [videoUrls, setVideoUrls] = useState([]);
     const [page, setPage] = useState(1);

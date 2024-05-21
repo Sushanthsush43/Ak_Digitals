@@ -1,11 +1,30 @@
 import React, { useState } from 'react';
 import './../css/TabsComponent.css';
+import { toast } from 'react-toastify';
+import { toastErrorStyle } from './uitls/toastStyle';
 
-const TabsComponent = ({storage, Tab1, Tab2}) => {
+const TabsComponent = ({storage, Tab1, Tab2, waitBeforeSwitch = false}) => {
   const [activeTab, setActiveTab] = useState(0);
+  const [runCompleted, setRunCompleted] = useState(true);
 
   const handleTabClick = (index) => {
+    if(waitBeforeSwitch && !runCompleted) {
+      toast.error('Please wait until the upload is completed', {
+        ...toastErrorStyle(),
+        style: {
+          ...toastErrorStyle().style,
+          backgroundColor: 'white',
+          background : 'none',
+          color: 'black'
+        }
+      });
+      return;
+    }
     setActiveTab(index);
+  };
+
+  const handleRunCompleted = (completed) => {
+    setRunCompleted(completed);
   };
 
   return (
@@ -16,8 +35,17 @@ const TabsComponent = ({storage, Tab1, Tab2}) => {
         <div className={`tab ${activeTab === 1 ? 'active' : ''}`} onClick={() => handleTabClick(1)}>video</div>
       </div>
       <div className="content">
-        {activeTab === 0 && <Tab1 storage={storage}/>}
-        {activeTab === 1 && <Tab2 storage={storage}/>}
+        {
+          waitBeforeSwitch ?
+          <>
+            {activeTab === 0 && <Tab1 storage={storage} runCompleted={handleRunCompleted} />}
+            {activeTab === 1 && <Tab2 storage={storage} runCompleted={handleRunCompleted} />}
+          </> :
+          <>
+            {activeTab === 0 && <Tab1 storage={storage} />}
+            {activeTab === 1 && <Tab2 storage={storage} />}
+          </>
+        }
       </div>
     </div>
   );

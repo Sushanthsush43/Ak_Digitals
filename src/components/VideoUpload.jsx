@@ -5,7 +5,8 @@ import { toast } from "react-toastify";
 import { toastSuccessStyle, toastErrorStyle } from './uitls/toastStyle.js';
 import { VideoToFrames, VideoToFramesMethod } from './uitls/ThumbnailGenerator';
 
-function VideoUpload({storage}) {
+// runCompleted is callback for tab component
+function VideoUpload({storage, runCompleted}) {
 
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [selectedFilesCopy, setSelectedFilesCopy] = useState([]);
@@ -45,6 +46,7 @@ function VideoUpload({storage}) {
         setUploading(true);
         isSomeFailed = false;
         isCompleteFailed = false;
+        runCompleted(false);
 
         try {
             const updatedArray = new Array(selectedFiles.length).fill(true); // set all file upload as successful initially
@@ -109,6 +111,9 @@ function VideoUpload({storage}) {
                 toast.error("Some videos could not be uploaded", {...toastErrorStyle(), autoClose:false}); // if some files couldn't be uploaded
             else if (!isCompleteFailed && !isSomeFailed)
                 toast.success("Videos successfully uploaded", {...toastSuccessStyle(), autoClose:false}); // if all files are uploaded
+
+            // callback for tab component
+            runCompleted(true);
         }
 
     };
