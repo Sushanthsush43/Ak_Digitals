@@ -77,43 +77,50 @@ function DashBoard({ storage, app }) {
   }, [imgsLength, vidsLength]);
 
   return (
-    <div className='DashBoard-div'>
+          <div className='DashBoard-div'>
 
-        {/* Header Section */}
-        <div className='header-Main'>
-            <div className="heading-container">
-                <h1 className="sofia-regular">AK DIGITALS</h1>
-            </div>
-        </div>
+              {/* Header Section */}
+              <div className='header-Main'>
+                  <div className="heading-container">
+                      <h1 className="sofia-regular">AK DIGITALS</h1>
+                  </div>
+              </div>
 
-        {/* Back Button Section */}
-        <div className='dashboard-back-btn'>
-            <Link to='/' className="teko-headings">
-                <FontAwesomeIcon icon={faChevronLeft} />
-            </Link>
-        </div>
+              {/* Back Button Section */}
+              <div className='dashboard-back-btn'>
+                  <Link to='/' className="teko-headings">
+                      <FontAwesomeIcon icon={faChevronLeft} />
+                  </Link>
+              </div>
 
-        <div className='MainDashBoardDiv'>
-            <div className='CountDiv'>
-                <div className='PhotoCountDiv'>
-                    <IoMdImages className='cameraIcon' />
-                    <p>PHOTOS<br /><span>{imgCount}</span></p>
-                </div>
-                <div className='VideoCountDiv'>
-                    <IoIosVideocam className='VideoIcon' />
-                    <p>VIDEOS<br /><span>{vidCount}</span></p>
-                </div>
-            </div>
-
-            <div className='Update-div'>
-                <TabsComponent storage={storage} Tab1={PhotoUpload} Tab2={VideoUpload} waitBeforeSwitch={true}/>
-            </div>
-            <div className='dashboard-delete-section'>
-                <Link to='/deletephotos' className="teko-headings">Delete Photos</Link>
-                <Link to='/deletevideos' className="teko-headings">Delete Videos</Link>
-            </div>
-        </div>
-    </div>
+              <div className='MainDashBoardDiv'>
+                  <div className='count-div-main'>
+                      <div className='count-div-tabs'>
+                          <IoMdImages className='count-icon' />
+                          <p>PHOTOS<br /><span>{imgCount}</span></p>
+                      </div>
+                      <div className='count-div-tabs'>
+                          <IoIosVideocam className='count-icon' />
+                          <p>VIDEOS<br /><span>{vidCount}</span></p>
+                      </div>
+                  </div>
+                  <div className='dashboard-upload-main'>
+                      <div className='dashboard-upload-head'>
+                        Upload
+                      </div>
+                      <TabsComponent storage={storage} Tab1={PhotoUpload} Tab2={VideoUpload} waitBeforeSwitch={true}/>
+                  </div>
+                  <div className='dashboard-delete-main'>
+                      <div className='dashboard-delete-head'>
+                            Delete
+                      </div>
+                      <div className='dashboard-delete-btns'>
+                        <Link to='/deletephotos' className="teko-headings">Delete Photos</Link>
+                        <Link to='/deletevideos' className="teko-headings">Delete Videos</Link>
+                      </div>
+                  </div>
+              </div>
+          </div>
   );
 }
 

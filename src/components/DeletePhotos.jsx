@@ -79,7 +79,7 @@ function DeletePhotos({storage, app}) {
             );
 
             // Sort images by upload time, newest first
-            imagesWithMetadata.sort((a, b) => new Date(b.timeCreated) - new Date(a.timeCreated));
+            imagesWithMetadata.sort((a, b) => new Date(a.timeCreated) - new Date(b.timeCreated));
 
             // Remove the uploadTime from the final array
             const sortedImageRefs = imagesWithMetadata.map(image => image.ref);

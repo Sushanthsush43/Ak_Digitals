@@ -4,94 +4,144 @@
 @import url('https://fonts.googleapis.com/css2?family=Lobster&family=Oleo+Script:wght@400;700&family=Pacifico&family=Teko:wght@300..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Sofia&display=swap');
 
-
-.MainDashBoardDiv {
-    display: flex;
-    flex-direction: column;
-    gap: 20px; /* Adds a gap of 20px between CountDiv and Dashbord-tab */
-}
-
 .DashBoard-div {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-self: center;
     gap: 20px; /* Adds a gap of 20px between header-Main and MainDashBoardDiv */
-    background-color: #f0f0f0; /* Optional: Set a background color */
+    /* background-color: green; */
+    background: #F5F5F5;
 }
 
-.CountDiv{
-    position: relative; /* Make the container relative */
+.MainDashBoardDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: center;
+    width: 80%;
+    gap: 20px; /* Adds a gap of 20px between CountDiv and Dashbord-tab */
+    padding: 20px;
+}
+
+.dashboard-back-btn {
+    margin-left: 20px;
+}
+
+.count-div-main{
+    position: relative;
     display: flex;
     justify-content: center;
+    align-items: center;
+    width: 60%;
+    align-self: center;
     flex-direction: row;
     column-gap: 100px;
+    margin-bottom: 50px;
 }
-.PhotoCountDiv{
-    position: relative; /* Make the container relative */
+
+.count-div-tabs {
+    position: relative;
     display: flex;
-    flex-direction: row; /* Change direction to row */
+    flex-direction: row;
     justify-content: center;
-    align-items: center; /* Align items vertically */
-    width: 400px; /* Adjust width as needed */
-    height: 150px; /* Adjust height as needed */
-    border-radius: 5%;
-    background-color: #ffffff; /* Background color */
-    box-shadow: 0 4px 8px 10px rgba(0, 0, 0, 0.1); /* Box shadow */
-    padding: 0; /* Padding */
-
+    align-items: center;
+    width: 100%;
+    border-radius: 5px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
 }
 
+/* .PhotoCountDiv{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+    height: 150px;
+    border-radius: 5px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px 10px rgba(0, 0, 0, 0.1);
+    padding: 0;
+} */
 
-.PhotoCountDiv span {
-    font-size: 50px; /* Adjust font size */
+.count-div-tabs span {
+    font-size: 50px;
     background-color: transparent;
 }
-.PhotoCountDiv p {
+.count-div-tabs p {
+    padding: 0 !important;
+    margin: 0 !important;
     font-size: 30px;
     background-color: transparent;
 }
 
-.cameraIcon {
+.count-icon {
     position: relative;
-    font-size: 70px; /* Adjust the size as needed */
-    right: 70px;
+    width: 25%;
+    height: 25%;
     background-color: transparent;
   }
 
-.VideoCountDiv{
-    position: relative; /* Make the container relative */
+/* .VideoCountDiv{
+    position: relative;
     display: flex;
-    flex-direction: row; /* Change direction to row */
+    flex-direction: row;
     justify-content: center;
-    align-items: center; /* Align items vertically */
-    width: 400px; /* Adjust width as needed */
-    height: 150px; /* Adjust height as needed */
-    border-radius: 5%;
-    background-color: #ffffff; /* Background color */
-    box-shadow: 0 4px 8px 10px rgba(0, 0, 0, 0.1); /* Box shadow */
-    padding: 0; /* Padding */
+    align-items: center;
+    width: 400px;
+    height: 150px;
+    border-radius: 5px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px 10px rgba(0, 0, 0, 0.1);
+    padding: 0;
+} */
 
+.dashboard-upload-main {
+    border-top: 2px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding-bottom: 30px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid black;
 }
 
-.VideoCountDiv span {
-    font-size: 50px; /* Adjust font size */
-    background-color: transparent;
-   
-}
-.VideoCountDiv p {
-    font-size: 30px;
-    background-color: transparent;
-
+.dashboard-upload-head {
+    font-size: 40px;
 }
 
-.VideoIcon {
-    position: relative;
-    font-size: 70px; /* Adjust the size as needed */
-    right: 70px;
-    background-color: transparent;
-  }
+.dashboard-delete-main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
 
+.dashboard-delete-head {
+    font-size: 40px;
+}
 
+.dashboard-delete-btns {
+    display: flex;
+    gap: 30px;
+}
+
+.dashboard-delete-btns .teko-headings {
+    display: flex;
+    gap: 30px;
+    background-color: black;
+    border-radius: 5px;
+    padding: 0 10px 0 10px;
+    color: white;
+    font-size: 20px;
+}
 
 
 
