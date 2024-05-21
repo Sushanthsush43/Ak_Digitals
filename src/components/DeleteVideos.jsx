@@ -99,7 +99,7 @@ function DeleteVideos({storage, app}) {
             );
     
             // Sort videos by upload time, newest first
-            videosWithMetadata.sort((a, b) => new Date(a.timeCreated) - new Date(b.timeCreated));
+            videosWithMetadata.sort((a, b) => new Date(b.timeCreated) - new Date(a.timeCreated));
     
             // Remove the uploadTime from the final array
             const sortedVideoRefs = videosWithMetadata.map(video => video.ref);
