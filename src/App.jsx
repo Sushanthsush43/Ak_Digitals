@@ -13,11 +13,11 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/" exact component={DashBoard} />
-        <Route path="/PhotoVideoTab" exact component={PhotoVideoTab} />
+        <Route path="/" exact component={HomePage} />
         <Route path="/ContactPage" exact component={ContactPage} />
       </Switch>
     </Router>
+
   );
 }
 
