@@ -10,10 +10,8 @@ import AboutUs from './components/AboutUs';
 import DeletePhotos from './components/DeletePhotos';
 import DeleteVideos from './components/DeleteVideos';
 
-
 // Firebase stuff ( Important )
 const { storage, app } = getFirebaseConfig();
-
 
 function App() {
   return (
