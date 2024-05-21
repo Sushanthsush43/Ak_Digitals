@@ -45,7 +45,7 @@ function PhotoUpload({storage}) {
                     // if (i % 2 === 0) {
                     //     throw new Error('Simulated error: i equals 2');
                     // }
-                        throw new Error('Simulated error: i equals 2');
+                        // throw new Error('Simulated error: i equals 2');
 
                     const storageRef = ref(storage, `images/${file.name}`);
 
