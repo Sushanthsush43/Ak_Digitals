@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import AdminLoginForm from './AdminLoginForm';
 import { CheckAdminLogin } from './uitls/checkAdminLogin';
 import AdminLogout from './AdminLogout';
+import { IoClose } from "react-icons/io5";
 
 const Header = ({app}) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -56,13 +57,17 @@ const Header = ({app}) => {
         </div>
       </div>
       <div className={`signIn ${isVisible ? 'visible' : ''}`}>
-          <button className='close-SignIn' onClick={closeSignIN}>X</button>
-
+        <div className='close-div'>
+        <spam className='signIn-text'>ADMIN LOGIN</spam>
+          <IoClose className='close-SignIn' onClick={closeSignIN}/>
+        </div>
+        <div className='Login-logout-div'>
           { isAdminLoggedIn ?
                 <AdminLogout app={app} closeStatus={handleClose}/> 
               :
                 <AdminLoginForm app={app}  closeStatus={handleClose}/>
           }
+        </div>
       </div>
     </div>
   );
