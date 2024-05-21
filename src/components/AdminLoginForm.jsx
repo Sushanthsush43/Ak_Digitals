@@ -3,7 +3,7 @@ import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from 'fir
 import { toast } from 'react-toastify';
 import { toastErrorStyle, toastSuccessStyle } from './uitls/toastStyle';
 
-function AdminLoginForm({ app }) {
+function AdminLoginForm({ app, closeStatus }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
@@ -26,11 +26,14 @@ function AdminLoginForm({ app }) {
 
       await signInWithEmailAndPassword(auth, email, password);
 
+      // signal to close component
+      closeStatus(true);
       toast.success("Admin Login Successfull", toastSuccessStyle());
       console.log('Admin logged in successfully!');
     } catch (error) {
       toast.error("Invalid Login Credentials", toastErrorStyle());
       console.error('Error signing in:', error.message);
+      closeStatus(false);
     }
   };
 

@@ -159,7 +159,7 @@ function PhotoContainer({storage}) {
                 )}
             </>
             <div className={`photo-container ${isOpened ? 'animate' : ''}`} >
-                <ResponsiveMasonry columnsCountBreakPoints={{ 350: 2, 750: 2, 900: 3 }}>
+                <ResponsiveMasonry columnsCountBreakPoints={{ 380: 1, 750: 2, 900: 3 }}>
                 <Masonry gutter='17px'>
                     {imageUrls.map(({ url, loaded }, index) => (
                         <InView

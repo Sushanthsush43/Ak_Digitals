@@ -6,7 +6,7 @@ import { ref, listAll, getDownloadURL, getMetadata } from 'firebase/storage';
 import { toast } from 'react-toastify';
 import { toastErrorStyle } from './uitls/toastStyle';
 import { InView } from "react-intersection-observer";
-import { isIOSorMacDevice } from './uitls/isIOS';
+import { isIOSorMacDevice } from './uitls/deviceUtils';
 import './../css/VideoContainer.css';
 
 function VideoContainer({storage}) {
@@ -203,7 +203,7 @@ function VideoContainer({storage}) {
       )}
 
       <div className={`video-container ${isOpened ? 'animate' : ''}`}>
-        <ResponsiveMasonry columnsCountBreakPoints={{ 350: 2, 750: 2, 900: 3 }}>
+        <ResponsiveMasonry columnsCountBreakPoints={{ 380: 1, 750: 2, 900: 3 }}>
           <Masonry gutter='17px'>
             {videoUrls.map(({ videoUrl, thumbnailUrl, loaded }, index) => (
               <InView
@@ -217,14 +217,15 @@ function VideoContainer({storage}) {
                     inView && loaded ? (videoUrl = videoUrl) : (videoUrl = '');
                   }
                 }}
-                onMouseEnter={(e) => { handlePlay(e.target); videoUrl = videoUrl; thumbnailUrl = thumbnailUrl}}
-                onMouseLeave={(e) => { handlePause(e.target); videoUrl = ''; thumbnailUrl = false}}
+                onContextMenu={(e)=> e.preventDefault()}
+                onMouseEnter={(e) => { handlePlay(e.target); videoUrl = videoUrl; thumbnailUrl = false}}
+                onMouseLeave={(e) => { handlePause(e.target); videoUrl = ''; thumbnailUrl = thumbnailUrl}}
                 onLoadedData={() => handleVideoLoad(index)}
                 src={videoUrl}
                 poster={thumbnailUrl}
                 onError={(e) => console.error('Error playing video while hover (hover):', e.target.error)}
                 alt={`Video ${index}`}
-                onClick={() => viewVideo(videoUrl, index)} // Click to open video in full-screen
+                onClick={()=>viewVideo(videoUrl, index)} // Click to open video in full-screen
                 style={{ display: isIOS ? 'inline' : loaded ? 'inline' : 'none',
                          cursor: 'pointer' }}                
                 autoPlay={false}
@@ -238,6 +239,7 @@ function VideoContainer({storage}) {
           </Masonry>
         </ResponsiveMasonry>
       </div>
+
       <div className='loading-viewMore' style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', }}>
         {/* Loading & ViewMore */}
         {videoUrls.length > 0 && (

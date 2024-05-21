@@ -7,9 +7,13 @@ import { InView } from "react-intersection-observer";
 import "../css/DeleteComp.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { isIOSorMacDevice } from './uitls/isIOS';
+import { isIOSorMacDevice } from './uitls/deviceUtils';
+import { CheckAdminLogin } from './uitls/checkAdminLogin';
 
-function DeleteVideos({storage}) {
+function DeleteVideos({storage, app}) {
+
+    // Check if authorized user, ie. admin
+    CheckAdminLogin({app, getBool : false});
 
     const [videoUrls, setVideoUrls] = useState([]);
     const [page, setPage] = useState(1);
@@ -110,25 +114,25 @@ function DeleteVideos({storage}) {
       }
 
     async function fetchVideos() {
-        if (videoRefs && videoRefs.items && videoRefs.items.length >= 1) {
+        if (videoRefs && videoRefs.length >= 1) {
             setIsLoading(true);
             try {
                 const startIndex = (page - 1) * videosPerPage;
                 const endIndex = startIndex + videosPerPage;
 
-                const totalPages = Math.ceil(videoRefs.items.length / videosPerPage);
+                const totalPages = Math.ceil(videoRefs.length / videosPerPage);
                 setTotalPages(totalPages);
 
-                const urls = await Promise.all(videoRefs.items.slice(startIndex, endIndex).map(async (itemRef) => {
+                const urls = await Promise.all(videoRefs.slice(startIndex, endIndex).map(async (itemRef) => {
                     try {
                         const videoUrl = await getDownloadURL(itemRef);
                         const thumbnailName = itemRef.name.slice(0, -4) + '.png';
 
                         const thumbnailRef = ref(storage, `thumbnails/${thumbnailName}`);
-                        // console.log(videoUrl)
+                        // console.log("video = ",videoUrl)
 
                         const thumbnailUrl = await getDownloadURL(thumbnailRef);
-                        // console.log(thumbnailUrl)
+                        // console.log("thumbnail ",thumbnailUrl)
 
                         return { videoUrl, thumbnailUrl, loaded: false, constVideoUrl : videoUrl, constThumbnailUrl : thumbnailUrl};
                     } catch (error) {
@@ -329,8 +333,9 @@ function DeleteVideos({storage}) {
                         className='delete-item image-video'
                         key={index}
                         data-index={index}
-                        onMouseEnter={(e) => { handlePlay(e.target); videoUrl = videoUrl; thumbnailUrl = thumbnailUrl}}
-                        onMouseLeave={(e) => { handlePause(e.target); videoUrl = ''; thumbnailUrl = false}}
+                        onContextMenu={(e)=> e.preventDefault()}
+                        onMouseEnter={(e) => { handlePlay(e.target); videoUrl = videoUrl; thumbnailUrl = false}}
+                        onMouseLeave={(e) => { handlePause(e.target); videoUrl = ''; thumbnailUrl = thumbnailUrl}}
                         onChange={(inView, entry) => {
                             // Trigger inView callback even before fully visible
                             if (entry.isIntersecting || entry.boundingClientRect.top < 100) {
@@ -339,7 +344,7 @@ function DeleteVideos({storage}) {
                           }}
                         src={videoUrl}
                         poster={thumbnailUrl}
-                        onClick={() => viewVideo(videoUrl, index)} // Click to open video in full-screen
+                        onClick={()=>viewVideo(videoUrl, index)} // Click to open video in full-screen
                         onError={(e) => console.error('Error playing video while hover (hover):', e.target.error)}
                         style={{ display: isIOS ? 'inline' : loaded ? 'inline' : 'none'}}  
                         onLoadedData={() => handleVideoLoad(index)}

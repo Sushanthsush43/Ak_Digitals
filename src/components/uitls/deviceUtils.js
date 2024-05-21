@@ -10,3 +10,8 @@ export function isIOSorMacDevice() {
         return true; // return true just for safety , we will assume its IOS
     }
 }
+
+export function isTouchDevice() {
+    return 'ontouchstart' in window || navigator.maxTouchPoints;
+  }
+  

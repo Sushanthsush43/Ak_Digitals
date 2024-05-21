@@ -33,6 +33,10 @@
   margin: 0;
 }
 
+.header-links > * {
+  padding-left: 23px;
+}
+
 /*css for the brandName text*/
 .sofia-regular {
   font-family: "Sofia", cursive;
@@ -81,6 +85,7 @@
 .signIn {
   width: 0;
   height: 0;
+  overflow-x: hidden; /* needed */
   background-color: #9d9a96c7; /* Adjust background color as needed */
   position: absolute;
   left: 15px;
@@ -120,6 +125,9 @@
   }
   .homePage-textBox p h4 {
     font-size: 12px;
+  }
+  .header-links > * {
+    padding-left: 10px;
   }
 }
 

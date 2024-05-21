@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import PhotoUpload from './PhotoUpload';
-import VideoUpload from './VideoUpload';
-import './../css/PhotoVideoTab.css';
+import './../css/TabsComponent.css';
 
-const UploadTab = ({storage}) => {
+const TabsComponent = ({storage, Tab1, Tab2}) => {
   const [activeTab, setActiveTab] = useState(0);
 
   const handleTabClick = (index) => {
@@ -18,11 +16,11 @@ const UploadTab = ({storage}) => {
         <div className={`tab ${activeTab === 1 ? 'active' : ''}`} onClick={() => handleTabClick(1)}>video</div>
       </div>
       <div className="content">
-        {activeTab === 0 && <PhotoUpload storage={storage}/>}
-        {activeTab === 1 && <VideoUpload storage={storage}/>}
+        {activeTab === 0 && <Tab1 storage={storage}/>}
+        {activeTab === 1 && <Tab2 storage={storage}/>}
       </div>
     </div>
   );
 };
 
-export default UploadTab;
+export default TabsComponent;
