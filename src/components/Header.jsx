@@ -58,7 +58,7 @@ const Header = ({app}) => {
       </div>
       <div className={`signIn ${isVisible ? 'visible' : ''}`}>
         <div className='close-div'>
-        <spam className='signIn-text'>ADMIN LOGIN</spam>
+        
           <IoClose className='close-SignIn' onClick={closeSignIN}/>
         </div>
         <div className='Login-logout-div'>

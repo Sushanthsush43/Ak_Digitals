@@ -92,7 +92,6 @@
   display: flex; /* Ensure children are displayed inline */
   flex-direction:column;
   justify-content: center;
-  gap: 10px;
   padding: 10px;
   left: 15px;
   border-radius: 5%;
@@ -105,7 +104,7 @@
 .signIn.visible {
   visibility: visible;
   width: 400px;
-  height: 280px;
+  height: 320px;
   background-color: rgb(243, 243, 243);
   box-shadow: 0 4px 8px 10px rgba(0, 0, 0, 0.397);
 
@@ -125,11 +124,9 @@
 .close-div{
   display: flex; /* Ensure children are displayed inline */
   flex-direction: row; /* Ensure the direction is row */
-  align-items: center; /* Align items vertically in the center */
-  justify-content: space-between; /* Space out items evenly */
-  padding: 10px;
-  top: 15px;
+  padding: 5px;
   position: relative;
+  justify-content: right;
 }
 
 /* css of the admin login text in signin div */
@@ -137,6 +134,7 @@
   font-size: 24px;
   font-family:sans-serif;
   font-weight: bolder;
+  color: #3F2305;
 }
 
 /*css of the close button of the signin div*/
@@ -169,7 +167,7 @@
     
   .signIn.visible {
     width: 60%; /* Make it responsive to the screen size */
-    height: 280px; /* Adjust height if needed */
+    height: 320px; /* Adjust height if needed */
   }
 
   .close-div {
@@ -200,9 +198,9 @@
   display: flex; /* Ensure children are displayed inline */
   flex-direction:column;
   justify-content: center;
+  text-align: center;
   gap: 10px;
   position: relative;
-  bottom: 12px;
 }
 .admin-form form{
   display: flex; /* Ensure children are displayed inline */
@@ -220,9 +218,7 @@
   border: none;
   background-color: rgb(243, 243, 243);
   border-bottom: 2px solid black;
-  border-right: 2px solid black;
   padding-left: 10px;
-  padding-right: 10px;
   border-radius: 5px;
 }
 
@@ -234,7 +230,6 @@
 
 .admin-email{
   position: relative;
-  margin-top: 20px;
 }
 
 .admin-submit{
@@ -242,14 +237,25 @@
   width: 100%;
   position: relative;
   border-color:white;
-  background-color: blue;
+  background-color: #563410e5;;
   color: aliceblue;
+  border-radius: 5px;
 }
 
 .admin-ForgotPass{
   background-color: transparent;
   border: none;
   color: blue;
+}
+
+.logout-btn{
+  height: 50px;
+  width: 100%;
+  position: relative;
+  border-color:white;
+  background-color: #563410e5;;
+  color: aliceblue;
+  border-radius: 5px;
 }
 
 /* admin form Responsive styles for screens 768px and smaller */
@@ -259,7 +265,8 @@
   }
 
   .admin-form input, 
-  .admin-submit {
+  .admin-submit,
+  .logout-btn {
     width: 100%; /* Make inputs and button full width */
     left: 0; /* Remove relative left positioning */
   }
