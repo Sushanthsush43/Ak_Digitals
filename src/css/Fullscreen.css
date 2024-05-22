@@ -80,4 +80,14 @@
     max-width: 90%;
     max-height: 90%;
   }
+
+  .full-screen-video-container.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.full-screen-video-container.close {
+    opacity: 0;
+    pointer-events: none;
+}
   
