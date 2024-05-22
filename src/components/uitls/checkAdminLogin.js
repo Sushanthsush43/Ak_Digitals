@@ -30,5 +30,4 @@ export const CheckAdminLogin = ({ app, getBool = false }) => {
     return { isAdminLoggedIn, adminLoading };
   else
     return null;
-  
 }
