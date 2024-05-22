@@ -20,7 +20,7 @@ export const getDashboardData = async (storage) => {
             return metadata.size;
         }));
         const vidsSizeTotal = vidsSizes.reduce((accumulator, currentValue) => accumulator  + currentValue, 0);
-
+        
 
         const thumbnailsRefsTemp = await listAll(ref(storage, 'thumbnails'));
         const thumbnailsRefs = thumbnailsRefsTemp.items;
