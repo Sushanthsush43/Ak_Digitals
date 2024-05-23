@@ -23,6 +23,7 @@ function VideoContainer({storage}) {
   const [isIOS, setIsIos] = useState(true); // for safety we will assume its IOS intialy
   const [viewMorePaused, setViewMorePaused] = useState(false);
   const [endReached, setEndReached] = useState(false);
+  const [floatingDisabled, setFloatingDisabled] = useState(false);
 
   useEffect(()=>{
     const i = isIOSorMacDevice();
@@ -208,7 +209,7 @@ function VideoContainer({storage}) {
       )}
       
       {/* Scroll to top Floating Btn */}
-      <FloatingScrollBtn />
+      {!floatingDisabled ? <FloatingScrollBtn /> : null }
 
       <div className={`video-container ${isOpened ? 'animate' : ''}`}>
         <ResponsiveMasonry columnsCountBreakPoints={{ 380: 1, 750: 2, 900: 3 }}>
@@ -260,7 +261,11 @@ function VideoContainer({storage}) {
             )}
           </div>
         :
-          <EndReachedBtn />
+          <InView
+              as="div"
+              onChange={(inView) => inView? setFloatingDisabled(true)  : setFloatingDisabled(false)}>
+              <EndReachedBtn />
+          </InView>
       }
     </>
   );

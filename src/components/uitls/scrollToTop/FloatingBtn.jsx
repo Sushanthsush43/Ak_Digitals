@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 
 const FloatingScrollBtn = () => {
   const [isVisible, setIsVisible] = useState(false);
-
   const toggleVisibility = () => {
     if (window.scrollY  > 300) {
       setIsVisible(true);

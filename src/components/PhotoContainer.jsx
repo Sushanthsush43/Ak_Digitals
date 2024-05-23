@@ -22,6 +22,7 @@ function PhotoContainer({storage}) {
   const [imageRefs, setImageRefs] = useState([]);
   const [viewMorePaused, setViewMorePaused] = useState(false);
   const [endReached, setEndReached] = useState(false);
+  const [floatingDisabled, setFloatingDisabled] = useState(false);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -165,7 +166,7 @@ function PhotoContainer({storage}) {
             </>
 
             {/* Scroll to top Floating Btn */}
-            <FloatingScrollBtn />
+            {!floatingDisabled ? <FloatingScrollBtn /> : null }
 
             <div className={`photo-container ${isOpened ? 'animate' : ''}`} >
                 <ResponsiveMasonry columnsCountBreakPoints={{ 380: 1, 750: 2, 900: 3 }}>
@@ -206,7 +207,11 @@ function PhotoContainer({storage}) {
                     )}
                 </div> 
             :
-                <EndReachedBtn />
+                <InView
+                    as="div"
+                    onChange={(inView) => inView? setFloatingDisabled(true)  : setFloatingDisabled(false)}>
+                    <EndReachedBtn />
+                </InView>
             }
 
         </>
