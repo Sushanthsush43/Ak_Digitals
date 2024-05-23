@@ -10,6 +10,7 @@ import { isIOSorMacDevice } from './uitls/deviceUtils';
 import './../css/VideoContainer.css';
 import './../css/Fullscreen.css';
 import FloatingScrollBtn from './uitls/scrollToTop/FloatingBtn';
+import EndReachedBtn from './uitls/scrollToTop/EndReachedBtn';
 
 function VideoContainer({storage}) {
 
@@ -21,6 +22,7 @@ function VideoContainer({storage}) {
   const [videoRefs, setVideoRefs] = useState([]);
   const [isIOS, setIsIos] = useState(true); // for safety we will assume its IOS intialy
   const [viewMorePaused, setViewMorePaused] = useState(false);
+  const [endReached, setEndReached] = useState(false);
 
   useEffect(()=>{
     const i = isIOSorMacDevice();
@@ -131,6 +133,7 @@ function VideoContainer({storage}) {
         // If it's the last page, reset the page count
         if (page === totalPages) {
           setPage(1);
+          setEndReached(true);
         }
   
         setVideoUrls(prevUrls => [...prevUrls, ...urls.filter(url => url !== null)]);
@@ -245,16 +248,20 @@ function VideoContainer({storage}) {
         </ResponsiveMasonry>
       </div>
 
-      <div className='loading-viewMore' style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', }}>
-        {/* Loading & ViewMore */}
-        {videoUrls.length > 0 && (
-            <InView
-                as="div"
-                className='loading'
-                onChange={(inView) => inView? handleViewMore()  : ''}>
-            </InView>
-        )}
-      </div>
+      {!endReached?
+          <div className='loading-viewMore' style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', }}>
+            {/* Loading & ViewMore */}
+            {videoUrls.length > 0 && (
+                <InView
+                    as="div"
+                    className='loading'
+                    onChange={(inView) => inView? handleViewMore()  : ''}>
+                </InView>
+            )}
+          </div>
+        :
+          <EndReachedBtn />
+      }
     </>
   );
 }

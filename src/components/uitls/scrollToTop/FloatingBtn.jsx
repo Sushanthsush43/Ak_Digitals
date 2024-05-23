@@ -26,7 +26,7 @@ const FloatingScrollBtn = () => {
   }, []);
 
   return (
-    <div className="scroll-to-top-floatBtn" onClick={scrollToTop} style={{ display: isVisible ? 'flex' : 'none' }}>
+    <div className="scroll-to-top-float-btn" onClick={scrollToTop} style={{ display: isVisible ? 'flex' : 'none' }}>
       &#8593;
     </div>
   );

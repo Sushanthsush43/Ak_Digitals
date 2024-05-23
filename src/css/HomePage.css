@@ -277,8 +277,8 @@
   }
 }
 
-/* Scroll to top floating btn */
-.scroll-to-top-floatBtn {
+/* Scroll to top floating btn section */
+.scroll-to-top-float-btn {
   position: fixed;
   bottom: 20px;
   right: 20px;
@@ -298,7 +298,37 @@
   transition: background-color 0.3s, box-shadow 0.3s;
 }
 
-.scroll-to-top-floatBtn:hover {
-  background-color: rgba(255, 255, 255, 0.5); /* Slightly more opaque on hover */
+.scroll-to-top-float-btn:hover {
+  background-color: rgba(255, 255, 255, 0.9); /* Slightly more opaque on hover */
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Scroll to top when end reached section */
+.scroll-to-top-end-main {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin: 35px;
+}
+
+.scroll-to-top-end-text {
+  width: 65%;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 13px;
+}
+
+.scroll-to-top-end-btn {
+  background-color: black;
+  color: rgb(255, 255, 255);
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 1px 5px 1px 5px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
 }

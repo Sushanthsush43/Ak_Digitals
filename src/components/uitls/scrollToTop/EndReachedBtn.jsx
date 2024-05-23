@@ -1,15 +1,4 @@
-import React, { useEffect, useState } from 'react';
-
 const EndReachedBtn = () => {
-  const [isVisible, setIsVisible] = useState(false);
-
-  const toggleVisibility = () => {
-    if (window.scrollY  > 300) {
-      setIsVisible(true);
-    } else {
-      setIsVisible(false);
-    }
-  };
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -18,16 +7,16 @@ const EndReachedBtn = () => {
     });
   };
 
-  useEffect(() => {
-    window.addEventListener('scroll', toggleVisibility);
-    return () => {
-      window.removeEventListener('scroll', toggleVisibility);
-    };
-  }, []);
-
   return (
-    <div className="scroll-to-top-endBtn" onClick={scrollToTop} style={{ display: isVisible ? 'flex' : 'none' }}>
-      &#8593;
+    <div className='scroll-to-top-end-main'>
+
+        <div className='scroll-to-top-end-text'>
+            In a World Full of Images, Thank You for Focusing on Mine.
+        </div>
+
+        <div className="scroll-to-top-end-btn" onClick={scrollToTop}>
+        &#8593; Go to Top
+        </div>
     </div>
   );
 };

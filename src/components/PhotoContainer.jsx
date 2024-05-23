@@ -9,6 +9,7 @@ import { InView } from "react-intersection-observer";
 import './../css/PhotoContainer.css';
 import './../css/Fullscreen.css';
 import FloatingScrollBtn from './uitls/scrollToTop/FloatingBtn';
+import EndReachedBtn from './uitls/scrollToTop/EndReachedBtn';
 
 function PhotoContainer({storage}) {
 
@@ -20,6 +21,7 @@ function PhotoContainer({storage}) {
   const imagesPerPage = 12;
   const [imageRefs, setImageRefs] = useState([]);
   const [viewMorePaused, setViewMorePaused] = useState(false);
+  const [endReached, setEndReached] = useState(false);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -107,6 +109,7 @@ function PhotoContainer({storage}) {
                 // If it's the last page, reset the page count
                 if (page === totalPages) {
                     setPage(1);
+                    setEndReached(true);
                 }
     
                 setImageUrls(prevUrls => [...prevUrls, ...urls.filter(url => url !== null)]);
@@ -190,16 +193,21 @@ function PhotoContainer({storage}) {
                 </Masonry>
                 </ResponsiveMasonry>
             </div>
-            <div className='loading-viewMore' style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', }}>
-                {/* Loading & ViewMore */}
-                {imageUrls.length > 0 && (
-                <InView
-                    as="div"
-                    className='loading'
-                    onChange={(inView) => inView? handleViewMore()  : ''}>
-                </InView>
-                )}
-            </div>
+            
+            {!endReached?
+                <div className='loading-viewMore' style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', }}>
+                    {/* Loading & ViewMore */}
+                    {imageUrls.length > 0 && (
+                    <InView
+                        as="div"
+                        className='loading'
+                        onChange={(inView) => inView? handleViewMore()  : ''}>
+                    </InView>
+                    )}
+                </div> 
+            :
+                <EndReachedBtn />
+            }
 
         </>
   );
