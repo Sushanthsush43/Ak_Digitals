@@ -70,6 +70,9 @@ function DashBoard({ storage, app }) {
                         <Link to='/deletevideos' className="teko-headings">Videos</Link>
                       </div>
                   </div>
+                  <div>
+                    
+                  </div>
               </div>
           </div>
   );
