@@ -7,6 +7,7 @@ import { InView } from "react-intersection-observer";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight, faTimes } from '@fortawesome/free-solid-svg-icons';
 import "../css/DeleteComp.css";
+import './../css/Fullscreen.css';
 import { CheckAdminLogin } from './uitls/checkAdminLogin';
 
 function DeletePhotos({storage, app}) {

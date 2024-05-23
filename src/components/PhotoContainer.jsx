@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import { toastErrorStyle } from '../components/uitls/toastStyle';
 import { InView } from "react-intersection-observer";
 import './../css/PhotoContainer.css';
+import './../css/Fullscreen.css';
 
 function PhotoContainer({storage}) {
 

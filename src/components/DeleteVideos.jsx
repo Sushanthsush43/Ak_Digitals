@@ -5,6 +5,7 @@ import { RiDeleteBinLine } from 'react-icons/ri';
 import { toastErrorStyle, toastSuccessStyle } from './uitls/toastStyle';
 import { InView } from "react-intersection-observer";
 import "../css/DeleteComp.css";
+import './../css/Fullscreen.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { isIOSorMacDevice } from './uitls/deviceUtils';

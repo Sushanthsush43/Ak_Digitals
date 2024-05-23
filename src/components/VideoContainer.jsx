@@ -8,6 +8,7 @@ import { toastErrorStyle } from './uitls/toastStyle';
 import { InView } from "react-intersection-observer";
 import { isIOSorMacDevice } from './uitls/deviceUtils';
 import './../css/VideoContainer.css';
+import './../css/Fullscreen.css';
 
 function VideoContainer({storage}) {
 
