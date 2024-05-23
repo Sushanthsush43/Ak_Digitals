@@ -91,7 +91,6 @@
   position: absolute;
   display: flex; /* Ensure children are displayed inline */
   flex-direction:column;
-  justify-content: center;
   padding: 10px;
   left: 15px;
   border-radius: 5%;
@@ -104,7 +103,7 @@
 .signIn.visible {
   visibility: visible;
   width: 400px;
-  height: 320px;
+  height: 340px;
   background-color: rgb(243, 243, 243);
   box-shadow: 0 4px 8px 10px rgba(0, 0, 0, 0.397);
 
@@ -167,7 +166,7 @@
     
   .signIn.visible {
     width: 60%; /* Make it responsive to the screen size */
-    height: 320px; /* Adjust height if needed */
+    height: 340px; /* Adjust height if needed */
   }
 
   .close-div {
@@ -219,7 +218,7 @@
   background-color: rgb(243, 243, 243);
   border-bottom: 2px solid black;
   padding-left: 10px;
-  border-radius: 5px;
+  /* border-radius: 5px; */
 }
 
 /* Optional: Adding focus styles to remove any default outline and add a custom focus effect */
@@ -235,6 +234,7 @@
 .admin-submit{
   height: 50px;
   width: 100%;
+  margin-top: 20px;
   position: relative;
   border-color:white;
   background-color: #563410e5;;
@@ -251,6 +251,7 @@
 .logout-btn{
   height: 50px;
   width: 100%;
+  margin-top: 100px;
   position: relative;
   border-color:white;
   background-color: #563410e5;;
