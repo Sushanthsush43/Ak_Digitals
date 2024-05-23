@@ -103,7 +103,7 @@
 .signIn.visible {
   visibility: visible;
   width: 400px;
-  height: 340px;
+  height: 330px;
   background-color: rgb(243, 243, 243);
   box-shadow: 0 4px 8px 10px rgba(0, 0, 0, 0.397);
 
@@ -123,7 +123,6 @@
 .close-div{
   display: flex; /* Ensure children are displayed inline */
   flex-direction: row; /* Ensure the direction is row */
-  padding: 5px;
   position: relative;
   justify-content: right;
 }
@@ -166,15 +165,13 @@
     
   .signIn.visible {
     width: 60%; /* Make it responsive to the screen size */
-    height: 340px; /* Adjust height if needed */
+    height: 330px; /* Adjust height if needed */
   }
 
   .close-div {
     flex-direction: column; /* Stack items vertically */
     align-items: flex-start; /* Align items to the start */
     justify-content: flex-start; /* Start items at the beginning */
-    padding: 10px; /* Reduce padding */
-    top: 10px; /* Adjust top position */
   }
 
   .signIn-text {
