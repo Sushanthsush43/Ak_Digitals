@@ -14,8 +14,17 @@ function VideoUpload({storage, runCompleted}) {
     const [allUploadDone, setAllUploadDone] = useState(false);
     const [uploadTrack, setUploadTrack] = useState(0);
     const [eachUpdated, setEachUpdated] = useState([]);
+    const [abortController, setAbortController] = useState(null);
     let isSomeFailed = false;
     let isCompleteFailed = false;
+
+    useEffect(() => {
+        return () => {
+            if (abortController) {
+            abortController.abort();
+            }
+        };
+    }, [abortController]);
 
     const handleFileChange = (e) => {
         setAllUploadDone(false);
@@ -51,6 +60,8 @@ function VideoUpload({storage, runCompleted}) {
         isSomeFailed = false;
         isCompleteFailed = false;
         runCompleted(false);
+        const controller = new AbortController();
+        setAbortController(controller);
 
         try {
             const updatedArray = new Array(selectedFiles.length).fill(true); // set all file upload as successful initially
@@ -64,6 +75,11 @@ function VideoUpload({storage, runCompleted}) {
             for (let i = 0; i < selectedFiles.length; i++) {
                 const file = selectedFiles[i];
                 try {
+                    // if component unmounts, cancel upload
+                    if (controller.signal.aborted) {
+                        return;
+                    }
+
                     const fileExtension = file.name.slice(file.name.lastIndexOf('.') + 1).toLowerCase();
                     if(!supportedExtensions.includes(fileExtension)) {
                         throw new Error('Invalid video format');

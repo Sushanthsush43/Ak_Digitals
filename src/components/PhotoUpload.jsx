@@ -13,16 +13,17 @@ function PhotoUpload({storage, runCompleted}) {
     const [allUploadDone, setAllUploadDone] = useState(false);
     const [uploadTrack, setUploadTrack] = useState(0);
     const [eachUpdated, setEachUpdated] = useState([]);
-    const [compUnmounted, setCompUnmounted] = useState(false);
+    const [abortController, setAbortController] = useState(null);
     let isSomeFailed = false;
     let isCompleteFailed = false;
 
     useEffect(() => {
         return () => {
-          setCompUnmounted(true);
-          console.log('Upload component unmounted');
+            if (abortController) {
+            abortController.abort();
+            }
         };
-      }, []);
+    }, [abortController]);
 
     const handleFileChange = (e) => {
         setAllUploadDone(false);
@@ -45,6 +46,8 @@ function PhotoUpload({storage, runCompleted}) {
         isSomeFailed = false;
         isCompleteFailed = false;
         runCompleted(false);
+        const controller = new AbortController();
+        setAbortController(controller);
 
         try {
             const updatedArray = new Array(selectedFiles.length).fill(true); // set all file upload as successful initially
@@ -57,6 +60,11 @@ function PhotoUpload({storage, runCompleted}) {
             for (let i = 0; i < selectedFiles.length; i++) {
                 const file = selectedFiles[i];
                 try {
+                    // if component unmounts, cancel upload
+                    if (controller.signal.aborted) {
+                        return;
+                    }
+
                     const fileExtension = file.name.slice(file.name.lastIndexOf('.') + 1).toLowerCase();
                     if(!supportedExtensions.includes(fileExtension)) {
                         throw new Error('Invalid image format');
@@ -75,7 +83,7 @@ function PhotoUpload({storage, runCompleted}) {
                     //         uploadTime: Date.now()
                     //     }
                     // };
-                    await uploadBytes(storageRef, file);
+                    await uploadBytes(storageRef, file, { signal: controller.signal });
 
                     // console.log(`File "${file.name}" uploaded successfully.`);
                 } catch (error) {
