@@ -18,7 +18,7 @@ function DashBoard({ storage, app }) {
 
   const [imgsLength, setImgsLength] = useState(0);
   const [vidsLength, setVidsLength] = useState(0);
-  const getDashboardDataRan = useRef(false);
+  const getDashboardDataRan = useRef(false); // for extra surety
 
   useEffect(() => {
     if (!getDashboardDataRan.current) {

@@ -9,6 +9,7 @@ import { InView } from "react-intersection-observer";
 import { isIOSorMacDevice } from './uitls/deviceUtils';
 import './../css/VideoContainer.css';
 import './../css/Fullscreen.css';
+import FloatingScrollBtn from './uitls/scrollToTop/FloatingBtn';
 
 function VideoContainer({storage}) {
 
@@ -202,6 +203,9 @@ function VideoContainer({storage}) {
           )}
         </div>
       )}
+      
+      {/* Scroll to top Floating Btn */}
+      <FloatingScrollBtn />
 
       <div className={`video-container ${isOpened ? 'animate' : ''}`}>
         <ResponsiveMasonry columnsCountBreakPoints={{ 380: 1, 750: 2, 900: 3 }}>
