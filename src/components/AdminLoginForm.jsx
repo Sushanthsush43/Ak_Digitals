@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
 import { toast } from 'react-toastify';
 import { toastErrorStyle, toastSuccessStyle } from './uitls/toastStyle';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 function AdminLoginForm({ app, closeStatus }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [isForgotBtnDisabled, setIsForgotBtnDisabled] = useState(false);
+  const [isLoginBtnDisabled, setIsLoginBtnDisabled] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -22,6 +25,7 @@ function AdminLoginForm({ app, closeStatus }) {
     }
 
     try {
+      setIsLoginBtnDisabled(true);
       const auth = getAuth(app);
 
       await signInWithEmailAndPassword(auth, email, password);
@@ -34,6 +38,8 @@ function AdminLoginForm({ app, closeStatus }) {
       toast.error("Invalid Login Credentials", toastErrorStyle());
       console.error('Error signing in:', error.message);
       closeStatus(false);
+    } finally {
+      setIsLoginBtnDisabled(false);
     }
   };
 
@@ -54,9 +60,9 @@ function AdminLoginForm({ app, closeStatus }) {
       {...toastSuccessStyle(), autoClose : false} );
       console.log('Password reset email sent.');
 
-      setIsButtonDisabled(true);
+      setIsForgotBtnDisabled(true);
       setTimeout(() => {
-        setIsButtonDisabled(false);
+        setIsForgotBtnDisabled(false);
       }, 5000); // 5 sec
     } catch (error) {
       if (error.code === 'auth/invalid-email')
@@ -86,10 +92,12 @@ function AdminLoginForm({ app, closeStatus }) {
           value={password}
           onChange={(e) => setPassword(e.target.value.trim())}
         />
-        <button className='admin-submit' type="submit">Login</button>
+        <button className='admin-submit' type="submit" disabled={isLoginBtnDisabled}>
+          {isLoginBtnDisabled ? <FontAwesomeIcon icon={faSpinner} spin />: 'Login'}
+        </button>
       </form>
-      <button className='admin-ForgotPass' disabled={isButtonDisabled} onClick={handleForgotPassword}>
-        { isButtonDisabled? 'Please wait for 5 seconds...' : 'Forgot Password?'}
+      <button className='admin-ForgotPass' disabled={isForgotBtnDisabled} onClick={handleForgotPassword}>
+        { isForgotBtnDisabled? 'Please wait for 5 seconds...' : 'Forgot Password?'}
       </button>
     </div>
   );
