@@ -16,7 +16,7 @@ function DashBoardCounts({imgsLength = 0, vidsLength = 0}) {
             if (imgCount >= imgsLength) {
                 clearInterval(imgIntervalRef.current);
             }
-            }, 100);
+            }, 50);
         }
 
         if (vidsLength > 0) {
@@ -27,7 +27,7 @@ function DashBoardCounts({imgsLength = 0, vidsLength = 0}) {
             if (vidCount >= vidsLength) {
                 clearInterval(vidIntervalRef.current);
             }
-            }, 100);
+            }, 50);
         }
     };
 

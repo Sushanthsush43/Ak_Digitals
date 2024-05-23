@@ -8,6 +8,7 @@ import { toastErrorStyle } from '../components/uitls/toastStyle';
 import { InView } from "react-intersection-observer";
 import './../css/PhotoContainer.css';
 import './../css/Fullscreen.css';
+import FloatingScrollBtn from './uitls/scrollToTop/FloatingBtn';
 
 function PhotoContainer({storage}) {
 
@@ -159,6 +160,10 @@ function PhotoContainer({storage}) {
                 </div>
                 )}
             </>
+
+            {/* Scroll to top Floating Btn */}
+            <FloatingScrollBtn />
+
             <div className={`photo-container ${isOpened ? 'animate' : ''}`} >
                 <ResponsiveMasonry columnsCountBreakPoints={{ 380: 1, 750: 2, 900: 3 }}>
                 <Masonry gutter='17px'>

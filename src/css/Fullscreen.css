@@ -72,7 +72,7 @@
     height: 100%;
     background: rgba(0, 0, 0, 0.8);
     display: flex;
-    z-index: 2;
+    z-index: 13;
     justify-content: center;
     align-items: center;
     user-select: none;

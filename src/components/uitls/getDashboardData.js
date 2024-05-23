@@ -11,7 +11,6 @@ export const getDashboardData = async (storage) => {
         }));
         const imgsSizeTotalMain = imgsSizes.reduce((accumulator, currentValue) => accumulator  + currentValue, 0);
 
-
         const vidRefsTemp = await listAll(ref(storage, 'videos'));
         const vidRefs = vidRefsTemp.items;
         const vidsSizes = await Promise.all(
