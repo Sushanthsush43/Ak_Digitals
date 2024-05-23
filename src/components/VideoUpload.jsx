@@ -42,6 +42,10 @@ function VideoUpload({storage, runCompleted}) {
             toast.error("No video selected", toastErrorStyle());
             return;
         }
+        if (selectedFiles.length > 20) {
+            toast.error("Cannot upload more than 20 videos at once", toastErrorStyle());
+            return;
+        }
         setAllUploadDone(false);
         setUploading(true);
         isSomeFailed = false;
@@ -55,10 +59,15 @@ function VideoUpload({storage, runCompleted}) {
 
             setSelectedFilesCopy(selectedFiles);
 
+            const supportedExtensions = ['mp4', 'webm', 'ogg', 'mpg', 'mov', 'avi', 'mpeg'];
             let thumbnailRef; // needed as global for passing to revokeThumbnail function
             for (let i = 0; i < selectedFiles.length; i++) {
                 const file = selectedFiles[i];
                 try {
+                    const fileExtension = file.name.slice(file.name.lastIndexOf('.') + 1).toLowerCase();
+                    if(!supportedExtensions.includes(fileExtension)) {
+                        throw new Error('Invalid video format');
+                    }
                         // throw new Error('Simulated error: i equals 2');
 
                     const thumbnail = await generateThumbnail(file);

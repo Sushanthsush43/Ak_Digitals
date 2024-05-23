@@ -1,5 +1,5 @@
 import './../css/Upload.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ref, uploadBytes } from 'firebase/storage';
 import { toast } from "react-toastify";
 import { toastSuccessStyle, toastErrorStyle } from './uitls/toastStyle';
@@ -13,8 +13,16 @@ function PhotoUpload({storage, runCompleted}) {
     const [allUploadDone, setAllUploadDone] = useState(false);
     const [uploadTrack, setUploadTrack] = useState(0);
     const [eachUpdated, setEachUpdated] = useState([]);
+    const [compUnmounted, setCompUnmounted] = useState(false);
     let isSomeFailed = false;
     let isCompleteFailed = false;
+
+    useEffect(() => {
+        return () => {
+          setCompUnmounted(true);
+          console.log('Upload component unmounted');
+        };
+      }, []);
 
     const handleFileChange = (e) => {
         setAllUploadDone(false);
@@ -26,6 +34,10 @@ function PhotoUpload({storage, runCompleted}) {
     const handleUpload = async () => {
         if (selectedFiles.length === 0) {
             toast.error("No photo selected", toastErrorStyle());
+            return;
+        }
+        if (selectedFiles.length > 100) {
+            toast.error("Cannot upload more than 100 photos at once", toastErrorStyle());
             return;
         }
         setAllUploadDone(false);
@@ -41,13 +53,19 @@ function PhotoUpload({storage, runCompleted}) {
 
             setSelectedFilesCopy(selectedFiles);
 
+            const supportedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'];
             for (let i = 0; i < selectedFiles.length; i++) {
                 const file = selectedFiles[i];
                 try {
+                    const fileExtension = file.name.slice(file.name.lastIndexOf('.') + 1).toLowerCase();
+                    if(!supportedExtensions.includes(fileExtension)) {
+                        throw new Error('Invalid image format');
+                    }
                     // if (i % 2 === 0) {
                     //     throw new Error('Simulated error: i equals 2');
                     // }
                         // throw new Error('Simulated error: i equals 2');
+
 
                     const storageRef = ref(storage, `images/${file.name}`);
 
@@ -58,7 +76,7 @@ function PhotoUpload({storage, runCompleted}) {
                     //     }
                     // };
                     await uploadBytes(storageRef, file);
-            
+
                     // console.log(`File "${file.name}" uploaded successfully.`);
                 } catch (error) {
                     updatedArray[i] = false; // if upload failed, then set failed for that file
