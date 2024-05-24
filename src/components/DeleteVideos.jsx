@@ -351,6 +351,7 @@ function DeleteVideos({storage, app}) {
                         onLoadedData={() => handleVideoLoad(index)}
                         autoPlay={false}
                         playsInline
+                        loop
                         muted
                         type="video/mp4/mov"
                     ></InView>

@@ -310,7 +310,7 @@
 }
 
 .scroll-to-top-end-text {
-  width: 65%;
+  width: 20%;
   display: flex;
   justify-content: center;
   text-align: center;
@@ -328,4 +328,22 @@
   cursor: pointer;
   padding: 1px 5px 1px 5px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+}
+
+@media (max-width: 1200px) {
+  .scroll-to-top-end-text {
+    width: 30%;
+  }
+}
+
+@media (max-width: 850px) {
+  .scroll-to-top-end-text {
+    width: 60%;
+  }
+}
+
+@media (max-width: 500px) {
+  .scroll-to-top-end-text {
+    width: 80%;
+  }
 }

@@ -170,7 +170,7 @@ function DeletePhotos({storage, app}) {
     const handleDeleteImages = async () => {
         try {
             if(toDelete.length <= 0){
-                toast.error("No image selected", toastErrorStyle());   
+                toast.error("No photo selected", toastErrorStyle());   
                 return;
             }
 
@@ -190,10 +190,10 @@ function DeletePhotos({storage, app}) {
             
             // Clear the toDelete array
             setToDelete([]);
-            toast.success("Images deleted successfully", toastSuccessStyle());
+            toast.success("Photos deleted successfully", toastSuccessStyle());
         } catch (error) {
-            console.error('Error deleting images:', error);
-            toast.error("Failed to delete images. Please try again.", toastErrorStyle());
+            console.error('Error deleting photos:', error);
+            toast.error("Failed to delete photos. Please try again.", toastErrorStyle());
         }
     };
 

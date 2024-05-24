@@ -240,6 +240,7 @@ function VideoContainer({storage}) {
                 autoPlay={false}
                 muted
                 playsInline
+                loop
                 type="video/mp4/mov"
               >
               </InView>
