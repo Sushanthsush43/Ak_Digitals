@@ -22,6 +22,14 @@ body {
   margin: 0 auto; 
 }
 
+.typewriter-text {
+  min-height: 2em;
+}
+
+.typewriter2-text {
+  min-height: 2em;
+}
+
 .abtHead {
   margin-bottom: 1.5rem;
   font-weight: 700;
@@ -88,6 +96,19 @@ body {
   color: #777;
   margin: 5px 0; 
 }
+
+@keyframes popup {
+  0% { transform: scale(0); opacity: 0; }
+  80% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.typewriter2-text {
+  animation: popup 0.5s ease forwards;
+  margin: 0;
+  padding: 0;
+}
+
 
 @media (max-width: 768px) {
   .row {
