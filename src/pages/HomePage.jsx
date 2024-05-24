@@ -39,10 +39,10 @@ function HomePage({storage, app}) {
       
       {/* <VideoContainer /> */}
       {/* <AdminLoginForm app={app}/> */}
-      {/* <TabsComponent storage={storage} Tab1={PhotoContainer} Tab2={VideoContainer}/> */}
+      <TabsComponent storage={storage} Tab1={PhotoContainer} Tab2={VideoContainer}/>
       {/* <DeletePhotos storage={storage}/> */}
       {/* <DeleteVideos storage={storage}/> */}
-      <AboutUs/>
+      {/* <AboutUs/> */}
       {/* <PhotoUpload storage={storage}/> */}
       {/* <VideoUpload storage={storage}/> */}
     </div>
