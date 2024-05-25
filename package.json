@@ -28,6 +28,7 @@
     "react-scripts": "^5.0.1",
     "react-simple-typewriter": "^5.0.1",
     "react-toastify": "^10.0.5",
+    "react-typing-effect": "^2.0.5",
     "react-use": "^17.5.0"
   },
   "scripts": {
