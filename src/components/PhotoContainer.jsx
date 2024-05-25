@@ -66,11 +66,11 @@ function PhotoContainer({storage}) {
     async function initialFetchImages() {
         try {
             const imageRefsTemp = await listAll(ref(storage, 'images')); // List items inside 'images' folder
-            const imageRefs = imageRefsTemp.items;
+            const imageRefsItems = imageRefsTemp.items;
 
             // Fetch metadata for each image to get the upload time
             const imagesWithMetadata = await Promise.all(
-                imageRefs.map(async (imageRef) => {
+                imageRefsItems.map(async (imageRef) => {
                     const metadata = await getMetadata(imageRef);
                     return { ref: imageRef, timeCreated: metadata.timeCreated };
                 })

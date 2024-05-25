@@ -89,11 +89,11 @@ function DeleteVideos({storage, app}) {
         setIsLoading(true);
         try {
             const videoRefsTemp = await listAll(ref(storage, 'videos')); // List items inside 'videos' folder
-            const videoRefs = videoRefsTemp.items;
+            const videoRefsItems = videoRefsTemp.items;
     
             // Fetch metadata for each video to get the upload time
             const videosWithMetadata = await Promise.all(
-                videoRefs.map(async (videoRef) => {
+                videoRefsItems.map(async (videoRef) => {
                     const metadata = await getMetadata(videoRef);
                     return { ref: videoRef, timeCreated: metadata.timeCreated };
                 })

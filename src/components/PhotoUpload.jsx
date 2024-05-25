@@ -83,7 +83,7 @@ function PhotoUpload({storage, runCompleted}) {
                     //         uploadTime: Date.now()
                     //     }
                     // };
-                    await uploadBytes(storageRef, file, { signal: controller.signal });
+                    await uploadBytes(storageRef, file);
 
                     // console.log(`File "${file.name}" uploaded successfully.`);
                 } catch (error) {
