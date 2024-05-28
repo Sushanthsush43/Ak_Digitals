@@ -1,9 +1,10 @@
 import './../css/Upload.css';
 import React, { useState, useEffect } from 'react';
-import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
+import { ref, getDownloadURL, deleteObject, uploadBytesResumable } from 'firebase/storage';
 import { toast } from "react-toastify";
 import { toastSuccessStyle, toastErrorStyle } from './uitls/toastStyle.js';
 import { VideoToFrames, VideoToFramesMethod } from './uitls/ThumbnailGenerator';
+import ProgressBar from "@ramonak/react-progress-bar";
 
 // runCompleted is callback for tab component
 function VideoUpload({storage, runCompleted}) {
@@ -15,6 +16,11 @@ function VideoUpload({storage, runCompleted}) {
     const [uploadTrack, setUploadTrack] = useState(0);
     const [eachUpdated, setEachUpdated] = useState([]);
     const [abortController, setAbortController] = useState(null);
+    const [videoUProgress, setVideoUProgress] = useState(0);
+    const [thumbnailUProgress, setThumbnailUProgress] = useState(0);
+    const [uploadProgress, setUploadProgress] = useState(0);
+    const [uploadingFile, setUploadingFile] = useState('');
+
     let isSomeFailed = false;
     let isCompleteFailed = false;
 
@@ -25,6 +31,15 @@ function VideoUpload({storage, runCompleted}) {
             }
         };
     }, [abortController]);
+
+    // calculate main progress value
+    useEffect(() => {
+        const prog = Math.abs(Math.round((thumbnailUProgress + videoUProgress) / 2));
+        if (prog > 100)
+            setUploadProgress(100);
+        else 
+            setUploadProgress(prog);
+      }, [thumbnailUProgress, videoUProgress]);
 
     const handleFileChange = (e) => {
         setAllUploadDone(false);
@@ -60,6 +75,7 @@ function VideoUpload({storage, runCompleted}) {
         isSomeFailed = false;
         isCompleteFailed = false;
         runCompleted(false);
+        setUploadingFile('');
         const controller = new AbortController();
         setAbortController(controller);
 
@@ -75,6 +91,10 @@ function VideoUpload({storage, runCompleted}) {
             for (let i = 0; i < selectedFiles.length; i++) {
                 const file = selectedFiles[i];
                 try {
+                    setUploadingFile(file.name);
+                    setThumbnailUProgress(0);
+                    setVideoUProgress(0);
+                    setUploadProgress(0);
                     // if component unmounts, cancel upload
                     if (controller.signal.aborted) {
                         return;
@@ -84,7 +104,11 @@ function VideoUpload({storage, runCompleted}) {
                     if(!supportedExtensions.includes(fileExtension)) {
                         throw new Error('Invalid video format');
                     }
-                        // throw new Error('Simulated error: i equals 2');
+                        
+                    // throw new Error('Simulated error: i equals 2');
+                    // if (i % 2 === 0) {
+                    //     throw new Error('Simulated error: i equals 2');
+                    // }
 
                     const thumbnail = await generateThumbnail(file);
                     const thumbnailName = file.name.slice(0, file.name.lastIndexOf('.')) + '.png';
@@ -93,8 +117,28 @@ function VideoUpload({storage, runCompleted}) {
                         throw new Error(`Thumbnail creation failed for video ${file.name}`);
             
                     thumbnailRef = ref(storage, `thumbnails/${thumbnailName}`);
-                    await uploadBytes(thumbnailRef, thumbnail, { contentType: 'image/png' });
-            
+
+                    // await uploadBytes(thumbnailRef, thumbnail, { contentType: 'image/png' });
+
+                    await new Promise((resolve, reject) => {
+                        const uploadTask = uploadBytesResumable(thumbnailRef, thumbnail, { contentType: 'image/png' });
+
+                        uploadTask.on(
+                        'state_changed',
+                        (snapshot) => {
+                            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                            setThumbnailUProgress(progress);
+                        },
+                        (error) => {
+                            reject(error);
+                        },
+                        () => {
+                            setThumbnailUProgress(100);
+                            resolve(); 
+                        }
+                        );
+                    });
+
                     const thumbnailUrl = await getDownloadURL(thumbnailRef);
 
                     const videoRef = ref(storage, `videos/${file.name}`);
@@ -105,9 +149,26 @@ function VideoUpload({storage, runCompleted}) {
                             thumbnailUrl: thumbnailUrl
                         }
                     };
-                    await uploadBytes(videoRef, file, metadata);
+
+                    await new Promise((resolve, reject) => {
+                        const uplaodTask = uploadBytesResumable(videoRef, file, metadata);
+
+                        uplaodTask.on(
+                        'state_changed',
+                        (snapshot) => {
+                            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                            setVideoUProgress(progress);
+                        },
+                        (error) => {
+                            reject(error);
+                        },
+                        () => {
+                            setVideoUProgress(100);
+                            resolve(); 
+                        }
+                        );
+                    });
             
-                    // await updateMetadata(videoRef, metadata);
                 } catch (error) {
                     await revokeThumbnailUpload(thumbnailRef); // Revoke video if upload fails
                     updatedArray[i] = false; // if upload failed, then set failed for that file
@@ -206,6 +267,12 @@ function VideoUpload({storage, runCompleted}) {
 
                     <button onClick={handleUpload} className="upload-button">Upload</button>
                     {uploading && <div className="upload-loading-animation">Uploading...</div>}
+                    {uploading && 
+                        <div>
+                            <span className='upload-filename-text'>{uploadingFile}</span>
+                            <ProgressBar completed={uploadProgress} /> 
+                        </div>
+                    }
                     <div className="remaing-css" style={{ marginTop: '10px' }}>
                         <span>Remaining: {uploadTrack}</span>
                     </div>

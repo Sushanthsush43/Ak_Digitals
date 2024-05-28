@@ -89,6 +89,16 @@
     margin-left: 10px;
 }
 
+.upload-filename-text {
+    margin-top: 10px;
+    display: inline-block;
+    box-sizing: border-box;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }

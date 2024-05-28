@@ -1,8 +1,9 @@
 import './../css/Upload.css';
 import React, { useState, useEffect } from 'react';
-import { ref, uploadBytes } from 'firebase/storage';
+import { ref, uploadBytesResumable } from 'firebase/storage';
 import { toast } from "react-toastify";
 import { toastSuccessStyle, toastErrorStyle } from './uitls/toastStyle';
+import ProgressBar from "@ramonak/react-progress-bar";
 
 // runCompleted is callback for tab component
 function PhotoUpload({storage, runCompleted}) {
@@ -14,6 +15,8 @@ function PhotoUpload({storage, runCompleted}) {
     const [uploadTrack, setUploadTrack] = useState(0);
     const [eachUpdated, setEachUpdated] = useState([]);
     const [abortController, setAbortController] = useState(null);
+    const [uploadProgress, setUploadProgress] = useState(0);
+    const [uploadingFile, setUploadingFile] = useState('');
     let isSomeFailed = false;
     let isCompleteFailed = false;
 
@@ -24,6 +27,15 @@ function PhotoUpload({storage, runCompleted}) {
             }
         };
     }, [abortController]);
+
+    // round up progress value
+    useEffect(() => {
+    const prog = Math.abs(Math.round(uploadProgress));
+    if (prog > 100)
+        setUploadProgress(100);
+    else 
+        setUploadProgress(prog);
+    }, [uploadProgress]);
 
     const handleFileChange = (e) => {
         setAllUploadDone(false);
@@ -60,6 +72,9 @@ function PhotoUpload({storage, runCompleted}) {
             for (let i = 0; i < selectedFiles.length; i++) {
                 const file = selectedFiles[i];
                 try {
+                    setUploadingFile(file.name);
+                    setUploadProgress(0);
+
                     // if component unmounts, cancel upload
                     if (controller.signal.aborted) {
                         return;
@@ -83,7 +98,24 @@ function PhotoUpload({storage, runCompleted}) {
                     //         uploadTime: Date.now()
                     //     }
                     // };
-                    await uploadBytes(storageRef, file);
+                    await new Promise((resolve, reject) => {
+                        const uplaodTask = uploadBytesResumable(storageRef, file);
+
+                        uplaodTask.on(
+                        'state_changed',
+                        (snapshot) => {
+                            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                            setUploadProgress(progress);
+                        },
+                        (error) => {
+                            reject(error);
+                        },
+                        () => {
+                            setUploadProgress(100);
+                            resolve(); 
+                        }
+                        );
+                    });
 
                     // console.log(`File "${file.name}" uploaded successfully.`);
                 } catch (error) {
@@ -154,6 +186,13 @@ function PhotoUpload({storage, runCompleted}) {
 
                     <button onClick={handleUpload} className="upload-button">Upload</button>
                     {uploading && <div className="upload-loading-animation">Uploading...</div>}
+                    {uploading && 
+                        <div>
+                            <span className='upload-filename-text'>{uploadingFile}</span>
+                            <ProgressBar completed={uploadProgress} /> 
+                        </div>
+                    }
+
                     <div className="remaing-css" style={{ marginTop: '10px' }}>
                         <span>Remaining: {uploadTrack}</span>
                     </div>
