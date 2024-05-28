@@ -269,7 +269,7 @@ function VideoUpload({storage, runCompleted}) {
                     {uploading && <div className="upload-loading-animation">Uploading...</div>}
                     {uploading && 
                         <div>
-                            <span className='upload-filename-text'>{uploadingFile}</span>
+                            <div className='upload-filename-text'>{uploadingFile}</div>
                             <ProgressBar completed={uploadProgress} /> 
                         </div>
                     }
