@@ -48,10 +48,11 @@ body {
   margin: 0;
 }
 
-.header-links > * {
-  padding-left: 23px;
+.header-links :first-child {
+  margin-right: 23px;
 }
 
+/* back button of all pages, let it be in this file itself */
 .back-btn :first-child{
   color: #000000;
   text-decoration: none;
@@ -76,6 +77,12 @@ body {
   text-decoration: none;
   font-size: 23px;
   margin:0%;
+  border-bottom: 2px solid #ffffff;
+  transition: border-bottom 0.5s ease;
+}
+
+.teko-headings:hover {
+  border-bottom: 2px solid #850F8D;
 }
 
 /*css of main div*/
@@ -189,8 +196,8 @@ body {
   .homePage-textBox p h4 {
     font-size: 12px;
   }
-  .header-links > * {
-    padding-left: 10px;
+  .header-links :first-child {
+    margin-right: 10px;
   }
     
   .signIn.visible {

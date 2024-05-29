@@ -65,8 +65,8 @@ function DashBoard({ storage, app }) {
                             Delete
                       </div>
                       <div className='dashboard-delete-btns'>
-                        <Link to='/deletephotos' className="teko-headings">Photos</Link>
-                        <Link to='/deletevideos' className="teko-headings">Videos</Link>
+                        <Link to='/deletephotos' >Photos</Link>
+                        <Link to='/deletevideos' >Videos</Link>
                       </div>
                   </div>
                   <div>

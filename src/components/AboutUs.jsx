@@ -6,6 +6,8 @@ import logo from '../components/uitls/ak_logo1.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faTwitter, faInstagram, faGoogle, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
+import { ImArrowLeft2 } from "react-icons/im";
 
 const AboutUs = () => {
   const [index, setIndex] = useState(0);
@@ -36,6 +38,13 @@ const AboutUs = () => {
   }, [charIndex, index, words]);
 
   return (
+    <>
+    {/* Back Button Section */}
+    <div className='back-btn'>
+    <Link to='/'>
+      <ImArrowLeft2 />
+    </Link>
+</div>
     <div className="container my-2">
       <div className="row align-items-center">
         <div className="col-md-6 order-md-2 my-3" data-aos="fade-left">
@@ -93,6 +102,7 @@ const AboutUs = () => {
         </p>
       </footer>
     </div>
+    </>
   );
 };
 
