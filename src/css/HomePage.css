@@ -162,6 +162,7 @@ body {
   color: grey;
   position: relative;
   font-size: 40px;
+  cursor: pointer;
 }
 .close-SignIn:hover{
   color: #cf2f2f;
