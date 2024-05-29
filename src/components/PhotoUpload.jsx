@@ -86,9 +86,9 @@ function PhotoUpload({storage, runCompleted}) {
                     if(!supportedExtensions.includes(fileExtension)) {
                         throw new Error('Invalid image format');
                     }
-                    if (i % 2 === 0) {
-                        throw new Error('Simulated error: i equals 2');
-                    }
+                    // if (i % 2 === 0) {
+                    //     throw new Error('Simulated error: i equals 2');
+                    // }
                         // throw new Error('Simulated error: i equals 2');
 
 

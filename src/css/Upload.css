@@ -132,7 +132,7 @@
     display: flex;
     justify-content: space-between;
     padding: 5px;
-    background-color: #FF0000B2;
+    background-color: #cf2f2f !important;
     color: #fff;
     border-radius: 5px;
     margin-bottom: 5px;
