@@ -9,6 +9,8 @@ import { faChevronLeft, faChevronRight, faTimes } from '@fortawesome/free-solid-
 import "../css/DeleteComp.css";
 import './../css/Fullscreen.css';
 import { CheckAdminLogin } from './uitls/checkAdminLogin';
+import { Link } from 'react-router-dom';
+import { ImArrowLeft2 } from "react-icons/im";
 
 function DeletePhotos({storage, app}) {
 
@@ -199,6 +201,7 @@ function DeletePhotos({storage, app}) {
 
     return (
         <>
+            {/* Fullscreen section */}
             {data.img && (
                 <div className={`full-screen-image-container ${isOpened ? 'open' : 'close'}`}>
                     <button className="close-btn" onClick={() => imgAction('close-img')}>
@@ -218,8 +221,22 @@ function DeletePhotos({storage, app}) {
                     )}
                 </div>
             )}
+            {/* Header section */}
+             <div className={`header-Main`}>
+                <div className="heading-container">
+                    <h1 className="sofia-regular header-gradient-text">AK DIGITALS</h1>
+                </div>
+            </div>
+
+             {/* Back Button Section */}
+             <div className='back-btn'>
+                  <Link to='/dashboard'>
+                    <ImArrowLeft2 />
+                  </Link>
+              </div>
+
+            {/* Delete section */}
             <div className='delete-main container mt-5'>
-                {/* Delete Images Button */}
                 <div className="d-flex mb-3 delete-label-btn">
                         <label className='lead'><span className='text-danger'>{toDelete.length}</span> items selected</label>
                         <button className="btn btn-danger" onClick={() => handleDeleteImages()}>Delete</button>
@@ -282,6 +299,7 @@ function DeletePhotos({storage, app}) {
                             <button
                                 key={i + 1}
                                 className={`btn mx-1 ${i + 1 === page ? 'btn-primary' : 'btn-outline-primary'}`}
+                                
                                 onClick={() => handlePageChange(i + 1)}
                                 disabled={isLoading || (i + 1 === page)}
                             >

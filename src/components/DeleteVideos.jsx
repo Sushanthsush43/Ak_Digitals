@@ -10,6 +10,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { isIOSorMacDevice } from './uitls/deviceUtils';
 import { CheckAdminLogin } from './uitls/checkAdminLogin';
+import { Link } from 'react-router-dom';
+import { ImArrowLeft2 } from "react-icons/im";
 
 function DeleteVideos({storage, app}) {
 
@@ -295,6 +297,7 @@ function DeleteVideos({storage, app}) {
     
     return (
         <>
+             {/* Fullscreen section */}
              {data.video && (
                 <div className={`full-screen-video-container ${isOpened ? 'open' : 'close'}`}>
                 <button className="close-btn" onClick={() => videoAction('close-video')}>
@@ -319,6 +322,21 @@ function DeleteVideos({storage, app}) {
                 )}
                 </div>
             )}
+        {/* Header section */}
+        <div className={`header-Main`}>
+            <div className="heading-container">
+                <h1 className="sofia-regular header-gradient-text">AK DIGITALS</h1>
+            </div>
+        </div>
+        
+        {/* Back Button Section */}
+        <div className='back-btn'>
+            <Link to='/dashboard'>
+                <ImArrowLeft2 />
+            </Link>
+        </div>
+
+        {/* Delete section */}
         <div className='delete-main container mt-5'>
             <div className="d-flex mb-3 delete-label-btn">
                 <label className='lead'><span className='text-danger'>{toDeleteVideos.length}</span> items selected</label>
