@@ -9,7 +9,7 @@
     flex-direction: column;
     justify-content: center;
     align-self: center;
-    gap: 20px; /* Adds a gap of 20px between header-Main and MainDashBoardDiv */
+    /* gap: 20px; */
     /* background-color: green; */
     background: #F5F5F5;
 }
@@ -20,12 +20,8 @@
     justify-content: center;
     align-self: center;
     width: 80%;
-    gap: 20px; /* Adds a gap of 20px between CountDiv and Dashbord-tab */
+    gap: 20px;
     padding: 20px;
-}
-
-.dashboard-back-btn {
-    margin-left: 20px;
 }
 
 .count-div-main{
@@ -35,6 +31,7 @@
     align-items: center;
     width: 60%;
     align-self: center;
+    margin-top: 10px;
     flex-direction: row;
     column-gap: 10%;
     margin-bottom: 50px;
@@ -74,6 +71,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    color: #850F8D;
 }
 .count-div-tabs p {
     padding: 0 !important;
@@ -86,6 +84,7 @@
     position: relative;
     width: 25%;
     height: 25%;
+    /* color: #850F8D; */
     background-color: transparent;
   }
 

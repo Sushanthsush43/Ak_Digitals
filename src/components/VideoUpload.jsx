@@ -5,6 +5,8 @@ import { toast } from "react-toastify";
 import { toastSuccessStyle, toastErrorStyle } from './uitls/toastStyle.js';
 import { VideoToFrames, VideoToFramesMethod } from './uitls/ThumbnailGenerator';
 import ProgressBar from "@ramonak/react-progress-bar";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 // runCompleted is callback for tab component
 function VideoUpload({storage, runCompleted}) {
@@ -260,13 +262,18 @@ function VideoUpload({storage, runCompleted}) {
                      multiple 
                      style={{ display: 'none' }} />
                 </form>
-                {selectedFiles.length > 0 ?
-                     `No of selected Files : ${selectedFiles.length}` : ''}
+                {selectedFiles.length > 0 ? (
+                    <>
+                        No of selected Files : <strong>{selectedFiles.length}</strong>
+                    </>
+                ) : ('')}
 
                 <section className="upload-progress-area">
 
-                    <button onClick={handleUpload} className="upload-button">Upload</button>
-                    {uploading && <div className="upload-loading-animation">Uploading...</div>}
+                    <button onClick={handleUpload} className='upload-button' type="submit" disabled={uploading}>
+                        {uploading ? <>Uploading <FontAwesomeIcon icon={faSpinner} spin /></>: 'Upload'}
+                    </button>
+                    {/* {uploading && <div className="upload-loading-animation">Uploading...</div>} */}
                     {uploading && 
                         <div>
                             <div className='upload-filename-text'>{uploadingFile}</div>
@@ -274,13 +281,13 @@ function VideoUpload({storage, runCompleted}) {
                              completed={uploadProgress}
                              height='17px'
                              customLabel={`${uploadProgress.toFixed(0)}`}
-                             bgColor="#000000"
+                             bgColor="#850F8D"
                              //  baseBgColor="#ffff"
                             labelColor="#ffff" />
                         </div>
                     }
                     <div className="remaing-css" style={{ marginTop: '10px' }}>
-                        <span>Remaining: {uploadTrack}</span>
+                        Remaining : <strong>{uploadTrack}</strong>
                     </div>
 
                     <div className="failed-uploads-container">

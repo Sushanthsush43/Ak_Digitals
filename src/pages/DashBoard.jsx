@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { ImArrowLeft2 } from "react-icons/im";
 import '../css/Dashboard.css';
 import { toast } from 'react-toastify';
 import { toastErrorStyle } from '../components/uitls/toastStyle';
@@ -40,14 +39,14 @@ function DashBoard({ storage, app }) {
               {/* Header Section */}
               <div className='header-Main'>
                   <div className="heading-container">
-                      <h1 className="sofia-regular">AK DIGITALS</h1>
+                      <h1 className="sofia-regular header-gradient-text">AK DIGITALS</h1>
                   </div>
               </div>
 
               {/* Back Button Section */}
-              <div className='dashboard-back-btn'>
-                  <Link to='/' className="teko-headings">
-                      <FontAwesomeIcon icon={faChevronLeft} />
+              <div className='back-btn'>
+                  <Link to='/'>
+                    <ImArrowLeft2 />
                   </Link>
               </div>
 

@@ -9,13 +9,12 @@
 .upload-wrapper {
     width: 430px;
     padding: 30px;
-    background: #fff;
+    background: #ffff;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .upload-wrapper header {
-    color: #000000;
     font-size: 27px;
     font-weight: 600;
     text-align: center;
@@ -27,7 +26,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border: 2px dashed #000000;
+    border: 2px dashed #850F8D;
     border-radius: 5px;
     padding: 20px;
     margin-bottom: 10px;
@@ -36,7 +35,11 @@
 
 .upload-form i {
     font-size: 50px;
-    color: #000000;
+    transition: color 0.3s ease;
+}
+
+.upload-form i:hover{
+    color: #850F8D;
 }
 
 .upload-form p {
@@ -54,23 +57,27 @@
 }
 
 .upload-button {
-    background-color: #000000;
+    background-color: #850F8D;
     color: #fff;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
-    transition: background-color 0.3s ease;
+    /* transition: background-color 0.3s ease; */
     width: 100%;
     text-align: center;
 }
 
-.upload-button:hover {
-    background-color: #463f3f;
+/* .upload-button:hover {
+    background-color: #850F8D;
+} */
+
+.upload-no-files-count {
+    color : #850F8D;
 }
 
-.upload-loading-animation {
+/* .upload-loading-animation {
     font-size: 20px;
     margin-top: 10px;
     color: #000000;
@@ -87,7 +94,7 @@
     border-radius: 50%;
     animation: spin 0.7s linear infinite;
     margin-left: 10px;
-}
+} */
 
 .upload-filename-text {
     margin-top: 10px;
@@ -117,7 +124,7 @@
 }
 
 .failed-uploads-container::-webkit-scrollbar-thumb {
-    background-color: #000;
+    background-color: #850F8D;
     border-radius: 5px;
   }
     
@@ -125,7 +132,7 @@
     display: flex;
     justify-content: space-between;
     padding: 5px;
-    background-color: #e74c3c;
+    background-color: #FF0000B2;
     color: #fff;
     border-radius: 5px;
     margin-bottom: 5px;

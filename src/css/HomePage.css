@@ -3,8 +3,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Lobster&family=Oleo+Script:wght@400;700&family=Pacifico&family=Teko:wght@300..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Sofia&display=swap');
 
-
-
 body {
   font-family: 'Poppins', sans-serif;
   color: #000000;
@@ -32,7 +30,7 @@ body {
 }
 
 .header-gradient-text {
-  background: linear-gradient(to right, black, purple);
+  background: linear-gradient(to right, black, #c34acc);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -52,6 +50,13 @@ body {
 
 .header-links > * {
   padding-left: 23px;
+}
+
+.back-btn :first-child{
+  color: #000000;
+  text-decoration: none;
+  font-size: 2rem;
+  margin-left: 10px;
 }
 
 /*css for the brandName text*/
@@ -159,10 +164,15 @@ body {
   font-size: 40px;
 }
 .close-SignIn:hover{
-  color: red;
+  color: rgba(255, 0, 0, 0.7);
 }
 
 @media only screen and (max-width: 768px) {
+  .back-btn :first-child{
+    margin-left: 3px;
+    font-size: 1.5rem;
+  }
+
   .sofia-regular {
     font-size: 20px;
   }
@@ -231,7 +241,7 @@ body {
   position: relative;
   border: none;
   background-color: rgb(243, 243, 243);
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid #850F8D;
   padding-left: 10px;
   /* border-radius: 5px; */
 }
@@ -239,7 +249,6 @@ body {
 /* Optional: Adding focus styles to remove any default outline and add a custom focus effect */
 .admin-form input:focus {
   outline: none; /* Remove default focus outline */
-  border-bottom-color: black; /* Change border color on focus, optional */
 }
 
 .admin-email{
@@ -252,15 +261,20 @@ body {
   margin-top: 20px;
   position: relative;
   border-color:white;
-  background-color: #563410e5;;
-  color: aliceblue;
+  background-color: #850F8D;
+  color: rgb(255, 255, 255);
   border-radius: 5px;
+  /* transition: background-color 0.3s; */
 }
+
+/* .admin-submit:hover {
+  background-color: #4b0250;
+} */
 
 .admin-ForgotPass{
   background-color: transparent;
   border: none;
-  color: blue;
+  color: #650f6b;
 }
 
 .logout-btn{
@@ -269,8 +283,8 @@ body {
   margin-top: 100px;
   position: relative;
   border-color:white;
-  background-color: #563410e5;;
-  color: aliceblue;
+  background-color: #850F8D;
+  color: rgb(255, 255, 255);
   border-radius: 5px;
 }
 

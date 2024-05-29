@@ -4,6 +4,8 @@ import { ref, uploadBytesResumable } from 'firebase/storage';
 import { toast } from "react-toastify";
 import { toastSuccessStyle, toastErrorStyle } from './uitls/toastStyle';
 import ProgressBar from "@ramonak/react-progress-bar";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 // runCompleted is callback for tab component
 function PhotoUpload({storage, runCompleted}) {
@@ -84,9 +86,9 @@ function PhotoUpload({storage, runCompleted}) {
                     if(!supportedExtensions.includes(fileExtension)) {
                         throw new Error('Invalid image format');
                     }
-                    // if (i % 2 === 0) {
-                    //     throw new Error('Simulated error: i equals 2');
-                    // }
+                    if (i % 2 === 0) {
+                        throw new Error('Simulated error: i equals 2');
+                    }
                         // throw new Error('Simulated error: i equals 2');
 
 
@@ -116,7 +118,6 @@ function PhotoUpload({storage, runCompleted}) {
                         }
                         );
                     });
-
                     // console.log(`File "${file.name}" uploaded successfully.`);
                 } catch (error) {
                     updatedArray[i] = false; // if upload failed, then set failed for that file
@@ -179,13 +180,18 @@ function PhotoUpload({storage, runCompleted}) {
                      multiple 
                      style={{ display: 'none' }} />
                 </form>
-                {selectedFiles.length > 0 ?
-                     `No of selected Files : ${selectedFiles.length}` : ''}
+                {selectedFiles.length > 0 ? (
+                    <>
+                        No of selected Files : <strong>{selectedFiles.length}</strong>
+                    </>
+                ) : ('')}
 
                 <section className="upload-progress-area">
 
-                    <button onClick={handleUpload} className="upload-button">Upload</button>
-                    {uploading && <div className="upload-loading-animation">Uploading...</div>}
+                    <button onClick={handleUpload} className='upload-button' type="submit" disabled={uploading}>
+                        {uploading ? <>Uploading <FontAwesomeIcon icon={faSpinner} spin /></>: 'Upload'}
+                    </button>
+                    {/* {uploading && <div className="upload-loading-animation">Uploading...</div>} */}
                     {uploading && 
                         <div>
                             <div className='upload-filename-text'>{uploadingFile}</div>
@@ -193,14 +199,14 @@ function PhotoUpload({storage, runCompleted}) {
                              completed={uploadProgress} 
                              height='17px' 
                              customLabel={`${uploadProgress.toFixed(0)}`}
-                             bgColor="#000000"
+                             bgColor="#850F8D"
                             //  baseBgColor="#ffff"
                              labelColor="#ffff" />
                         </div>
                     }
 
                     <div className="remaing-css" style={{ marginTop: '10px' }}>
-                        <span>Remaining: {uploadTrack}</span>
+                        Remaining : <strong>{uploadTrack}</strong>
                     </div>
 
                     <div className="failed-uploads-container">

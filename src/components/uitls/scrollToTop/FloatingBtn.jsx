@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { ImArrowUp2 } from "react-icons/im";
 
 const FloatingScrollBtn = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -26,7 +27,7 @@ const FloatingScrollBtn = () => {
 
   return (
     <div className="scroll-to-top-float-btn" onClick={scrollToTop} style={{ display: isVisible ? 'flex' : 'none' }}>
-      &#8593;
+     <ImArrowUp2 />
     </div>
   );
 };
