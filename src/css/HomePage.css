@@ -31,8 +31,14 @@ body {
   cursor : default;
 }
 
-.purple-header-text {
-  color: #850F8D;
+.header-gradient-text {
+  background: linear-gradient(to right, black, purple);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+  display: inline-block;
+  padding: 0 0 7px 3px;
 }
 
 /* contact div in navigation */
@@ -166,6 +172,7 @@ body {
   .homePage-textBox p {
     font-size: 9px;
     width: 80%;
+    margin-top: 35px;
   }
   .homePage-textBox p h4 {
     font-size: 12px;

@@ -15,7 +15,7 @@ const EndReachedBtn = () => {
         </div>
 
         <div className="scroll-to-top-end-btn" onClick={scrollToTop}>
-          <b>Go to top</b>
+          <strong>Go to top</strong>
         </div>
     </div>
   );

@@ -9,22 +9,6 @@ const Header = ({app}) => {
   const [isVisible, setIsVisible] = useState(false);
   const [close, setClose] = useState(true);
   const { isAdminLoggedIn } = CheckAdminLogin({ app, getBool : true});
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  const handleScroll = () => {
-    if (window.scrollY > 200) {
-      setIsScrolled(true);
-    } else {
-      setIsScrolled(false);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
 
   const handleSignUpClick = () => {
     setIsVisible(!isVisible);
@@ -44,9 +28,9 @@ const Header = ({app}) => {
 
   return (
     <div>
-      <div className={`header-Main ${isScrolled ? 'scroll-shadow' : ''}`}>
+      <div className={`header-Main`}>
         <div className="heading-container" onClick={handleSignUpClick}>
-          <h1 className="sofia-regular">AK <span className='purple-header-text'>DIGITALS</span></h1>
+          <h1 className="sofia-regular header-gradient-text">AK DIGITALS</h1>
         </div>
         
         <div className='header-links'>

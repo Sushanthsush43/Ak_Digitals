@@ -31,8 +31,8 @@ const TabsComponent = ({storage, Tab1, Tab2, waitBeforeSwitch = false}) => {
     <div className='photo-video-tab-main'>
       <div className="tab-bar">
         <div className={`indicator ${activeTab === 0 ? 'tab1' : activeTab === 1 ? 'tab2' : 'tab3'}`}></div>
-        <div className={`tab ${activeTab === 0 ? 'active' : ''}`} onClick={() => handleTabClick(0)}>photo</div>
-        <div className={`tab ${activeTab === 1 ? 'active' : ''}`} onClick={() => handleTabClick(1)}>video</div>
+        <div className={`tab ${activeTab === 0 ? 'active' : ''}`} onClick={() => handleTabClick(0)}>photos</div>
+        <div className={`tab ${activeTab === 1 ? 'active' : ''}`} onClick={() => handleTabClick(1)}>videos</div>
       </div>
       <div className="content">
         {

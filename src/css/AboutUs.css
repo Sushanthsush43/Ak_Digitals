@@ -29,7 +29,7 @@
   font-weight: 700;
   font-family: 'Montserrat', sans-serif;
   font-size: 3.5rem;
-  color: #2c3e50;
+  color: #850F8D;
 }
 
 .typical-text {
@@ -74,20 +74,22 @@
 }
 
 .social-icons a:hover{
-  color:#2c3e50;
+  color:#850F8D;
   transform: scale(1.3);
   }
+  
 .footer {
   background-color: #f8f9fa;
   padding: 20px 0;
   text-align: center;
+  background-color: #850F8D;
 }
 
 .footer p {
   font-family: 'Poppins', sans-serif;
   font-weight: 400;
   font-size: 0.9rem;
-  color: #777;
+  color: #ffff;
   margin: 5px 0; 
 }
 
