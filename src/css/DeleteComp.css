@@ -90,3 +90,10 @@
 .btn {
   min-width: 40px;
 }
+
+@media only screen and (max-width: 1500px) {
+  .delete-main {
+    margin-top: 0.3rem !important;
+    /* background-color: #850F8D; */
+  }
+}
