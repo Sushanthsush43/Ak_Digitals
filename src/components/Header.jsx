@@ -46,7 +46,7 @@ const Header = ({app}) => {
     <div>
       <div className={`header-Main ${isScrolled ? 'scroll-shadow' : ''}`}>
         <div className="heading-container" onClick={handleSignUpClick}>
-          <h1 className="sofia-regular">AK DIGITALS</h1>
+          <h1 className="sofia-regular">AK <span className='purple-header-text'>DIGITALS</span></h1>
         </div>
         
         <div className='header-links'>

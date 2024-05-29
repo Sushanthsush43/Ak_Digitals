@@ -46,8 +46,7 @@
     display: none;
   }
 
-.close-btn:hover,
-.nav-btn:hover {
+.close-btn:hover {
     color: red;
 }
 

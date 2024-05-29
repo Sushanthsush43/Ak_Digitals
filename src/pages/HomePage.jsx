@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import '../css/HomePage.css';
-import "./ContactPage"
 import Header from '../components/Header';
 import TabsComponent from '../components/TabsComponent';
 import PhotoContainer from '../components/PhotoContainer';

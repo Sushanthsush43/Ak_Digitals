@@ -1,11 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Poppins:wght@400;600&display=swap');
 
-
-body {
-  font-family: 'Poppins', sans-serif;
-  color: #333;
-}
-
 .container {
   max-width: 1200px;
   padding: 15px;

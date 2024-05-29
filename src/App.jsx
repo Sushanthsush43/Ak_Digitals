@@ -4,7 +4,6 @@ import { getFirebaseConfig } from "./components/uitls/firebaseConfig";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import HomePage from './pages/HomePage';
-import ContactPage from './pages/ContactPage';
 import DashBoard from './pages/DashBoard';
 import AboutUs from './components/AboutUs';
 import DeletePhotos from './components/DeletePhotos';
