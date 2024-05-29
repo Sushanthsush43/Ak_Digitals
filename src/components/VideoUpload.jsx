@@ -270,7 +270,13 @@ function VideoUpload({storage, runCompleted}) {
                     {uploading && 
                         <div>
                             <div className='upload-filename-text'>{uploadingFile}</div>
-                            <ProgressBar completed={uploadProgress} /> 
+                            <ProgressBar 
+                             completed={uploadProgress}
+                             height='17px'
+                             customLabel={`${uploadProgress.toFixed(0)}`}
+                             bgColor="#000000"
+                             //  baseBgColor="#ffff"
+                            labelColor="#ffff" />
                         </div>
                     }
                     <div className="remaing-css" style={{ marginTop: '10px' }}>
