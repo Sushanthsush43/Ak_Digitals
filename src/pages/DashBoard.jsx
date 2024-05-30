@@ -17,10 +17,14 @@ function DashBoard({ storage, app }) {
 
   const [imgsLength, setImgsLength] = useState(0);
   const [vidsLength, setVidsLength] = useState(0);
-  const getDashboardDataRan = useRef(false); // for extra surety
+  const [dashboardCountRefresh, setDashboardCountRefresh] = useState(0);
+
+  // refresh img-vid count when new file upload
+  const handleCountRefresh = (count) => {
+    setDashboardCountRefresh(count);
+  }
 
   useEffect(() => {
-    if (!getDashboardDataRan.current) {
       getDashboardData(storage).then((data) => {
         if (data) {
           setImgsLength(data.imgsLength);
@@ -28,10 +32,8 @@ function DashBoard({ storage, app }) {
         } else {
           toast.error("Something went wrong", toastErrorStyle());
         }
-        getDashboardDataRan.current = true;
       });
-    }
-  }, []);
+  }, [dashboardCountRefresh]);
 
   return (
           <div className='DashBoard-div'>
@@ -58,7 +60,7 @@ function DashBoard({ storage, app }) {
                       <div className='dashboard-upload-head'>
                         Upload
                       </div>
-                      <TabsComponent storage={storage} Tab1={PhotoUpload} Tab2={VideoUpload} waitBeforeSwitch={true}/>
+                      <TabsComponent storage={storage} Tab1={PhotoUpload} Tab2={VideoUpload} waitBeforeSwitch={true} dashboardCountRefresh={handleCountRefresh}/>
                   </div>
                   <div className='dashboard-delete-main'>
                       <div className='dashboard-delete-head'>
