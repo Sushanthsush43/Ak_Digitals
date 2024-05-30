@@ -75,8 +75,10 @@ body {
 .teko-headings {
   color: #000000;
   text-decoration: none;
+  background-color: transparent;
   font-size: 23px;
   margin:0%;
+  /* border-radius: 5px; */
   border-bottom: 2px solid #ffffff;
   transition: border-bottom 0.5s ease;
 }
@@ -110,6 +112,16 @@ body {
   animation: fadeIn 2.5s ease-in-out forwards; /* Apply animation */
 }
 
+/* Keyframes for fadeIn animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 /*css for signIn div */
 .signIn {
   width: 0;
@@ -134,18 +146,8 @@ body {
   width: 400px;
   height: 330px;
   background-color: rgb(243, 243, 243);
-  box-shadow: 0 4px 8px 10px rgba(0, 0, 0, 0.397);
+  box-shadow: 0 4px 10px 5px rgba(0, 0, 0, 0.397);
 
-}
-
-/* Keyframes for fadeIn animation */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
 }
 
 /*css of the close div of the signin div*/
