@@ -5,7 +5,7 @@ import '../css/AboutUs.css';
 import logo from '../components/uitls/ak_logo1.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faTwitter, faInstagram, faGoogle, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
-import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faHeart ,faQuoteLeft,faQuoteRight} from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import { ImArrowLeft2 } from "react-icons/im";
 
@@ -32,7 +32,7 @@ const AboutUs = () => {
         setIsTypingDone(true);
         clearInterval(timer);
       }
-    }, 120); 
+    }, 150); 
 
     return () => clearInterval(timer);
   }, [charIndex, index, words]);
@@ -46,17 +46,17 @@ const AboutUs = () => {
         </Link>
     </div>
     <div className="container my-2">
+    <h2 className="font-weight-bold abtHead">Contact</h2>
       <div className="row align-items-center">
-        <div className="col-md-6 order-md-2 my-3" data-aos="fade-left">
+        <div className="col-md-6 order-md-2 my-3 image-container" data-aos="fade-left">
           <img src={logo} alt="About Us" className="logoImg img-fluid rounded small-img" />
         </div>
         <div className="col-md-6 order-md-1" data-aos="fade-right">
-          <h2 className="font-weight-bold abtHead">Contact</h2>
           <div className="typical-text mb-4">
           {!isTypingDone ? (
               <p className="typewriter-text">{words[index].substring(0, charIndex)}</p>
             ) : (
-              words.map((word) => <p className="typewriter2-text">{word}</p>)
+              words.map((word) => <p className="typewriter2-text"><FontAwesomeIcon icon={faQuoteLeft}/> {word}  <FontAwesomeIcon icon={faQuoteRight}/></p>)
             )}
           </div>
           <p data-aos="fade-up abtPara">

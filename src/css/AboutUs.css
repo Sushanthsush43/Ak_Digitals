@@ -25,7 +25,6 @@
 }
 
 .abtHead {
-  margin-bottom: 1.5rem;
   font-weight: 700;
   font-family: 'Montserrat', sans-serif;
   font-size: 3.5rem;
@@ -35,7 +34,7 @@
 .typical-text {
   font-weight: 400;
   font-family: 'Poppins', sans-serif;
-  font-size: 2rem;
+  font-size: 1.5rem;
   color: #555;
 }
 
@@ -105,10 +104,20 @@
   padding: 0;
 }
 
-
 @media (max-width: 768px) {
   .row {
-    flex-direction: column-reverse;
+    flex-direction: column;
+  }
+
+  .image-container {
+    order: -1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .logoImg{
+    max-width: 70%;
   }
 
   .abtHead {
@@ -116,7 +125,8 @@
   }
 
   .typical-text {
-    font-size: 1.5rem;
+    text-align: center;
+    font-size: 1.3rem;
   }
 
   .abtPara {

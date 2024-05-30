@@ -91,6 +91,31 @@
   min-width: 40px;
 }
 
+.btn-primary {
+  background-color: #c34acc !important;
+  border-color: #c34acc !important;
+}
+
+.btn-primary:hover,
+.btn-primary:active
+ {
+  background-color: #a82f9c !important; /* Slightly darker shade for hover, focus, and active states */
+  border-color: #a82f9c !important;
+}
+
+.btn-outline-primary {
+  color: #c34acc !important;
+  border-color: #c34acc !important;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:active{
+  color: #fff !important;
+  background-color: #c34acc !important;
+  border-color: #c34acc !important;
+}
+
+
 @media only screen and (max-width: 1500px) {
   .delete-main {
     margin-top: 0.3rem !important;
