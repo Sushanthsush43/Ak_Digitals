@@ -9,6 +9,15 @@ body {
   /* background-color: #000000; */
 }
 
+body::-webkit-scrollbar {
+  width: 12px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
 /* navigation bar */
 .header-Main {
   display: flex; /* Ensure children are displayed inline */

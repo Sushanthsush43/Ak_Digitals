@@ -30,19 +30,31 @@ function VideoContainer({storage}) {
     setIsIos(i);
   },[])
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setIsOpened(true);
-    }, 1000);
-    setIsOpened(true);
-    return () => clearTimeout(timeout);
-  }, []);
+  // useEffect(() => {
+  //   const timeout = setTimeout(() => {
+  //     setIsOpened(true);
+  //   }, 1000);
+  //   setIsOpened(true);
+  //   return () => clearTimeout(timeout);
+  // }, []);
 
   // Function to view video
   const viewVideo = (video, i) => {
     setData({ video, i });
     setIsOpened(true);
   }
+
+  useEffect(() => {
+    if (isOpened)
+      document.body.style.overflow = 'hidden';
+    else
+      document.body.style.overflow = '';
+
+    // Clean up on unmount or when isOpened changes
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpened]);
 
   // Function to handle video actions (next, previous, close)
   const videoAction = (action) => {

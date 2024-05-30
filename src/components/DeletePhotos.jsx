@@ -28,19 +28,31 @@ function DeletePhotos({storage, app}) {
     const [isOpened, setIsOpened] = useState(false);
     const [data, setData] = useState({ img: '', i: 0 });
 
-    useEffect(() => {
-        const timeout = setTimeout(() => {
-          setIsOpened(true);
-        }, 1000);
-        setIsOpened(true);
-        return () => clearTimeout(timeout);
-      }, []);
+    // useEffect(() => {
+    //     const timeout = setTimeout(() => {
+    //       setIsOpened(true);
+    //     }, 1000);
+    //     setIsOpened(true);
+    //     return () => clearTimeout(timeout);
+    //   }, []);
     
       // Function to view image
       const viewImage = (img, i) => {
         setData({ img, i });
         setIsOpened(true);
       }
+
+      useEffect(() => {
+        if (isOpened)
+          document.body.style.overflow = 'hidden';
+        else
+          document.body.style.overflow = '';
+    
+        // Clean up on unmount or when isOpened changes
+        return () => {
+          document.body.style.overflow = '';
+        };
+      }, [isOpened]);
     
       // Function to handle image actions (next, previous, close)
       const imgAction = (action) => {
