@@ -46,6 +46,10 @@
     display: none;
   }
 
+.nav-btn:hover {
+    color: #850F8D;
+}
+
 .close-btn:hover {
     color: #cf2f2f;
 }

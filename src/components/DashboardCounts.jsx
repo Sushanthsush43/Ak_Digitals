@@ -51,7 +51,7 @@ function DashBoardCounts({imgsLength = 0, vidsLength = 0}) {
             </div>
             <div className='count-div-tabs'>
                 <IoIosVideocam className='count-icon' />
-                <p><span className='dashboard-count-text'>Videos</span><br /><span className='dashboard-count'>{vidCount}</span></p>
+                <p><span className='dashboard-count-text'>VIDEOS</span><br /><span className='dashboard-count'>{vidCount}</span></p>
             </div>
         </div>
     )

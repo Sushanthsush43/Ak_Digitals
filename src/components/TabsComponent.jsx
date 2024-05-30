@@ -3,7 +3,10 @@ import './../css/TabsComponent.css';
 import { toast } from 'react-toastify';
 import { toastErrorStyle } from './uitls/toastStyle';
 
-const TabsComponent = ({storage, Tab1, Tab2, waitBeforeSwitch = false}) => {
+// needs to be outside
+let dashboardCountRefreshCount = 0;
+
+const TabsComponent = ({storage, Tab1, Tab2, waitBeforeSwitch = false, dashboardCountRefresh}) => {
   const [activeTab, setActiveTab] = useState(0);
   const [runCompleted, setRunCompleted] = useState(true);
 
@@ -25,6 +28,13 @@ const TabsComponent = ({storage, Tab1, Tab2, waitBeforeSwitch = false}) => {
 
   const handleRunCompleted = (completed) => {
     setRunCompleted(completed);
+    if(completed) {
+      if(dashboardCountRefresh) {
+        dashboardCountRefreshCount += 1;
+        dashboardCountRefresh(dashboardCountRefreshCount);
+
+      }
+    }
   };
 
   return (

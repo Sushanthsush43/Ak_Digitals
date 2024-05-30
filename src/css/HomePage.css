@@ -6,6 +6,7 @@
 body {
   font-family: 'Poppins', sans-serif;
   color: #000000;
+  /* background-color: #000000; */
 }
 
 /* navigation bar */
@@ -48,8 +49,8 @@ body {
   margin: 0;
 }
 
-.header-links :first-child {
-  margin-right: 23px;
+.header-links .contact-link {
+  margin-left: 23px;
 }
 
 /* back button of all pages, let it be in this file itself */
@@ -59,6 +60,10 @@ body {
   font-size: 2rem;
   margin-left: 10px;
 }
+
+/* .back-btn :first-child:hover{
+  color: #850F8D;
+} */
 
 /*css for the brandName text*/
 .sofia-regular {
@@ -128,17 +133,17 @@ body {
   height: 0;
   overflow-x: hidden;
   overflow-y: hidden; /* needed */
-  background-color: #9d9a96c7; /* Adjust background color as needed */
+  background-color: rgb(243, 243, 243);
   position: absolute;
   display: flex; /* Ensure children are displayed inline */
-  flex-direction:column;
+  flex-direction: column;
   padding: 10px;
   left: 15px;
   border-radius: 5%;
   top: 9px; /* Align to the left of the heading-container */
-  z-index: 10; /* Ensure it is above all other content */
+  z-index: 15; /* Ensure it is above all other content */
   visibility: hidden;
-  transition: visibility 0s, width 0.5s ease-in-out, height 0.5s ease-in-out;
+  transition: width 0.5s ease-in-out, height 0.5s ease-in-out, visibility 0s 0.5s;
 }
 
 .signIn.visible {
@@ -147,7 +152,7 @@ body {
   height: 330px;
   background-color: rgb(243, 243, 243);
   box-shadow: 0 4px 10px 5px rgba(0, 0, 0, 0.397);
-
+  transition: width 0.5s ease-in-out, height 0.5s ease-in-out, visibility 0s 0s;
 }
 
 /*css of the close div of the signin div*/
@@ -198,8 +203,9 @@ body {
   .homePage-textBox p h4 {
     font-size: 12px;
   }
-  .header-links :first-child {
-    margin-right: 10px;
+  .header-links .contact-link {
+    margin-left: 10px;
+    margin-right: 5px;
   }
     
   .signIn.visible {
@@ -251,7 +257,7 @@ body {
   width: 100%;
   position: relative;
   border: none;
-  background-color: rgb(243, 243, 243);
+  background-color: inherit;
   border-bottom: 2px solid #850F8D;
   padding-left: 10px;
   /* border-radius: 5px; */

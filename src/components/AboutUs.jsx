@@ -41,10 +41,10 @@ const AboutUs = () => {
     <>
     {/* Back Button Section */}
     <div className='back-btn'>
-    <Link to='/'>
-      <ImArrowLeft2 />
-    </Link>
-</div>
+        <Link to='/'>
+          <ImArrowLeft2 />
+        </Link>
+    </div>
     <div className="container my-2">
     <h2 className="font-weight-bold abtHead">Contact</h2>
       <div className="row align-items-center">
