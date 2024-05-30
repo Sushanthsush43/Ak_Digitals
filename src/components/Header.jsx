@@ -20,6 +20,11 @@ const Header = ({ app }) => {
     setIsVisible(false);
   };
 
+  const handleIsVisible = (value) => {
+    // setIsTransitioning(true);
+    setIsVisible(!value);
+  }
+
   useEffect(() => {
     if (!isVisible) {
       const timeout = setTimeout(() => {
@@ -59,9 +64,9 @@ const Header = ({ app }) => {
         </div>
         <div className='Login-logout-div'>
           {isAdminLoggedIn ?
-            <AdminLogout app={app} closeStatus={closeSignIN} />
+            <AdminLogout app={app} closeStatus={handleIsVisible} />
             :
-            <AdminLoginForm app={app} closeStatus={closeSignIN} />
+            <AdminLoginForm app={app} closeStatus={handleIsVisible} />
           }
         </div>
       </div>

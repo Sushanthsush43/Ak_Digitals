@@ -61,6 +61,10 @@ body {
   margin-left: 10px;
 }
 
+/* .back-btn :first-child:hover{
+  color: #850F8D;
+} */
+
 /*css for the brandName text*/
 .sofia-regular {
   font-family: "Sofia", cursive;
