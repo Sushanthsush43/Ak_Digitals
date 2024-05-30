@@ -190,5 +190,25 @@
     .dashboard-count-text {
         display: none;
     }
+}
 
+/* piechart css */
+.piechart-div {
+    border-top: 2px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.piechart-div h2 {
+    margin-top: 20px;
+}
+
+.chart-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 600px;
 }

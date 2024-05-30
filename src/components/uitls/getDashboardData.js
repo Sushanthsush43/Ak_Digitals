@@ -1,7 +1,12 @@
 import { ref, listAll, getMetadata } from 'firebase/storage';
 
 export const getDashboardData = async (storage) => {
+
+    const convertBytesToGb = (bytes) => {
+        return bytes / (1024 * 1024 * 1024);
+    };
     try{
+        // Image section
         const imgRefsTemp = await listAll(ref(storage, 'images'));
         const imgRefs = imgRefsTemp.items;
         const imgsSizes = await Promise.all(
@@ -9,8 +14,10 @@ export const getDashboardData = async (storage) => {
             const metadata = await getMetadata(imgRef);
             return metadata.size;
         }));
-        const imgsSizeTotalMain = imgsSizes.reduce((accumulator, currentValue) => accumulator  + currentValue, 0);
+        const imgsSizeTotalMainBytes = imgsSizes.reduce((accumulator, currentValue) => accumulator  + currentValue, 0);
+        const imgsSizeTotalMainGB = convertBytesToGb(imgsSizeTotalMainBytes);
 
+        // Video section
         const vidRefsTemp = await listAll(ref(storage, 'videos'));
         const vidRefs = vidRefsTemp.items;
         const vidsSizes = await Promise.all(
@@ -18,9 +25,9 @@ export const getDashboardData = async (storage) => {
             const metadata = await getMetadata(vidRef);
             return metadata.size;
         }));
-        const vidsSizeTotal = vidsSizes.reduce((accumulator, currentValue) => accumulator  + currentValue, 0);
+        const vidsSizeTotalBytes = vidsSizes.reduce((accumulator, currentValue) => accumulator  + currentValue, 0);
         
-
+        // Thumbnail section
         const thumbnailsRefsTemp = await listAll(ref(storage, 'thumbnails'));
         const thumbnailsRefs = thumbnailsRefsTemp.items;
         const thumbnailsSizes = await Promise.all(
@@ -28,11 +35,21 @@ export const getDashboardData = async (storage) => {
             const metadata = await getMetadata(thumbnailRef);
             return metadata.size;
         }));
-        const thumbnailsSizeTotal = thumbnailsSizes.reduce((accumulator, currentValue) => accumulator  + currentValue, 0);
+        const thumbnailsSizeTotalBytes = thumbnailsSizes.reduce((accumulator, currentValue) => accumulator  + currentValue, 0);
 
-        const vidsSizeTotalMain = vidsSizeTotal + thumbnailsSizeTotal;
+        // Thumbnails and Videos are considered togethor
+        const vidsSizeTotalMainBytes = vidsSizeTotalBytes + thumbnailsSizeTotalBytes;
+        const vidsSizeTotalMainGB = convertBytesToGb(vidsSizeTotalMainBytes);
 
-        return { imgsLength : imgRefs.length, vidsLength : vidRefs.length };
+        const totalSizeUsedBytes = imgsSizeTotalMainBytes + vidsSizeTotalMainBytes;
+        const totalSizeUsedGB = convertBytesToGb(totalSizeUsedBytes);
+
+        return { imgsLength : imgRefs.length,
+                 vidsLength : vidRefs.length,
+                 imgSize : imgsSizeTotalMainGB,
+                 vidSize : vidsSizeTotalMainGB,
+                 totalUsedSize : totalSizeUsedGB 
+                };
 
     }catch(error){
         console.log("Something went wrong while getting dashboard data :", error);

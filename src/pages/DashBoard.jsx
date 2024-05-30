@@ -10,6 +10,7 @@ import VideoUpload from '../components/VideoUpload';
 import { CheckAdminLogin } from '../components/uitls/checkAdminLogin';
 import { getDashboardData } from '../components/uitls/getDashboardData';
 import DashBoardCounts from '../components/DashboardCounts';
+import PieChart from '../components/PieChart.jsx';
 
 function DashBoard({ storage, app }) {
   // Check if authorized user, ie. admin
@@ -18,6 +19,7 @@ function DashBoard({ storage, app }) {
   const [imgsLength, setImgsLength] = useState(0);
   const [vidsLength, setVidsLength] = useState(0);
   const [dashboardCountRefresh, setDashboardCountRefresh] = useState(0);
+  const [pieChartdata, setPieChartdata] = useState({ photoSize: 0, videoSize: 0, totalUsedSize: 0 });
 
   // refresh img-vid count when new file upload
   const handleCountRefresh = (count) => {
@@ -29,11 +31,14 @@ function DashBoard({ storage, app }) {
         if (data) {
           setImgsLength(data.imgsLength);
           setVidsLength(data.vidsLength);
+          setPieChartdata({ photoSize: data.imgSize, videoSize: data.vidSize, totalUsedSize: data.totalUsedSize });
         } else {
           toast.error("Something went wrong", toastErrorStyle());
         }
       });
   }, [dashboardCountRefresh]);
+
+
 
   return (
           <div className='DashBoard-div'>
@@ -55,6 +60,11 @@ function DashBoard({ storage, app }) {
               <div className='MainDashBoardDiv'>
                   {/* Count section */}
                   <DashBoardCounts imgsLength={imgsLength} vidsLength={vidsLength}/>
+
+                  <div className='piechart-div'>
+                    <h2>Storage Distribution</h2>
+                    <PieChart data={pieChartdata}/>
+                  </div>
 
                   <div className='dashboard-upload-main'>
                       <div className='dashboard-upload-head'>
