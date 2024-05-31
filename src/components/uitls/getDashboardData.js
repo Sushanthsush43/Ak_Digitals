@@ -3,7 +3,7 @@ import { ref, listAll, getMetadata } from 'firebase/storage';
 export const getDashboardData = async (storage) => {
 
     const convertBytesToGb = (bytes) => {
-        return bytes / (1024 * 1024 * 1024);
+        return parseFloat(bytes / (1024 * 1024 * 1024)).toFixed(2);
     };
     try{
         // Image section

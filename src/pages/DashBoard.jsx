@@ -61,19 +61,21 @@ function DashBoard({ storage, app }) {
                   {/* Count section */}
                   <DashBoardCounts imgsLength={imgsLength} vidsLength={vidsLength}/>
 
-                  <div className='piechart-div'>
-                    <h2>Storage Distribution</h2>
+                  <div className='piechart-div-main'>
+                    <div className='dashboard-head-texts'>
+                        Storage Distribution
+                    </div>
                     <PieChart data={pieChartdata}/>
                   </div>
 
                   <div className='dashboard-upload-main'>
-                      <div className='dashboard-upload-head'>
+                      <div className='dashboard-head-texts'>
                         Upload
                       </div>
                       <TabsComponent storage={storage} Tab1={PhotoUpload} Tab2={VideoUpload} waitBeforeSwitch={true} dashboardCountRefresh={handleCountRefresh}/>
                   </div>
                   <div className='dashboard-delete-main'>
-                      <div className='dashboard-delete-head'>
+                      <div className='dashboard-head-texts'>
                             Delete
                       </div>
                       <div className='dashboard-delete-btns'>

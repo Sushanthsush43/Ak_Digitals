@@ -114,7 +114,7 @@
     border-bottom: 2px solid black;
 }
 
-.dashboard-upload-head {
+.dashboard-head-texts {
     font-size: 40px;
 }
 
@@ -125,10 +125,6 @@
     align-items: center;
     gap: 20px;
     margin-bottom: 20px;
-}
-
-.dashboard-delete-head {
-    font-size: 40px;
 }
 
 .dashboard-delete-btns {
@@ -147,6 +143,38 @@
     font-size: 20px;
 }
 
+/* piechart css */
+.piechart-div-main {
+    border-top: 2px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.piechart-div-sub {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.piechart-div{
+    width: 22%;
+}
+
+.storage-extra_details-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
 
 @media (max-width: 1500px) {
     .MainDashBoardDiv {
@@ -154,6 +182,9 @@
     }
     .count-div-main{
         width: 82%;
+    }
+    .piechart-div{
+        width: 27%;
     }
 }
 
@@ -165,50 +196,48 @@
     .count-div-main{
         width: 82%;
     }
+    .piechart-div{
+        width: 40%;
+    }
 }
 
 
 @media (max-width: 750px) {
     .count-div-main{
-        flex-direction: row;
-    }
-    .count-div-tabs {
         flex-direction: column;
-        padding: 10px;
     }
-    .count-div-tabs .dashboard-count {
+    .count-div-tabs:first-child {
+        margin-bottom: 15px;
+    }
+    /* .count-div-tabs .dashboard-count {
         font-size: 3rem;
         margin-top: -20px;
-    }
-    .count-div-tabs p {
+    } */
+    /* .count-div-tabs p {
         font-size: 1rem;
-    }
-    .count-icon {
+    } */
+    /* .count-icon {
         width: 50%;
         height: 25%;
+    } */
+    .dashboard-head-texts {
+        font-size: 27px;
     }
-    .dashboard-count-text {
+    /* .dashboard-count-text {
         display: none;
+    } */
+    .piechart-div-sub {
+        flex-direction: column;
+        justify-content: center;
+    }
+    .piechart-div{
+        width: 50%;
     }
 }
 
-/* piechart css */
-.piechart-div {
-    border-top: 2px solid black;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+@media (max-width: 550px) {
+    .piechart-div{
+        width: 75%;
+    }
 }
 
-.piechart-div h2 {
-    margin-top: 20px;
-}
-
-.chart-div {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    width: 600px;
-}

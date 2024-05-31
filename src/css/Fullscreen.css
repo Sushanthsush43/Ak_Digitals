@@ -38,7 +38,7 @@
     cursor: pointer;
     z-index: 15;
     padding: 0.5rem;
-    transition: color 0.2s ease-in-out;
+    transition: color 0.2s ease-in-out, transform 0.1s ease-in-out;
 }
 
 .close{
@@ -47,10 +47,12 @@
 
 .nav-btn:hover {
     color: #850F8D;
+    transform: scale(1.5);
 }
 
 .close-btn:hover {
     color: #cf2f2f;
+    transform: scale(1.5);
 }
 
 .close-btn {

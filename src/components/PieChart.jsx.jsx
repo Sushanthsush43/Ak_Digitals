@@ -1,51 +1,87 @@
-import React from 'react';
-import { PieChart } from 'react-minimal-pie-chart';
+import React, { useEffect } from 'react';
+import { Pie } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip,
+  Legend,
+} from 'chart.js';
 import '../css/Dashboard.css';
+import { toast } from 'react-toastify';
+import { toastErrorStyle } from './uitls/toastStyle';
 
-const PieChartComponent = ({ data }) => {
-  const totalStorage = data.photoSize + data.videoSize;
-  const usedStorage = data.photoSize + data.videoSize;
+ChartJS.register(ArcElement, Tooltip, Legend);
+
+const PieChart = ({ data }) => {
+  const totalStorage = parseFloat(5); // Total storage in GB
+  const photoSize  = parseFloat(data.photoSize);
+  const videoSize  = parseFloat(data.videoSize);
+
+  const usedStorage = photoSize + videoSize;
+
   const remainingStorage = totalStorage - usedStorage;
 
-  const chartData = [
-    { title: 'Photos', value: data.photoSize, color: '#36A2EB' },
-    { title: 'Videos', value: data.videoSize, color: '#FF6384' },
-    { title: 'Remaining', value: remainingStorage, color: '#F5F5F5' },
-  ];
-
-  const animationConfig = {
-    animate: true,
-    animationDuration: 1000,
-    animationEasing: 'ease-out'
+  const chartData = {
+    labels: ['Photos', 'Videos', 'Remaining'],
+    datasets: [
+      {
+        label: 'Storage Distribution',
+        data: [photoSize, videoSize, remainingStorage],
+        backgroundColor: ['#36A2EB', '#FF6384', '#FFCE56'],
+        hoverBackgroundColor: ['#36A2EB', '#FF6384', '#FFCE56'],
+      },
+    ],
   };
 
-  const segmentsStyle = (index) => ({
-    transition: 'fill 0.3s ease',
-    fill: chartData[index].color,
-  });
+  const options = {
+    plugins: {
+      legend: {
+        position: 'bottom',
+        labels: {
+          generateLabels: (chart) => {
+            const data = chart.data;
+            if (data.labels.length && data.datasets.length) {
+              return data.labels.map((label, i) => {
+                const value = data.datasets[0].data[i];
+                return {
+                  text: `${label}: ${value} GB`,
+                  fillStyle: data.datasets[0].backgroundColor[i],
+                  hidden: false,
+                  index: i,
+                };
+              });
+            }
+            return [];
+          },
+        },
+      },
+    },
+    layout: {
+      padding: {
+        bottom: 20, // Add space between chart and legend
+      },
+    },
+  };
 
-  const labelStyle = (index) => ({
-    fontSize: '6px',
-    transition: 'fill 0.3s ease',
-  });
-  console.log(data);
+  useEffect(()=>{
+    if(remainingStorage <= 0) {
+      toast.error("Storage full. Consider deleting some files and please reach out to the developers.", {...toastErrorStyle(), autoClose: false});
+    } else if (remainingStorage <= 0.5) {
+      toast.error("Storage almost full. Consider deleting some files or reaching out to the developers.", {...toastErrorStyle(), autoClose: false});
+    }
+  },[remainingStorage]);
 
   return (
-    <div className='chart-div'>
-      <PieChart
-        data={chartData}
-        label={({ dataEntry }) => `${dataEntry.title}: ${dataEntry.value} GB`}
-        labelStyle={labelStyle}
-        segmentsStyle={segmentsStyle}
-        {...animationConfig}
-      />
-      <div className='extra_details-div'>
-        <h2>aaaaaaaaaaaaaa</h2>
-        <h2>bbbbbbbbbbbbb</h2>
-        <h2>cccccccccccccccc</h2>
+    <div className='piechart-div-sub'>
+      <div className='piechart-div'>
+        <Pie data={chartData} options={options} className='chart'/>
+      </div>
+      <div className='storage-extra_details-div'>
+        <h2>Total space used : {usedStorage} GB</h2>
+        <h2>This data is represented based on limited storage of 5 GB</h2>
       </div>
     </div>
   );
 };
 
-export default PieChartComponent;
+export default PieChart;

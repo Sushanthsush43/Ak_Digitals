@@ -10,24 +10,34 @@ function DashBoardCounts({imgsLength = 0, vidsLength = 0}) {
     const handleCountInterval = () => {
         if (imgsLength > 0) {
             let imgCount = 0;
+            let delay = 0;
+            if (imgsLength < 100) 
+                delay = 50
+            else
+                delay = 25
             imgIntervalRef.current = setInterval(() => {
             imgCount++;
             setImgCount(imgCount);
             if (imgCount >= imgsLength) {
                 clearInterval(imgIntervalRef.current);
             }
-            }, 50);
+            }, delay);
         }
 
         if (vidsLength > 0) {
             let vidCount = 0;
+            let delay = 0;
+            if (vidsLength < 100) 
+                delay = 50
+            else
+                delay = 25
             vidIntervalRef.current = setInterval(() => {
             vidCount++;
             setVidCount(vidCount);
             if (vidCount >= vidsLength) {
                 clearInterval(vidIntervalRef.current);
             }
-            }, 50);
+            }, delay);
         }
     };
 
