@@ -12,15 +12,7 @@ const TabsComponent = ({storage, Tab1, Tab2, waitBeforeSwitch = false, dashboard
 
   const handleTabClick = (index) => {
     if(waitBeforeSwitch && !runCompleted) {
-      toast.error('Please wait until the upload is completed', {
-        ...toastErrorStyle(),
-        style: {
-          ...toastErrorStyle().style,
-          backgroundColor: 'white',
-          background : 'none',
-          color: 'black'
-        }
-      });
+      toast.error('Please wait until the upload is completed', {...toastErrorStyle(), autoClose: 1500});
       return;
     }
     setActiveTab(index);

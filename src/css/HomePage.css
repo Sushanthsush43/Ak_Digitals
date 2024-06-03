@@ -6,7 +6,7 @@
 body {
   font-family: 'Poppins', sans-serif;
   color: #000000;
-  /* background-color: #000000; */
+  background-color: #F7F3F8 !important;
 }
 
 body::-webkit-scrollbar {
@@ -16,6 +16,11 @@ body::-webkit-scrollbar {
 body::-webkit-scrollbar-thumb {
   background: #888;
   border-radius: 5px;
+}
+
+/* success toast progress bar color */
+.toast-success-progress-bar {
+  background-color: #850F8D !important;
 }
 
 /* navigation bar */
@@ -68,6 +73,12 @@ body::-webkit-scrollbar-thumb {
   text-decoration: none;
   font-size: 2rem;
   margin-left: 10px;
+  transition: color 0.2s ease-in-out, transform 0.1s ease-in-out;
+}
+
+.back-btn :first-child:hover{
+  color: #850F8D;
+  /* transform: scale(1.1); */
 }
 
 /* .back-btn :first-child:hover{
@@ -93,7 +104,7 @@ body::-webkit-scrollbar-thumb {
   font-size: 23px;
   margin:0%;
   /* border-radius: 5px; */
-  border-bottom: 2px solid #ffffff;
+  border-bottom: 2px solid #F7F3F8;
   transition: border-bottom 0.5s ease;
 }
 
@@ -142,7 +153,7 @@ body::-webkit-scrollbar-thumb {
   height: 0;
   overflow-x: hidden;
   overflow-y: hidden; /* needed */
-  background-color: rgb(243, 243, 243);
+  background-color: #F7F3F8;
   position: absolute;
   display: flex; /* Ensure children are displayed inline */
   flex-direction: column;
@@ -159,7 +170,6 @@ body::-webkit-scrollbar-thumb {
   visibility: visible;
   width: 400px;
   height: 330px;
-  background-color: rgb(243, 243, 243);
   box-shadow: 0 4px 10px 5px rgba(0, 0, 0, 0.397);
   transition: width 0.5s ease-in-out, height 0.5s ease-in-out, visibility 0s 0s;
 }
@@ -261,7 +271,6 @@ body::-webkit-scrollbar-thumb {
 }
 
 .admin-form input {
-
   height: 50px;
   width: 100%;
   position: relative;
@@ -286,16 +295,11 @@ body::-webkit-scrollbar-thumb {
   width: 100%;
   margin-top: 20px;
   position: relative;
-  border-color:white;
+  border-color:#F7F3F8;
   background-color: #850F8D;
   color: rgb(255, 255, 255);
   border-radius: 5px;
-  /* transition: background-color 0.3s; */
 }
-
-/* .admin-submit:hover {
-  background-color: #4b0250;
-} */
 
 .admin-ForgotPass{
   background-color: transparent;
@@ -308,7 +312,7 @@ body::-webkit-scrollbar-thumb {
   width: 100%;
   margin-top: 100px;
   position: relative;
-  border-color:white;
+  border-color:#F7F3F8;
   background-color: #850F8D;
   color: rgb(255, 255, 255);
   border-radius: 5px;
@@ -339,8 +343,8 @@ body::-webkit-scrollbar-thumb {
   right: 20px;
   width: 50px;
   height: 50px;
-  background-color: rgba(255, 255, 255, 0.7); /* Lightly transparent background */
-  color: rgb(0, 0, 0);
+  background-color: rgba(255, 255, 255, 0.7);
+  color: #850F8D;
   border: none;
   border-radius: 50%;
   display: flex;
@@ -354,7 +358,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .scroll-to-top-float-btn:hover {
-  background-color: #850F8D; /* Slightly more opaque on hover */
+  background-color: #850F8D;
   color: #ffff;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
@@ -377,7 +381,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .scroll-to-top-end-btn {
-  background-color: #ffffff;
+  background-color: #F7F3F8;
   color: rgb(0, 0, 0);
   border-radius: 5px;
   display: flex;
