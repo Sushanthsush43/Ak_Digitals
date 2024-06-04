@@ -1,9 +1,17 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; 
+}
+
 .delete-main {
   margin-top: 10rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  padding: 0 1rem;
 }
 
 .delete-container {
@@ -12,6 +20,7 @@
   justify-content: center;
   align-items: center;
   gap: 0.8rem;
+  width: 100%;
 }
 
 .delete-label-btn {
@@ -19,6 +28,7 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  padding: 0 1rem; 
 }
 
 .delete-item-div {
@@ -26,11 +36,13 @@
   overflow: hidden;
   width: 100%;
   flex: 0 0 calc(50% - 1rem);
+  max-width: calc(100% - 1rem);
 }
 
 @media (min-width: 576px) { /* Small devices*/
   .delete-item-div {
     flex: 0 0 calc(50% - 1rem); /* 2 items per row */
+    max-width: calc(75% - 1rem);
   }
 }
 
@@ -38,11 +50,20 @@
   .delete-item-div {
     flex: 0 0 calc(50% - 1rem); /* 2 items per row */
   }
+
+  .delete-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.8rem;
+  }
 }
 
 @media (min-width: 992px) { /* Large devices */
   .delete-item-div {
     flex: 0 0 calc(25% - 1rem); /* 4 items per row */
+    max-width: calc(25% - 1rem);
   }
 }
 

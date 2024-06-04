@@ -162,7 +162,7 @@
 }
 
 .piechart-div{
-    width: 22%;
+    width: 25%;
 }
 
 .storage-extra_details-div {
@@ -185,6 +185,9 @@
     }
     .piechart-div{
         width: 27%;
+    }
+    .lead{
+        font-size: 1rem;
     }
 }
 

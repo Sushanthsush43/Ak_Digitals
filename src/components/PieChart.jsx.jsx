@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import { Pie } from 'react-chartjs-2';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import {
   Chart as ChartJS,
   ArcElement,
@@ -72,14 +74,19 @@ const PieChart = ({ data }) => {
   },[remainingStorage]);
 
   return (
-    <div className='piechart-div-sub'>
-      <div className='piechart-div'>
+    <div className='piechart-div-sub border border-dark rounded'>
+      <div className='piechart-div p-2'>
         <Pie data={chartData} options={options} className='chart'/>
       </div>
       <div className='storage-extra_details-div'>
-        <h2>Total space used : {usedStorage} GB</h2>
-        <h2>This data is represented based on limited storage of 5 GB</h2>
-      </div>
+  <h2 className="lead">
+    <FontAwesomeIcon icon={faCaretRight} /> Total space used: <strong style={{fontSize: '1.8rem'}}>{usedStorage} GB</strong>
+  </h2>
+  <h2 className="lead">
+    <FontAwesomeIcon icon={faCaretRight} /> Storage space Limit: <strong style={{fontSize: '1.8rem'}}>5 GB</strong>
+  </h2>
+</div>
+
     </div>
   );
 };
