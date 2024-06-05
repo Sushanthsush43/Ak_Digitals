@@ -23,7 +23,6 @@ function DeleteVideos({storage, app}) {
     const videosPerPage = 15;
     const [isLoading, setIsLoading] = useState(false);
     const [totalPages, setTotalPages] = useState(0);
-    const [displayedPages, setDisplayedPages] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
     const [toDeleteVideos, setToDeleteVideos] = useState([]);
     const [toDeleteThumbnails, setToDeleteThumbnails] = useState([]);
     const [videoRefs, setVideoRefs] = useState([]);
@@ -182,11 +181,11 @@ function DeleteVideos({storage, app}) {
 
         setPage(newPage);
 
-        if (totalPages > 10) {
-            const newDisplayedPages = Array.from({ length: 10 }, (_, i) => newPage + i - 5)
-                .filter(page => page > 0 && page <= totalPages);
-            setDisplayedPages(newDisplayedPages);
-        }
+        // if (totalPages > 10) {
+        //     const newDisplayedPages = Array.from({ length: 10 }, (_, i) => newPage + i - 5)
+        //         .filter(page => page > 0 && page <= totalPages);
+        //     setDisplayedPages(newDisplayedPages);
+        // }
     };
 
     const handleVideoLoad = (index) => {
@@ -405,31 +404,24 @@ function DeleteVideos({storage, app}) {
             </div>
 
 
-            <div className='pagination d-flex justify-content-center mt-4 mb-4'>
-                {totalPages > 10 ?
-                    displayedPages.map((pageNum) => (
-                        <button
-                            key={pageNum}
-                            className={`btn mx-1 ${pageNum === page ? 'btn-primary' : 'btn-outline-primary'}`}
-                            onClick={() => handlePageChange(pageNum)}
-                            disabled={isLoading || pageNum === page}
-                        >
-                            {pageNum}
-                        </button>
-                    ))
-                    :
-                    Array.from({ length: totalPages }, (_, i) => (
-                        <button
-                            key={i + 1}
-                            className={`btn mx-1 ${i + 1 === page ? 'btn-primary' : 'btn-outline-primary'}`}
-                            onClick={() => handlePageChange(i + 1)}
-                            disabled={isLoading || (i + 1 === page)}
-                        >
-                            {i + 1}
-                        </button>
-                    ))
-                }
+            <div className='delete-pagination-wrapper'>
+                <div className='delete-pagination'>
+                    <div className="delete-pagination-inner">
+                        { Array.from({ length: totalPages }, (_, i) => (
+                                <button
+                                    key={i + 1}
+                                    className={`btn mx-1 ${i + 1 === page ? 'btn-primary' : 'btn-outline-primary'}`}
+                                    onClick={() => handlePageChange(i + 1)}
+                                    disabled={isLoading || (i + 1 === page)}
+                                >
+                                    {i + 1}
+                                </button>
+                            ))
+                        }
+                    </div>
+                </div>
             </div>
+
         </div>
     </>
 );

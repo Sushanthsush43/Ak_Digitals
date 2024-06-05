@@ -104,8 +104,36 @@ body, html {
   color: #850F8D !important;
 }
 
-.pagination {
+.delete-pagination-wrapper {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.delete-pagination {
   margin-top: 2rem;
+  padding-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.delete-pagination-inner {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.delete-pagination::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+}
+
+.delete-pagination::-webkit-scrollbar-thumb {
+  background-color: #850F8D;
+  border-radius: 5px;
 }
 
 .btn {
