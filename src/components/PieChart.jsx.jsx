@@ -81,7 +81,7 @@ const PieChart = ({ data }) => {
       <div className='storage-extra_details-div'>
   <h2 className="lead">
     <FontAwesomeIcon icon={faCaretRight} /> Total space used :
-      <strong style={{fontSize: '1.8rem', color : usedStorage>= 4.5 ? 'red' : 'inherit' }}> {usedStorage} GB</strong>
+      <strong style={{fontSize: '1.8rem', color : usedStorage>= 4.5 ? '#cf2f2f' : 'inherit' }}> {usedStorage} GB</strong>
   </h2>
   <h2 className="lead">
     <FontAwesomeIcon icon={faCaretRight} /> Storage space Limit :<strong style={{fontSize: '1.8rem'}}> 5 GB</strong>
