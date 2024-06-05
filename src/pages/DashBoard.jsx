@@ -61,14 +61,14 @@ function DashBoard({ storage, app }) {
                   {/* Count section */}
                   <DashBoardCounts imgsLength={imgsLength} vidsLength={vidsLength}/>
 
-                  <div className='piechart-div-main p-2'>
+                  <div className='piechart-div-main'>
                     <div className='dashboard-head-texts'>
                         Storage Distribution
                     </div>
                     <PieChart data={pieChartdata}/>
                   </div>
 
-                  <div className='dashboard-upload-main p-4'>
+                  <div className='dashboard-upload-main'>
                       <div className='dashboard-head-texts'>
                         Upload
                       </div>

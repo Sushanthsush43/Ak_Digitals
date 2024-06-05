@@ -19,9 +19,9 @@ const PieChart = ({ data }) => {
   const photoSize  = parseFloat(data.photoSize);
   const videoSize  = parseFloat(data.videoSize);
 
-  const usedStorage = photoSize + videoSize;
+  const usedStorage = parseFloat(photoSize + videoSize).toFixed(2);
 
-  const remainingStorage = totalStorage - usedStorage;
+  const remainingStorage = parseFloat(totalStorage - usedStorage).toFixed(2);
 
   const chartData = {
     labels: ['Photos', 'Videos', 'Remaining'],
@@ -80,10 +80,11 @@ const PieChart = ({ data }) => {
       </div>
       <div className='storage-extra_details-div'>
   <h2 className="lead">
-    <FontAwesomeIcon icon={faCaretRight} /> Total space used: <strong style={{fontSize: '1.8rem'}}>{usedStorage} GB</strong>
+    <FontAwesomeIcon icon={faCaretRight} /> Total space used :
+      <strong style={{fontSize: '1.8rem', color : usedStorage>= 4.5 ? 'red' : 'inherit' }}> {usedStorage} GB</strong>
   </h2>
   <h2 className="lead">
-    <FontAwesomeIcon icon={faCaretRight} /> Storage space Limit: <strong style={{fontSize: '1.8rem'}}>5 GB</strong>
+    <FontAwesomeIcon icon={faCaretRight} /> Storage space Limit :<strong style={{fontSize: '1.8rem'}}> 5 GB</strong>
   </h2>
 </div>
 

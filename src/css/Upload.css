@@ -11,7 +11,15 @@
     padding: 30px;
     background: #F7F3F8;
     border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* border: 1px solid black; */
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+    box-shadow: 0 2px 8px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease-in-out;
+    margin-bottom: 44px;
+}
+
+.upload-wrapper:hover {
+    box-shadow: 0 2px 8px 4px rgba(133, 15, 141, 0.4);
 }
 
 .upload-wrapper header {
