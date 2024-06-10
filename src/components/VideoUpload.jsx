@@ -61,7 +61,7 @@ function VideoUpload({storage, runCompleted}) {
           if (error.code === 'storage/object-not-found') {
             console.log('The thumbnail you tried to delete does not exist.');
           } else {
-            console.error('Error revoking thumbnail:', error);
+            console.error('Error revoking thumbnail:', error.message || error);
           }
         }
       }
@@ -110,11 +110,6 @@ function VideoUpload({storage, runCompleted}) {
                     if(!supportedExtensions.includes(fileExtension)) {
                         throw new Error('Invalid video format');
                     }
-                        
-                    // throw new Error('Simulated error: i equals 2');
-                    // if (i % 2 === 0) {
-                    //     throw new Error('Simulated error: i equals 2');
-                    // }
 
                     const thumbnail = await generateThumbnail(file);
                     const thumbnailName = file.name.slice(0, file.name.lastIndexOf('.')) + '.png';
@@ -134,8 +129,6 @@ function VideoUpload({storage, runCompleted}) {
                     const compressedThumbnailFile = await imageCompression(thumbnail, options);
             
                     thumbnailRef = ref(storage, `thumbnails/${thumbnailName}`);
-
-                    // await uploadBytes(thumbnailRef, thumbnail, { contentType: 'image/png' });
 
                     await new Promise((resolve, reject) => {
                         const uploadTask = uploadBytesResumable(thumbnailRef, compressedThumbnailFile, { contentType: 'image/png' });
@@ -253,7 +246,7 @@ function VideoUpload({storage, runCompleted}) {
           // Create an object URL for the Blob
           return blob;
         } catch (error) {
-          console.error('Error generating thumbnail:', error);
+          console.error('Error generating thumbnail:', error.message || error);
           return null;
         }
       };
@@ -261,7 +254,6 @@ function VideoUpload({storage, runCompleted}) {
     return (
 
         <div className='upload-mainBody'>
-            {/* <Link to="/" className="back-button"><i className="fas fa-arrow-left"></i></Link> */}
 
             <div className='upload-wrapper'>
                 <header>Upload videos</header>
@@ -290,7 +282,6 @@ function VideoUpload({storage, runCompleted}) {
                     <button onClick={handleUpload} className='upload-button' type="submit" disabled={uploading}>
                         {uploading ? <>Uploading <FontAwesomeIcon icon={faSpinner} spin /></>: 'Upload'}
                     </button>
-                    {/* {uploading && <div className="upload-loading-animation">Uploading...</div>} */}
                     {uploading && 
                         <div>
                             <div className='upload-filename-text'>{uploadingFile}</div>
@@ -299,7 +290,6 @@ function VideoUpload({storage, runCompleted}) {
                              height='17px'
                              customLabel={`${uploadProgress.toFixed(0)}`}
                              bgColor="#850F8D"
-                             //  baseBgColor="#ffff"
                             labelColor="#ffff" />
                         </div>
                     }

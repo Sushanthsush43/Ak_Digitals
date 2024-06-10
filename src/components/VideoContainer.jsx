@@ -123,10 +123,8 @@ function VideoContainer({storage}) {
             const thumbnailName = itemRef.name.slice(0, itemRef.name.lastIndexOf('.')) + '.png';
 
             const thumbnailRef = ref(storage, `thumbnails/${thumbnailName}`);
-            // console.log(videoUrl)
 
             const thumbnailUrl = await getDownloadURL(thumbnailRef);
-            // console.log(thumbnailUrl)
 
             return { videoUrl, thumbnailUrl, loaded: false };
           } catch (error) {

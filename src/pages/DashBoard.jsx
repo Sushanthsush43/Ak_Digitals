@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ImArrowLeft2 } from "react-icons/im";
 import '../css/Dashboard.css';
@@ -37,8 +37,6 @@ function DashBoard({ storage, app }) {
         }
       });
   }, [dashboardCountRefresh]);
-
-
 
   return (
           <div className='DashBoard-div'>

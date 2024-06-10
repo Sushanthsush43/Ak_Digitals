@@ -144,12 +144,6 @@ function DeletePhotos({storage, app}) {
         setToDelete([]); // clear selection
 
         setPage(newPage);
-
-        // if (totalPages > 10) {
-        //     const newDisplayedPages = Array.from({ length: 10 }, (_, i) => newPage + i - 5)
-        //         .filter(page => page > 0 && page <= totalPages);
-        //     setDisplayedPages(newDisplayedPages);
-        // }
     };
 
     const handleImageLoad = (index) => {

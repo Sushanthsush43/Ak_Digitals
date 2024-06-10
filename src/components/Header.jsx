@@ -21,7 +21,6 @@ const Header = ({ app }) => {
   };
 
   const handleIsVisible = (value) => {
-    // setIsTransitioning(true);
     setIsVisible(!value);
   }
 

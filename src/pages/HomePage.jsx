@@ -4,9 +4,6 @@ import Header from '../components/Header';
 import TabsComponent from '../components/TabsComponent';
 import PhotoContainer from '../components/PhotoContainer';
 import VideoContainer from '../components/VideoContainer';
-import DeleteVideos from '../components/DeleteVideos';
-import DeletePhotos from '../components/DeletePhotos';
-import AboutUs  from '../components/AboutUs';
 
 function HomePage({storage, app}) {
 
@@ -35,15 +32,9 @@ function HomePage({storage, app}) {
         </p>
       </div>
 
-      
-      {/* <VideoContainer /> */}
-      {/* <AdminLoginForm app={app}/> */}
+      {/* Photo-Video Section MAIN*/}
       <TabsComponent storage={storage} Tab1={PhotoContainer} Tab2={VideoContainer}/>
-      {/* <DeletePhotos storage={storage}/> */}
-      {/* <DeleteVideos storage={storage}/> */}
-      {/* <AboutUs/> */}
-      {/* <PhotoUpload storage={storage}/> */}
-      {/* <VideoUpload storage={storage}/> */}
+
     </div>
   );
 }

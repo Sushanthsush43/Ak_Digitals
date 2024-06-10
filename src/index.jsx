@@ -9,7 +9,6 @@ import 'aos/dist/aos.css';
 import AOS from 'aos';
 AOS.init();
 
-
 ReactDOM.render(
   <React.StrictMode>
     <App />
@@ -17,7 +16,3 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root')
 );
-
-
-
-

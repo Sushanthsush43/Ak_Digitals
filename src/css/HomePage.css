@@ -14,7 +14,7 @@ body::-webkit-scrollbar {
 }
 
 body::-webkit-scrollbar-thumb {
-  background: #888;
+  background: #850F8D;
   border-radius: 5px;
 }
 
@@ -79,12 +79,7 @@ body::-webkit-scrollbar-thumb {
 
 .back-btn :first-child:hover{
   color: #850F8D;
-  /* transform: scale(1.1); */
 }
-
-/* .back-btn :first-child:hover{
-  color: #850F8D;
-} */
 
 /*css for the brandName text*/
 .sofia-regular {
@@ -104,7 +99,6 @@ body::-webkit-scrollbar-thumb {
   background-color: transparent;
   font-size: 23px;
   margin:0%;
-  /* border-radius: 5px; */
   border-bottom: 2px solid #F7F3F8;
   transition: border-bottom 0.5s ease;
 }
@@ -248,11 +242,7 @@ body::-webkit-scrollbar-thumb {
     font-size: 30px; /* Adjust font size */
     align-self: flex-end; /* Align the close button to the end */
   }
-  
-  
 }
-
-/* css of admin */
 
 /* css of admin form */
 .admin-form{
@@ -279,7 +269,6 @@ body::-webkit-scrollbar-thumb {
   background-color: inherit;
   border-bottom: 2px solid #850F8D;
   padding-left: 10px;
-  /* border-radius: 5px; */
 }
 
 /* Optional: Adding focus styles to remove any default outline and add a custom focus effect */
@@ -393,7 +382,6 @@ body::-webkit-scrollbar-thumb {
   padding: 1px 10px 1px 10px;
   border-bottom: 2px solid #850F8D;
   transition: background-color 0.3s, color 0.3s, border-bottom 0.3s;
-  /* box-shadow: 2px 6px 12px rgba(0, 0, 0, 0.3); */
 }
 
 .scroll-to-top-end-btn:hover{

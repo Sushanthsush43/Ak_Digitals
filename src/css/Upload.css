@@ -11,8 +11,6 @@
     padding: 30px;
     background: #F7F3F8;
     border-radius: 5px;
-    /* border: 1px solid black; */
-    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
     box-shadow: 0 2px 8px 4px rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s ease-in-out;
     margin-bottom: 44px;
@@ -72,37 +70,13 @@
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
-    /* transition: background-color 0.3s ease; */
     width: 100%;
     text-align: center;
 }
 
-/* .upload-button:hover {
-    background-color: #850F8D;
-} */
-
 .upload-no-files-count {
     color : #850F8D;
 }
-
-/* .upload-loading-animation {
-    font-size: 20px;
-    margin-top: 10px;
-    color: #000000;
-    text-align: center;
-}
-
-.upload-loading-animation::after {
-    content: '';
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border: 2px solid #f3f3f3;
-    border-top: 2px solid #3498db;
-    border-radius: 50%;
-    animation: spin 0.7s linear infinite;
-    margin-left: 10px;
-} */
 
 .upload-filename-text {
     margin-top: 10px;

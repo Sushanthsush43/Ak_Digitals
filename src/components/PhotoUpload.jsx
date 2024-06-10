@@ -102,21 +102,9 @@ function PhotoUpload({storage, runCompleted}) {
                         }
                     };
                     const compressedFile = await imageCompression(file, options);
-                    
-                    // if (i % 2 === 0) {
-                    //     throw new Error('Simulated error: i equals 2');
-                    // }
-                        // throw new Error('Simulated error: i equals 2');
-
 
                     const storageRef = ref(storage, `images/${file.name}`);
 
-                    // const metadata = {
-                    //     contentType: file.type,
-                    //     customMetadata: {
-                    //         uploadTime: Date.now()
-                    //     }
-                    // };
                     await new Promise((resolve, reject) => {
                         const uplaodTask = uploadBytesResumable(storageRef, compressedFile);
 
@@ -136,12 +124,10 @@ function PhotoUpload({storage, runCompleted}) {
                         );
                     });
 
-                    // console.log(`File "${file.name}" uploaded successfully.`);
                 } catch (error) {
                     updatedArray[i] = false; // if upload failed, then set failed for that file
                     console.error(`Error uploading photo "${file.name}":`, error);
                     isSomeFailed = true;
-                    // console.log("Error on ", i);
                 } finally {
                     setUploadTrack(prevCount => prevCount - 1);
                 }
@@ -162,11 +148,6 @@ function PhotoUpload({storage, runCompleted}) {
             const fileInput = document.getElementById('upload-input');
             fileInput && (fileInput.value = '');
 
-            // console.log("Initial array:", eachUpdated);
-            // const filteredArray = eachUpdated.filter(val => val === true);
-            // console.log("Filtered array:", filteredArray);
-            // console.log("Length of filtered array:", filteredArray.length);
-
             // display appropriate toast message
             if (!isCompleteFailed && isSomeFailed)
                 toast.error("Some photos could not be uploaded", {...toastErrorStyle(), autoClose:false}); // if some files couldnt be uploaded
@@ -179,9 +160,7 @@ function PhotoUpload({storage, runCompleted}) {
 
     };
     return (
-
         <div className='upload-mainBody'>
-            {/* <Link to="/" className="back-button"><i className="fas fa-arrow-left"></i></Link> */}
 
             <div className='upload-wrapper'>
                 <header>Upload photos</header>

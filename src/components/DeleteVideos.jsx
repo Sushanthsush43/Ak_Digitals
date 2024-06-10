@@ -36,14 +36,6 @@ function DeleteVideos({storage, app}) {
       const i = isIOSorMacDevice();
       setIsIos(i);
     },[])
-
-    // useEffect(() => {
-    //     const timeout = setTimeout(() => {
-    //       setIsOpened(true);
-    //     }, 1000);
-    //     setIsOpened(true);
-    //     return () => clearTimeout(timeout);
-    //   }, []);
     
       // Function to view video
       const viewVideo = (video, i) => {
@@ -143,10 +135,8 @@ function DeleteVideos({storage, app}) {
                         const thumbnailName = itemRef.name.slice(0, -4) + '.png';
 
                         const thumbnailRef = ref(storage, `thumbnails/${thumbnailName}`);
-                        // console.log("video = ",videoUrl)
 
                         const thumbnailUrl = await getDownloadURL(thumbnailRef);
-                        // console.log("thumbnail ",thumbnailUrl)
 
                         return { videoUrl, thumbnailUrl, loaded: false, constVideoUrl : videoUrl, constThumbnailUrl : thumbnailUrl};
                     } catch (error) {
@@ -180,12 +170,6 @@ function DeleteVideos({storage, app}) {
         setToDeleteThumbnails([]); // clear selection
 
         setPage(newPage);
-
-        // if (totalPages > 10) {
-        //     const newDisplayedPages = Array.from({ length: 10 }, (_, i) => newPage + i - 5)
-        //         .filter(page => page > 0 && page <= totalPages);
-        //     setDisplayedPages(newDisplayedPages);
-        // }
     };
 
     const handleVideoLoad = (index) => {

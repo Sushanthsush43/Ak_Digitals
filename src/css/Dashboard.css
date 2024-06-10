@@ -1,5 +1,3 @@
-/* Dashboard.css */
-
 @import url('https://fonts.googleapis.com/css2?family=Lobster&family=Oleo+Script:wght@400;700&family=Pacifico&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lobster&family=Oleo+Script:wght@400;700&family=Pacifico&family=Teko:wght@300..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Sofia&display=swap');
@@ -44,9 +42,6 @@
     align-items: center;
     width: 100%;
     border-radius: 5px;
-    /* border: 1px solid black; */
-    /* background-color: #ffff; */
-    /* box-shadow: 0 4px 8px 10px rgba(0, 0, 0, 0.1); */
     box-shadow: 0 2px 8px 4px rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s ease-in-out;
     padding: 20px;
@@ -55,20 +50,6 @@
 .count-div-tabs:hover {
     box-shadow: 0 2px 8px 4px rgba(133, 15, 141, 0.4);
 }
-
-/* .PhotoCountDiv{
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    width: 400px;
-    height: 150px;
-    border-radius: 5px;
-    background-color: #ffffff;
-    box-shadow: 0 4px 8px 10px rgba(0, 0, 0, 0.1);
-    padding: 0;
-} */
 
 .count-div-tabs .dashboard-count {
     font-size: 3rem;
@@ -89,23 +70,8 @@
     position: relative;
     width: 25%;
     height: 25%;
-    /* color: #850F8D; */
     background-color: transparent;
   }
-
-/* .VideoCountDiv{
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    width: 400px;
-    height: 150px;
-    border-radius: 5px;
-    background-color: #ffffff;
-    box-shadow: 0 4px 8px 10px rgba(0, 0, 0, 0.1);
-    padding: 0;
-} */
 
 .dashboard-upload-main {
     border-top: 2px solid black;
@@ -135,7 +101,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* gap: 20px; */
     margin-bottom: 24px;
 }
 
@@ -168,7 +133,6 @@
 }
 
 .piechart-div-sub {
-    /* background-color: #fff; */
     border: none !important;
     display: flex;
     flex-direction: row;
@@ -234,23 +198,9 @@
     .count-div-tabs:first-child {
         margin-bottom: 15px;
     }
-    /* .count-div-tabs .dashboard-count {
-        font-size: 3rem;
-        margin-top: -20px;
-    } */
-    /* .count-div-tabs p {
-        font-size: 1rem;
-    } */
-    /* .count-icon {
-        width: 50%;
-        height: 25%;
-    } */
     .dashboard-head-texts {
         font-size: 27px;
     }
-    /* .dashboard-count-text {
-        display: none;
-    } */
     .piechart-div-sub {
         flex-direction: column;
         justify-content: center;
@@ -265,4 +215,3 @@
         width: 75%;
     }
 }
-
