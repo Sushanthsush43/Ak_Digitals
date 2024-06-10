@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './../css/TabsComponent.css';
 import { toast } from 'react-toastify';
-import { toastErrorStyle } from './uitls/toastStyle';
+import { toastErrorStyle } from './utils/toastStyle';
 
 // needs to be outside
 let dashboardCountRefreshCount = 0;
 
-const TabsComponent = ({storage, Tab1, Tab2, waitBeforeSwitch = false, dashboardCountRefresh}) => {
+const TabsComponent = ({ storage, Tab1, Tab2, waitBeforeSwitch = false, dashboardCountRefresh }) => {
   const [activeTab, setActiveTab] = useState(0);
   const [runCompleted, setRunCompleted] = useState(true);
 
   const handleTabClick = (index) => {
-    if(waitBeforeSwitch && !runCompleted) {
-      toast.error('Please wait until the upload is completed', {...toastErrorStyle(), autoClose: 1500});
+    if (waitBeforeSwitch && !runCompleted) {
+      toast.error('Please wait until the upload is completed', { ...toastErrorStyle(), autoClose: 1500 });
       return;
     }
     setActiveTab(index);
@@ -20,11 +20,10 @@ const TabsComponent = ({storage, Tab1, Tab2, waitBeforeSwitch = false, dashboard
 
   const handleRunCompleted = (completed) => {
     setRunCompleted(completed);
-    if(completed) {
-      if(dashboardCountRefresh) {
+    if (completed) {
+      if (dashboardCountRefresh) {
         dashboardCountRefreshCount += 1;
         dashboardCountRefresh(dashboardCountRefreshCount);
-
       }
     }
   };
@@ -39,14 +38,14 @@ const TabsComponent = ({storage, Tab1, Tab2, waitBeforeSwitch = false, dashboard
       <div className="content">
         {
           waitBeforeSwitch ?
-          <>
-            {activeTab === 0 && <Tab1 storage={storage} runCompleted={handleRunCompleted} />}
-            {activeTab === 1 && <Tab2 storage={storage} runCompleted={handleRunCompleted} />}
-          </> :
-          <>
-            {activeTab === 0 && <Tab1 storage={storage} />}
-            {activeTab === 1 && <Tab2 storage={storage} />}
-          </>
+            <>
+              {activeTab === 0 && <Tab1 storage={storage} runCompleted={handleRunCompleted} />}
+              {activeTab === 1 && <Tab2 storage={storage} runCompleted={handleRunCompleted} />}
+            </> :
+            <>
+              {activeTab === 0 && <Tab1 storage={storage} />}
+              {activeTab === 1 && <Tab2 storage={storage} />}
+            </>
         }
       </div>
     </div>

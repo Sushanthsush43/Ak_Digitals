@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import AdminLoginForm from './AdminLoginForm';
-import { CheckAdminLogin } from './uitls/checkAdminLogin';
+import { CheckAdminLogin } from './utils/checkAdminLogin';
 import AdminLogout from './AdminLogout';
 import { IoClose } from "react-icons/io5";
 

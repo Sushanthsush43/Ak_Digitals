@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 import { ImArrowLeft2 } from "react-icons/im";
 import '../css/Dashboard.css';
 import { toast } from 'react-toastify';
-import { toastErrorStyle } from '../components/uitls/toastStyle';
+import { toastErrorStyle } from '../components/utils/toastStyle';
 import TabsComponent from '../components/TabsComponent';
 import PhotoUpload from '../components/PhotoUpload';
 import VideoUpload from '../components/VideoUpload';
-import { CheckAdminLogin } from '../components/uitls/checkAdminLogin';
-import { getDashboardData } from '../components/uitls/getDashboardData';
+import { CheckAdminLogin } from '../components/utils/checkAdminLogin';
+import { getDashboardData } from '../components/utils/getDashboardData';
 import DashBoardCounts from '../components/DashboardCounts';
 import PieChart from '../components/PieChart.jsx';
 

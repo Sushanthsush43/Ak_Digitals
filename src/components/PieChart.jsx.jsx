@@ -10,7 +10,7 @@ import {
 } from 'chart.js';
 import '../css/Dashboard.css';
 import { toast } from 'react-toastify';
-import { toastErrorStyle } from './uitls/toastStyle';
+import { toastErrorStyle } from './utils/toastStyle';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 

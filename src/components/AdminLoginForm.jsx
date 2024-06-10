@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
 import { toast } from 'react-toastify';
-import { toastErrorStyle, toastSuccessStyle } from './uitls/toastStyle';
+import { toastErrorStyle, toastSuccessStyle } from './utils/toastStyle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 

@@ -4,12 +4,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { ref, listAll, getDownloadURL, getMetadata } from 'firebase/storage';
 import { toast } from 'react-toastify';
-import { toastErrorStyle } from '../components/uitls/toastStyle';
+import { toastErrorStyle } from '../components/utils/toastStyle';
 import { InView } from "react-intersection-observer";
 import './../css/PhotoContainer.css';
 import './../css/Fullscreen.css';
-import FloatingScrollBtn from './uitls/scrollToTop/FloatingBtn';
-import EndReachedBtn from './uitls/scrollToTop/EndReachedBtn';
+import FloatingScrollBtn from './utils/scrollToTop/FloatingBtn';
+import EndReachedBtn from './utils/scrollToTop/EndReachedBtn';
 
 function PhotoContainer({storage}) {
 
@@ -23,14 +23,6 @@ function PhotoContainer({storage}) {
   const [viewMorePaused, setViewMorePaused] = useState(false);
   const [endReached, setEndReached] = useState(false);
   const [floatingDisabled, setFloatingDisabled] = useState(false);
-
-//   useEffect(() => {
-//     const timeout = setTimeout(() => {
-//       setIsOpened(true);
-//     }, 1000);
-//     setIsOpened(true);
-//     return () => clearTimeout(timeout);
-//   }, []);
 
   // Function to view image
   const viewImage = (img, i) => {

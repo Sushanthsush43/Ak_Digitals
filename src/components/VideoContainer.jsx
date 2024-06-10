@@ -4,13 +4,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { ref, listAll, getDownloadURL, getMetadata } from 'firebase/storage';
 import { toast } from 'react-toastify';
-import { toastErrorStyle } from './uitls/toastStyle';
+import { toastErrorStyle } from './utils/toastStyle';
 import { InView } from "react-intersection-observer";
-import { isIOSorMacDevice } from './uitls/deviceUtils';
+import { isIOSorMacDevice } from './utils/deviceUtils';
 import './../css/VideoContainer.css';
 import './../css/Fullscreen.css';
-import FloatingScrollBtn from './uitls/scrollToTop/FloatingBtn';
-import EndReachedBtn from './uitls/scrollToTop/EndReachedBtn';
+import FloatingScrollBtn from './utils/scrollToTop/FloatingBtn';
+import EndReachedBtn from './utils/scrollToTop/EndReachedBtn';
 
 function VideoContainer({storage}) {
 
@@ -29,14 +29,6 @@ function VideoContainer({storage}) {
     const i = isIOSorMacDevice();
     setIsIos(i);
   },[])
-
-  // useEffect(() => {
-  //   const timeout = setTimeout(() => {
-  //     setIsOpened(true);
-  //   }, 1000);
-  //   setIsOpened(true);
-  //   return () => clearTimeout(timeout);
-  // }, []);
 
   // Function to view video
   const viewVideo = (video, i) => {

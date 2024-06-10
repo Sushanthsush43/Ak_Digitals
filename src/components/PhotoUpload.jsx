@@ -2,7 +2,7 @@ import './../css/Upload.css';
 import React, { useState, useEffect } from 'react';
 import { ref, uploadBytesResumable } from 'firebase/storage';
 import { toast } from "react-toastify";
-import { toastSuccessStyle, toastErrorStyle } from './uitls/toastStyle';
+import { toastSuccessStyle, toastErrorStyle } from './utils/toastStyle';
 import ProgressBar from "@ramonak/react-progress-bar";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
@@ -10,7 +10,6 @@ import imageCompression from 'browser-image-compression';
 
 // runCompleted is callback for tab component
 function PhotoUpload({storage, runCompleted}) {
-
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [selectedFilesCopy, setSelectedFilesCopy] = useState([]);
     const [uploading, setUploading] = useState(false);
@@ -18,9 +17,12 @@ function PhotoUpload({storage, runCompleted}) {
     const [uploadTrack, setUploadTrack] = useState(0);
     const [eachUpdated, setEachUpdated] = useState([]);
     const [abortController, setAbortController] = useState(null);
-    const [uploadProgress, setUploadProgress] = useState(0);
+    const [fileUploadProgress, setfileUploadProgress] = useState(0);
     const [compressionProgress, setCompressionProgress] = useState(0);
+    const [uploadProgress, setUploadProgess] = useState(0);
     const [uploadingFile, setUploadingFile] = useState('');
+    const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+
     let isSomeFailed = false;
     let isCompleteFailed = false;
 
@@ -34,12 +36,12 @@ function PhotoUpload({storage, runCompleted}) {
 
     // round up progress value
     useEffect(() => {
-    const prog = Math.abs(Math.round((compressionProgress + uploadProgress) / 2));
+    const prog = Math.abs(Math.round((compressionProgress + fileUploadProgress) / 2));
     if (prog > 100)
-        setUploadProgress(100);
+        setUploadProgess(100);
     else 
-        setUploadProgress(prog);
-    }, [compressionProgress, uploadProgress]);
+        setUploadProgess(prog);
+    }, [compressionProgress, fileUploadProgress]);
 
     const handleFileChange = (e) => {
         setAllUploadDone(false);
@@ -78,7 +80,8 @@ function PhotoUpload({storage, runCompleted}) {
                 try {
                     setUploadingFile(file.name);
                     setCompressionProgress(0);
-                    setUploadProgress(0);
+                    setfileUploadProgress(0);
+                    setUploadProgess(0);
 
                     // if component unmounts, cancel upload
                     if (controller.signal.aborted) {
@@ -120,17 +123,18 @@ function PhotoUpload({storage, runCompleted}) {
                         'state_changed',
                         (snapshot) => {
                             const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                            setUploadProgress(progress);
+                            setfileUploadProgress(progress);
                         },
                         (error) => {
                             reject(error);
                         },
                         () => {
-                            setUploadProgress(100);
+                            setfileUploadProgress(100);
                             resolve(); 
                         }
                         );
                     });
+
                     // console.log(`File "${file.name}" uploaded successfully.`);
                 } catch (error) {
                     updatedArray[i] = false; // if upload failed, then set failed for that file
@@ -140,6 +144,8 @@ function PhotoUpload({storage, runCompleted}) {
                 } finally {
                     setUploadTrack(prevCount => prevCount - 1);
                 }
+                // Add delay before processing the next file
+                await delay(2000);
             }
         } catch (error) {
             console.error('Error uploading photos:', error);

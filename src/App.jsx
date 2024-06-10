@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { getFirebaseConfig } from "./components/uitls/firebaseConfig";
+import { getFirebaseConfig } from "./components/utils/firebaseConfig";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import HomePage from './pages/HomePage';
