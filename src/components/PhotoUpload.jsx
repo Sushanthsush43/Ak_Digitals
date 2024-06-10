@@ -86,7 +86,7 @@ function PhotoUpload({storage, runCompleted}) {
                     }
 
                     const options = {
-                        maxSizeMB: 3,
+                        maxSizeMB: 5,
                         maxWidthOrHeight: 1920,
                         useWebWorker: true,
                         onProgress: (progress) => {
