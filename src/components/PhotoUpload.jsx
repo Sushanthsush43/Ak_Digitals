@@ -88,20 +88,21 @@ function PhotoUpload({storage, runCompleted}) {
                         return;
                     }
 
+                    const fileExtension = file.name.slice(file.name.lastIndexOf('.') + 1).toLowerCase();
+                    if(!supportedExtensions.includes(fileExtension)) {
+                        throw new Error('Invalid image format');
+                    }
+
                     const options = {
                         maxSizeMB: 5,
                         maxWidthOrHeight: 1920,
                         useWebWorker: true,
                         onProgress: (progress) => {
-                            setCompressionProgress(progress); // Update compression progress
+                            setCompressionProgress(progress);
                         }
                     };
                     const compressedFile = await imageCompression(file, options);
-
-                    const fileExtension = file.name.slice(file.name.lastIndexOf('.') + 1).toLowerCase();
-                    if(!supportedExtensions.includes(fileExtension)) {
-                        throw new Error('Invalid image format');
-                    }
+                    
                     // if (i % 2 === 0) {
                     //     throw new Error('Simulated error: i equals 2');
                     // }

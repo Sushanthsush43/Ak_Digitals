@@ -7,6 +7,7 @@ import { VideoToFrames, VideoToFramesMethod } from './utils/ThumbnailGenerator';
 import ProgressBar from "@ramonak/react-progress-bar";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import imageCompression from 'browser-image-compression';
 
 // runCompleted is callback for tab component
 function VideoUpload({storage, runCompleted}) {
@@ -20,8 +21,10 @@ function VideoUpload({storage, runCompleted}) {
     const [abortController, setAbortController] = useState(null);
     const [videoUProgress, setVideoUProgress] = useState(0);
     const [thumbnailUProgress, setThumbnailUProgress] = useState(0);
+    const [thumbnailCompressionProgress, setThumbnailCompressionProgress] = useState(0);
     const [uploadProgress, setUploadProgress] = useState(0);
     const [uploadingFile, setUploadingFile] = useState('');
+    const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
     let isSomeFailed = false;
     let isCompleteFailed = false;
@@ -36,12 +39,12 @@ function VideoUpload({storage, runCompleted}) {
 
     // calculate main progress value
     useEffect(() => {
-        const prog = Math.abs(Math.round((thumbnailUProgress + videoUProgress) / 2));
+        const prog = Math.abs(Math.round((thumbnailCompressionProgress + thumbnailUProgress + videoUProgress) / 3));
         if (prog > 100)
             setUploadProgress(100);
         else 
             setUploadProgress(prog);
-      }, [thumbnailUProgress, videoUProgress]);
+      }, [thumbnailCompressionProgress, thumbnailUProgress, videoUProgress]);
 
     const handleFileChange = (e) => {
         setAllUploadDone(false);
@@ -97,6 +100,7 @@ function VideoUpload({storage, runCompleted}) {
                     setThumbnailUProgress(0);
                     setVideoUProgress(0);
                     setUploadProgress(0);
+                    setThumbnailCompressionProgress(0);
                     // if component unmounts, cancel upload
                     if (controller.signal.aborted) {
                         return;
@@ -117,13 +121,24 @@ function VideoUpload({storage, runCompleted}) {
 
                     if(thumbnail === null)
                         throw new Error(`Thumbnail creation failed for video ${file.name}`);
+
+                    // thumbnail compression
+                    const options = {
+                        maxSizeMB: 3,
+                        maxWidthOrHeight: 1920,
+                        useWebWorker: true,
+                        onProgress: (progress) => {
+                            setThumbnailCompressionProgress(progress);
+                        }
+                    };
+                    const compressedThumbnailFile = await imageCompression(thumbnail, options);
             
                     thumbnailRef = ref(storage, `thumbnails/${thumbnailName}`);
 
                     // await uploadBytes(thumbnailRef, thumbnail, { contentType: 'image/png' });
 
                     await new Promise((resolve, reject) => {
-                        const uploadTask = uploadBytesResumable(thumbnailRef, thumbnail, { contentType: 'image/png' });
+                        const uploadTask = uploadBytesResumable(thumbnailRef, compressedThumbnailFile, { contentType: 'image/png' });
 
                         uploadTask.on(
                         'state_changed',
@@ -179,6 +194,8 @@ function VideoUpload({storage, runCompleted}) {
                 } finally {
                     setUploadTrack(prevCount => prevCount - 1);
                 }
+                // Add delay before processing the next file
+                await delay(1000);
             }
         } catch (error) {
             console.error('Error uploading videos:', error);
