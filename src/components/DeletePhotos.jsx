@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ref, listAll, getDownloadURL, deleteObject, getMetadata } from 'firebase/storage';
 import { toast } from 'react-toastify';
-import { RiDeleteBinLine } from 'react-icons/ri'; // Import delete icon from react-icons
+import { RiDeleteBinLine } from 'react-icons/ri';
 import { toastErrorStyle, toastSuccessStyle } from './uitls/toastStyle';
 import { InView } from "react-intersection-observer";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -22,20 +22,11 @@ function DeletePhotos({storage, app}) {
     const imagesPerPage = 27;
     const [isLoading, setIsLoading] = useState(false);
     const [totalPages, setTotalPages] = useState(0);
-    const [displayedPages, setDisplayedPages] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
     const [toDelete, setToDelete] = useState([]);
     const [imageRefs, setImageRefs] = useState([]);
     const [isOpened, setIsOpened] = useState(false);
     const [data, setData] = useState({ img: '', i: 0 });
 
-    // useEffect(() => {
-    //     const timeout = setTimeout(() => {
-    //       setIsOpened(true);
-    //     }, 1000);
-    //     setIsOpened(true);
-    //     return () => clearTimeout(timeout);
-    //   }, []);
-    
       // Function to view image
       const viewImage = (img, i) => {
         setData({ img, i });
@@ -102,7 +93,7 @@ function DeletePhotos({storage, app}) {
             setImageRefs(sortedImageRefs);
         } catch (error) {
             toast.error("Something went wrong, Please try again!", toastErrorStyle());
-            console.error('Error listing items in storage:', error);
+            console.error('Error listing items in storage:', error.message || error);
         } finally {
             setIsLoading(false);
         }
@@ -123,7 +114,7 @@ function DeletePhotos({storage, app}) {
                         const url = await getDownloadURL(itemRef);
                         return { url, loaded: false, constUrl : url };
                     } catch (error) {
-                        console.error('Error getting download URL for itemRef:', error);
+                        console.error('Error getting download URL for itemRef:', error.message || error);
                         return null;
                     }
                 }));
@@ -132,7 +123,7 @@ function DeletePhotos({storage, app}) {
 
             } catch (error) {
                 toast.error("Something went wrong, Please try again!", toastErrorStyle());
-                console.error('Error listing items in storage:', error);
+                console.error('Error listing items in storage:', error.message || error);
             } finally {
                 setIsLoading(false);
             }

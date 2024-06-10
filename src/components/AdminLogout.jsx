@@ -15,7 +15,7 @@ function AdminLogout({ app, closeStatus }) {
         console.log('Logout Successfull');
         toast.success("Logout Successfull", toastSuccessStyle());
       } catch (error) {
-        console.error('Error logging out:', error.message);
+        console.error('Error logging out:',  error.message || error);
         toast.error("Something went wrong, Please try again.", toastErrorStyle());
         closeStatus(false);
       }

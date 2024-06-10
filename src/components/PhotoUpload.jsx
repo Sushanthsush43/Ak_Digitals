@@ -6,6 +6,7 @@ import { toastSuccessStyle, toastErrorStyle } from './uitls/toastStyle';
 import ProgressBar from "@ramonak/react-progress-bar";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import imageCompression from 'browser-image-compression';
 
 // runCompleted is callback for tab component
 function PhotoUpload({storage, runCompleted}) {
@@ -18,6 +19,7 @@ function PhotoUpload({storage, runCompleted}) {
     const [eachUpdated, setEachUpdated] = useState([]);
     const [abortController, setAbortController] = useState(null);
     const [uploadProgress, setUploadProgress] = useState(0);
+    const [compressionProgress, setCompressionProgress] = useState(0);
     const [uploadingFile, setUploadingFile] = useState('');
     let isSomeFailed = false;
     let isCompleteFailed = false;
@@ -32,12 +34,12 @@ function PhotoUpload({storage, runCompleted}) {
 
     // round up progress value
     useEffect(() => {
-    const prog = Math.abs(Math.round(uploadProgress));
+    const prog = Math.abs(Math.round((compressionProgress + uploadProgress) / 2));
     if (prog > 100)
         setUploadProgress(100);
     else 
         setUploadProgress(prog);
-    }, [uploadProgress]);
+    }, [compressionProgress, uploadProgress]);
 
     const handleFileChange = (e) => {
         setAllUploadDone(false);
@@ -75,12 +77,23 @@ function PhotoUpload({storage, runCompleted}) {
                 const file = selectedFiles[i];
                 try {
                     setUploadingFile(file.name);
+                    setCompressionProgress(0);
                     setUploadProgress(0);
 
                     // if component unmounts, cancel upload
                     if (controller.signal.aborted) {
                         return;
                     }
+
+                    const options = {
+                        maxSizeMB: 3,
+                        maxWidthOrHeight: 1920,
+                        useWebWorker: true,
+                        onProgress: (progress) => {
+                            setCompressionProgress(progress); // Update compression progress
+                        }
+                    };
+                    const compressedFile = await imageCompression(file, options);
 
                     const fileExtension = file.name.slice(file.name.lastIndexOf('.') + 1).toLowerCase();
                     if(!supportedExtensions.includes(fileExtension)) {
@@ -101,7 +114,7 @@ function PhotoUpload({storage, runCompleted}) {
                     //     }
                     // };
                     await new Promise((resolve, reject) => {
-                        const uplaodTask = uploadBytesResumable(storageRef, file);
+                        const uplaodTask = uploadBytesResumable(storageRef, compressedFile);
 
                         uplaodTask.on(
                         'state_changed',

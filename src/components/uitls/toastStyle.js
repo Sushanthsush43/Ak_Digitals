@@ -28,7 +28,6 @@ export const toastSuccessStyle = () => {
   };
 };
 
-
 export const toastErrorStyle = () => {
   return {
     position: 'top-center',
@@ -53,6 +52,5 @@ export const toastErrorStyle = () => {
       boxShadow: '0px 10px 20px rgba(255, 75, 43, 0.4)'
     },
     icon: <FcCancel style={{ color: '#FCAF45', width: '60px', height: '55px' }} />
-
   };
 };

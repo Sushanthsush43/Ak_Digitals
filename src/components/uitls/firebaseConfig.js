@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+// import { getAnalytics } from "firebase/analytics";
 import { getStorage } from 'firebase/storage';
 
 let cachedFirebaseApp; // Cache the initialized Firebase app

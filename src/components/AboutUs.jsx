@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import '../css/AboutUs.css';
-import logo from '../components/uitls/ak_logo1.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faTwitter, faInstagram, faGoogle, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import { faHeart ,faQuoteLeft,faQuoteRight} from '@fortawesome/free-solid-svg-icons';
@@ -14,6 +13,7 @@ const AboutUs = () => {
   const [charIndex, setCharIndex] = useState(0);
   const [isTypingDone, setIsTypingDone] = useState(false);
   const words = ['Creating memories.', 'Visual storytelling.', 'Dedicated artisans.'];
+  const logo =  '/assets/ak_logo1.png';
 
   useEffect(() => {
     AOS.init({

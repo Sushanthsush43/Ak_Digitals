@@ -36,7 +36,7 @@ function AdminLoginForm({ app, closeStatus }) {
       console.log('Admin logged in successfully!');
     } catch (error) {
       toast.error("Invalid Login Credentials", toastErrorStyle());
-      console.error('Error signing in:', error.message);
+      console.error('Error signing in:', error.message || error);
       closeStatus(false);
     } finally {
       setIsLoginBtnDisabled(false);
@@ -70,7 +70,7 @@ function AdminLoginForm({ app, closeStatus }) {
       else
         toast.error("Failed to send password reset email. Please try again later.", toastErrorStyle());
 
-      console.error('Error sending password reset email:', error.message);
+      console.error('Error sending password reset email:', error.message || error);
     }
   };
 
