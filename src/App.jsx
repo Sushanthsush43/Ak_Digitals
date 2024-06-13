@@ -6,8 +6,8 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import HomePage from './pages/HomePage';
 import DashBoard from './pages/DashBoard';
 import AboutUs from './components/AboutUs';
-import DeletePhotos from './components/DeletePhotos';
-import DeleteVideos from './components/DeleteVideos';
+import DeletePhotos from './components/admin/DeletePhotos';
+import DeleteVideos from './components/admin/DeleteVideos';
 
 // Firebase stuff ( Important )
 const { storage, app } = getFirebaseConfig();

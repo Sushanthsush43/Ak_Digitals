@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import AdminLoginForm from './AdminLoginForm';
+import AdminLoginForm from './admin/AdminLoginForm';
 import { CheckAdminLogin } from './utils/checkAdminLogin';
-import AdminLogout from './AdminLogout';
+import AdminLogout from './admin/AdminLogout';
 import { IoClose } from "react-icons/io5";
 
 const Header = ({ app }) => {

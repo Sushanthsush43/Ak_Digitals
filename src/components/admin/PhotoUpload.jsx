@@ -1,17 +1,15 @@
-import './../css/Upload.css';
+import '../../css/Upload.css';
 import React, { useState, useEffect } from 'react';
-import { ref, getDownloadURL, deleteObject, uploadBytesResumable } from 'firebase/storage';
+import { ref, uploadBytesResumable } from 'firebase/storage';
 import { toast } from "react-toastify";
-import { toastSuccessStyle, toastErrorStyle } from './utils/toastStyle.js';
-import { VideoToFrames, VideoToFramesMethod } from './utils/ThumbnailGenerator';
+import { toastSuccessStyle, toastErrorStyle } from '../utils/toastStyle';
 import ProgressBar from "@ramonak/react-progress-bar";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import imageCompression from 'browser-image-compression';
 
 // runCompleted is callback for tab component
-function VideoUpload({storage, runCompleted}) {
-
+function PhotoUpload({storage, runCompleted}) {
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [selectedFilesCopy, setSelectedFilesCopy] = useState([]);
     const [uploading, setUploading] = useState(false);
@@ -19,10 +17,9 @@ function VideoUpload({storage, runCompleted}) {
     const [uploadTrack, setUploadTrack] = useState(0);
     const [eachUpdated, setEachUpdated] = useState([]);
     const [abortController, setAbortController] = useState(null);
-    const [videoUProgress, setVideoUProgress] = useState(0);
-    const [thumbnailUProgress, setThumbnailUProgress] = useState(0);
-    const [thumbnailCompressionProgress, setThumbnailCompressionProgress] = useState(0);
-    const [uploadProgress, setUploadProgress] = useState(0);
+    const [fileUploadProgress, setfileUploadProgress] = useState(0);
+    const [compressionProgress, setCompressionProgress] = useState(0);
+    const [uploadProgress, setUploadProgess] = useState(0);
     const [uploadingFile, setUploadingFile] = useState('');
     const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -37,14 +34,14 @@ function VideoUpload({storage, runCompleted}) {
         };
     }, [abortController]);
 
-    // calculate main progress value
+    // round up progress value
     useEffect(() => {
-        const prog = Math.abs(Math.round((thumbnailCompressionProgress + thumbnailUProgress + videoUProgress) / 3));
-        if (prog > 100)
-            setUploadProgress(100);
-        else 
-            setUploadProgress(prog);
-      }, [thumbnailCompressionProgress, thumbnailUProgress, videoUProgress]);
+    const prog = Math.abs(Math.round((compressionProgress + fileUploadProgress) / 2));
+    if (prog > 100)
+        setUploadProgess(100);
+    else 
+        setUploadProgess(prog);
+    }, [compressionProgress, fileUploadProgress]);
 
     const handleFileChange = (e) => {
         setAllUploadDone(false);
@@ -53,26 +50,13 @@ function VideoUpload({storage, runCompleted}) {
         setSelectedFiles(files);
     };
 
-    async function revokeThumbnailUpload(thumbnailRef) {
-        try {
-          await deleteObject(thumbnailRef);
-          console.log('Thumbnail revoked successfully');
-        } catch (error) {
-          if (error.code === 'storage/object-not-found') {
-            console.log('The thumbnail you tried to delete does not exist.');
-          } else {
-            console.error('Error revoking thumbnail:', error.message || error);
-          }
-        }
-      }
-
     const handleUpload = async () => {
         if (selectedFiles.length === 0) {
-            toast.error("No video selected", toastErrorStyle());
+            toast.error("No photo selected", toastErrorStyle());
             return;
         }
-        if (selectedFiles.length > 20) {
-            toast.error("Cannot upload more than 20 videos at once", toastErrorStyle());
+        if (selectedFiles.length > 100) {
+            toast.error("Cannot upload more than 100 photos at once", toastErrorStyle());
             return;
         }
         setAllUploadDone(false);
@@ -80,7 +64,6 @@ function VideoUpload({storage, runCompleted}) {
         isSomeFailed = false;
         isCompleteFailed = false;
         runCompleted(false);
-        setUploadingFile('');
         const controller = new AbortController();
         setAbortController(controller);
 
@@ -91,16 +74,15 @@ function VideoUpload({storage, runCompleted}) {
 
             setSelectedFilesCopy(selectedFiles);
 
-            const supportedExtensions = ['mp4', 'webm', 'ogg', 'mpg', 'mov', 'avi', 'mpeg'];
-            let thumbnailRef; // needed as global for passing to revokeThumbnail function
+            const supportedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'];
             for (let i = 0; i < selectedFiles.length; i++) {
                 const file = selectedFiles[i];
                 try {
                     setUploadingFile(file.name);
-                    setThumbnailUProgress(0);
-                    setVideoUProgress(0);
-                    setUploadProgress(0);
-                    setThumbnailCompressionProgress(0);
+                    setCompressionProgress(0);
+                    setfileUploadProgress(0);
+                    setUploadProgess(0);
+
                     // if component unmounts, cancel upload
                     if (controller.signal.aborted) {
                         return;
@@ -108,90 +90,52 @@ function VideoUpload({storage, runCompleted}) {
 
                     const fileExtension = file.name.slice(file.name.lastIndexOf('.') + 1).toLowerCase();
                     if(!supportedExtensions.includes(fileExtension)) {
-                        throw new Error('Invalid video format');
+                        throw new Error('Invalid image format');
                     }
 
-                    const thumbnail = await generateThumbnail(file);
-                    const thumbnailName = file.name.slice(0, file.name.lastIndexOf('.')) + '.png';
-
-                    if(thumbnail === null)
-                        throw new Error(`Thumbnail creation failed for video ${file.name}`);
-
-                    // thumbnail compression
                     const options = {
-                        maxSizeMB: 3,
+                        maxSizeMB: 5,
                         maxWidthOrHeight: 1920,
                         useWebWorker: true,
                         onProgress: (progress) => {
-                            setThumbnailCompressionProgress(progress);
+                            setCompressionProgress(progress);
                         }
                     };
-                    const compressedThumbnailFile = await imageCompression(thumbnail, options);
-            
-                    thumbnailRef = ref(storage, `thumbnails/${thumbnailName}`);
+                    const compressedFile = await imageCompression(file, options);
+
+                    const storageRef = ref(storage, `images/${file.name}`);
 
                     await new Promise((resolve, reject) => {
-                        const uploadTask = uploadBytesResumable(thumbnailRef, compressedThumbnailFile, { contentType: 'image/png' });
-
-                        uploadTask.on(
-                        'state_changed',
-                        (snapshot) => {
-                            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                            setThumbnailUProgress(progress);
-                        },
-                        (error) => {
-                            reject(error);
-                        },
-                        () => {
-                            setThumbnailUProgress(100);
-                            resolve(); 
-                        }
-                        );
-                    });
-
-                    const thumbnailUrl = await getDownloadURL(thumbnailRef);
-
-                    const videoRef = ref(storage, `videos/${file.name}`);
-            
-                    const metadata = {
-                        contentType: file.type,
-                        customMetadata: {
-                            thumbnailUrl: thumbnailUrl
-                        }
-                    };
-
-                    await new Promise((resolve, reject) => {
-                        const uplaodTask = uploadBytesResumable(videoRef, file, metadata);
+                        const uplaodTask = uploadBytesResumable(storageRef, compressedFile);
 
                         uplaodTask.on(
                         'state_changed',
                         (snapshot) => {
                             const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                            setVideoUProgress(progress);
+                            setfileUploadProgress(progress);
                         },
                         (error) => {
                             reject(error);
                         },
                         () => {
-                            setVideoUProgress(100);
+                            setfileUploadProgress(100);
                             resolve(); 
                         }
                         );
                     });
-            
+
                 } catch (error) {
-                    await revokeThumbnailUpload(thumbnailRef); // Revoke video if upload fails
                     updatedArray[i] = false; // if upload failed, then set failed for that file
-                    console.error(`Error uploading video "${file.name}":`, error);
+                    console.error(`Error uploading photo "${file.name}":`, error);
                     isSomeFailed = true;
                 } finally {
                     setUploadTrack(prevCount => prevCount - 1);
                 }
                 // Add delay before processing the next file
-                await delay(1000);
+                await delay(2000);
             }
         } catch (error) {
-            console.error('Error uploading videos:', error);
+            console.error('Error uploading photos:', error);
             toast.error("Something went wrong, Please try again.", {...toastErrorStyle(), autoClose:false});
             isCompleteFailed = true;
             return;
@@ -206,68 +150,32 @@ function VideoUpload({storage, runCompleted}) {
 
             // display appropriate toast message
             if (!isCompleteFailed && isSomeFailed)
-                toast.error("Some videos could not be uploaded", {...toastErrorStyle(), autoClose:false}); // if some files couldn't be uploaded
+                toast.error("Some photos could not be uploaded", {...toastErrorStyle(), autoClose:false}); // if some files couldnt be uploaded
             else if (!isCompleteFailed && !isSomeFailed)
-                toast.success("Videos successfully uploaded", {...toastSuccessStyle(), autoClose:false}); // if all files are uploaded
+                toast.success("Photos successfully uploaded", {...toastSuccessStyle(), autoClose:false}); // if all files are uploaded
 
             // callback for tab component
             runCompleted(true);
         }
 
     };
-
-    const generateThumbnail = async (file) => {
-        try {
-          const videoUrl = URL.createObjectURL(file);
-      
-          const frames = await VideoToFrames.getFrames(videoUrl, 1, VideoToFramesMethod.totalFrames);
-          const frameData = frames[0];
-      
-          // Remove the data URL prefix
-          const base64WithoutPrefix = frameData.split(",")[1];
-      
-          // Decode the base64 string to binary data
-          const binaryData = atob(base64WithoutPrefix);
-      
-          // Create an ArrayBuffer to store the binary data
-          const arrayBuffer = new ArrayBuffer(binaryData.length);
-      
-          // Create a typed array to represent the binary data
-          const uint8Array = new Uint8Array(arrayBuffer);
-      
-          // Fill the typed array with the binary data
-          for (let i = 0; i < binaryData.length; i++) {
-            uint8Array[i] = binaryData.charCodeAt(i);
-          }
-      
-          // Create a Blob object from the binary data
-          const blob = new Blob([uint8Array], { type: 'image/png' });
-      
-          // Create an object URL for the Blob
-          return blob;
-        } catch (error) {
-          console.error('Error generating thumbnail:', error.message || error);
-          return null;
-        }
-      };
-      
     return (
-
         <div className='upload-mainBody'>
 
             <div className='upload-wrapper'>
-                <header>Upload videos</header>
+                <header>Upload photos</header>
                 <form className='upload-form'>
                     <label htmlFor="upload-input">
                         <i className="fas fa-cloud-upload-alt"></i>
                         <p>Browse file to upload</p>
                     </label>
-                    <input type="file" id="upload-input"
+                    <input type="file"
+                     id="upload-input"
                      onClick={(e) => { if (uploading){
                         e.preventDefault();
-                        toast.error("Please wait until the current files finish uploading.",toastErrorStyle()) }}}
+                        toast.error("Please wait until the current photos finish uploading.",toastErrorStyle()) }}}
                      onChange={handleFileChange} 
-                     accept="video/*" 
+                     accept="image/*" 
                      multiple 
                      style={{ display: 'none' }} />
                 </form>
@@ -282,17 +190,20 @@ function VideoUpload({storage, runCompleted}) {
                     <button onClick={handleUpload} className='upload-button' type="submit" disabled={uploading}>
                         {uploading ? <>Uploading <FontAwesomeIcon icon={faSpinner} spin /></>: 'Upload'}
                     </button>
+                    {/* {uploading && <div className="upload-loading-animation">Uploading...</div>} */}
                     {uploading && 
                         <div>
                             <div className='upload-filename-text'>{uploadingFile}</div>
                             <ProgressBar 
-                             completed={uploadProgress}
-                             height='17px'
+                             completed={uploadProgress} 
+                             height='17px' 
                              customLabel={`${uploadProgress.toFixed(0)}`}
                              bgColor="#850F8D"
-                            labelColor="#ffff" />
+                            //  baseBgColor="#ffff"
+                             labelColor="#ffff" />
                         </div>
                     }
+
                     <div className="remaing-css" style={{ marginTop: '10px' }}>
                         Remaining : <strong>{uploadTrack}</strong>
                     </div>
@@ -300,8 +211,8 @@ function VideoUpload({storage, runCompleted}) {
                     <div className="failed-uploads-container">
                     {allUploadDone &&
                         eachUpdated.map((value, i) => value !== true ?
-                            <div className='failed-file-upload' style={{ backgroundColor: "red", display: "flex" }} 
-                            key={`${i}-failed-vid-upload`}>
+                            <div className='failed-file-upload' style={{ backgroundColor: "red", display: "flex" }}
+                            key={`${i}-failed-img-upload`}>
                                 {/* display these in row style */}
                                 <div className='failed-upload-file-name'>{selectedFilesCopy[i].name}</div>
                                 <div>Failed</div>
@@ -317,4 +228,4 @@ function VideoUpload({storage, runCompleted}) {
     );
 }
 
-export default VideoUpload;
+export default PhotoUpload;

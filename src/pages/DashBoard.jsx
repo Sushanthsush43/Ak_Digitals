@@ -5,12 +5,12 @@ import '../css/Dashboard.css';
 import { toast } from 'react-toastify';
 import { toastErrorStyle } from '../components/utils/toastStyle';
 import TabsComponent from '../components/TabsComponent';
-import PhotoUpload from '../components/PhotoUpload';
-import VideoUpload from '../components/VideoUpload';
+import PhotoUpload from '../components/admin/PhotoUpload';
+import VideoUpload from '../components/admin/VideoUpload';
 import { CheckAdminLogin } from '../components/utils/checkAdminLogin';
 import { getDashboardData } from '../components/utils/getDashboardData';
-import DashBoardCounts from '../components/DashboardCounts';
-import PieChart from '../components/PieChart.jsx';
+import DashBoardCounts from '../components/admin/DashboardCounts';
+import PieChart from '../components/admin/PieChart.jsx';
 
 function DashBoard({ storage, app }) {
   // Check if authorized user, ie. admin

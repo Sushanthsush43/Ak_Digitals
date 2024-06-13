@@ -1,6 +1,6 @@
 import React from 'react';
 import { toast } from 'react-toastify';
-import { toastErrorStyle, toastSuccessStyle } from './utils/toastStyle';
+import { toastErrorStyle, toastSuccessStyle } from '../utils/toastStyle';
 import { getAuth, signOut } from 'firebase/auth';
 
 function AdminLogout({ app, closeStatus }) {

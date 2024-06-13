@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { ref, listAll, getDownloadURL, deleteObject, getMetadata } from 'firebase/storage';
 import { toast } from 'react-toastify';
 import { RiDeleteBinLine } from 'react-icons/ri';
-import { toastErrorStyle, toastSuccessStyle } from './utils/toastStyle';
+import { toastErrorStyle, toastSuccessStyle } from '../utils/toastStyle';
 import { InView } from "react-intersection-observer";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight, faTimes } from '@fortawesome/free-solid-svg-icons';
-import "../css/DeleteComp.css";
-import './../css/Fullscreen.css';
-import { CheckAdminLogin } from './utils/checkAdminLogin';
+import "../../css/DeleteComp.css"
+import '../../css/Fullscreen.css';
+import { CheckAdminLogin } from '../utils/checkAdminLogin';
 import { Link } from 'react-router-dom';
 import { ImArrowLeft2 } from "react-icons/im";
 
