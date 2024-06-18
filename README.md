@@ -1,4 +1,4 @@
-## <img src="https://github.com/MeghanathShetty/Ak_digitals/assets/127648939/252f085a-06b0-44b4-ba07-7f366316af7e" alt="Image Alt Text" style="width:27px;" /> AK Digitals Photography website
+## <img src="https://github.com/MeghanathShetty/Ak_digitals/assets/127648939/7b758960-9d11-42f0-b84b-060041a5218e" alt="Image Alt Text" style="width:27px;" /> AK Digitals Photography website
 
 ### Published at https://ak-digitalstest-meghanathshettys-projects.vercel.app/
 
