@@ -11,7 +11,7 @@ const EndReachedBtn = () => {
     <div className='scroll-to-top-end-main'>
 
         <div className='scroll-to-top-end-text'>
-            In a World Full of Images, Thank You for Focusing on Mine.
+          Each Frame Captures a Lifetime of Memories, Preserving Every Detail Forever
         </div>
 
         <div className="scroll-to-top-end-btn" onClick={scrollToTop}>

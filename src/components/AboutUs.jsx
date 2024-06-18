@@ -13,7 +13,7 @@ const AboutUs = () => {
   const [charIndex, setCharIndex] = useState(0);
   const [isTypingDone, setIsTypingDone] = useState(false);
   const words = ['Creating memories.', 'Visual storytelling.', 'Dedicated artisans.'];
-  const logo =  '/assets/ak_logo1.png';
+  const logo =  '/assets/ak_logo2.png';
 
   useEffect(() => {
     AOS.init({

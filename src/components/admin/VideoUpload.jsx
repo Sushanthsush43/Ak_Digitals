@@ -71,8 +71,8 @@ function VideoUpload({storage, runCompleted}) {
             toast.error("No video selected", toastErrorStyle());
             return;
         }
-        if (selectedFiles.length > 20) {
-            toast.error("Cannot upload more than 20 videos at once", toastErrorStyle());
+        if (selectedFiles.length > 25) {
+            toast.error("Cannot upload more than 25 videos at once", toastErrorStyle());
             return;
         }
         setAllUploadDone(false);
