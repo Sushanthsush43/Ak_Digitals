@@ -1,70 +1,37 @@
-# Getting Started with Create React App
+## <img src="https://github.com/MeghanathShetty/Ak_digitals/assets/127648939/252f085a-06b0-44b4-ba07-7f366316af7e" alt="Image Alt Text" style="width:27px;" /> AK Digitals Photography website
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Published at https://ak-digitalstest-meghanathshettys-projects.vercel.app/
 
-## Available Scripts
+## Software Features
+* Showcase photos and videos in a elegant manner.
+* Lazy loading.
+* Thumbnail generation while uploading videos to ensure efficient video displaying.
+* Responsive design.
+* Dynamic Dashboard.
+* Upload photos/videos.
+* Delete photos/videos.
 
-In the project directory, you can run:
+## Preview
+### Desktop version
+![image](https://github.com/MeghanathShetty/Ak_digitals/assets/127648939/9e8c553b-1e82-4608-a4f3-bf4d1751c090)
+#### Full-screen photo
+![image](https://github.com/MeghanathShetty/Ak_digitals/assets/127648939/4492eb71-9626-440b-abb8-2ee84aa745b7)
 
-### `npm start`
+![image](https://github.com/MeghanathShetty/Ak_digitals/assets/127648939/57344d5f-0d15-4d65-be14-a848f9895cc3)
+#### Full-screen video
+![image](https://github.com/MeghanathShetty/Ak_digitals/assets/127648939/f9fa45ae-752c-4e75-924e-b8648847a4b7)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+#### Dashboard
+![image](https://github.com/MeghanathShetty/Ak_digitals/assets/127648939/e8d85f6a-dab5-4e8a-a662-23fb89c56f38)
+![image](https://github.com/MeghanathShetty/Ak_digitals/assets/127648939/7d6000c6-98aa-4768-86d9-6d08d80a30a5)
+#### Delete Section
+![image](https://github.com/MeghanathShetty/Ak_digitals/assets/127648939/714770dc-8cdf-487f-87d2-7f718d236f34)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+#### Contact Page
+![image](https://github.com/MeghanathShetty/Ak_digitals/assets/127648939/7e1478e8-d014-4fce-b78a-df3daffb9f53)
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Mobile Version
+<img src="https://github.com/MeghanathShetty/Ak_digitals/assets/127648939/6261f01f-b768-4bfe-9fe5-9d29e2856d64" alt="Image Alt Text" style="width:300px; height:700px" />
+<img src="https://github.com/MeghanathShetty/Ak_digitals/assets/127648939/4cf4b8b3-ffb5-440c-922a-9351f109b2d0" alt="Image Alt Text" style="width:300px; height:700px" />
+<img src="https://github.com/MeghanathShetty/Ak_digitals/assets/127648939/5732cdb8-c4d5-4812-916a-68042983c135" alt="Image Alt Text" style="width:300px; height:700px" />
+<img src="https://github.com/MeghanathShetty/Ak_digitals/assets/127648939/463c09a4-0e0f-4635-b7ea-8bd5da53431f" alt="Image Alt Text" style="width:300px; height:700px" />

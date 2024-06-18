@@ -24,6 +24,12 @@ body::-webkit-scrollbar-thumb {
   border-radius: 5px;
 }
 
+*::selection
+{
+    background-color: #850F8D;
+    color: #ffffff;
+}
+
 /* success toast progress bar color */
 .toast-success-progress-bar {
   background-color: #850F8D !important;
