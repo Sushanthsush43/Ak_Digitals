@@ -66,6 +66,7 @@
   height: auto;
   cursor: pointer;
   transition: transform 0.2s ease-in-out;
+  user-select: none;
 }
 
 .delete-item:hover {

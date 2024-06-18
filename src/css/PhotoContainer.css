@@ -1,6 +1,7 @@
 .photo-container img {
     box-shadow: 10px;
     transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    user-select: none;
   }
   
   .photo-container {
