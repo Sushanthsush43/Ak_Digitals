@@ -19,10 +19,6 @@
 
 #### Dashboard
 ![image](https://github.com/MeghanathShetty/Ak_digitals/assets/127648939/e8d85f6a-dab5-4e8a-a662-23fb89c56f38)
-![image](https://github.com/MeghanathShetty/Ak_digitals/assets/127648939/7d6000c6-98aa-4768-86d9-6d08d80a30a5)
-
-#### Contact Page
-![image](https://github.com/MeghanathShetty/Ak_digitals/assets/127648939/7e1478e8-d014-4fce-b78a-df3daffb9f53)
 
 ### Mobile Version
 <img src="https://github.com/MeghanathShetty/Ak_digitals/assets/127648939/6261f01f-b768-4bfe-9fe5-9d29e2856d64" alt="Image Alt Text" style="width:300px;" />
