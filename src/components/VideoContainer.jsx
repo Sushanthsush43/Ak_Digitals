@@ -155,7 +155,7 @@ function VideoContainer({storage}) {
     setTimeout(() => {
         setPage(prevPage => prevPage + 1);
         setViewMorePaused(false);
-    }, [1500]);
+    }, [2250]);
   };
 
   const handleVideoLoad = (index) => {
