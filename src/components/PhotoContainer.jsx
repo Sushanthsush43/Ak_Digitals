@@ -134,7 +134,7 @@ function PhotoContainer({storage}) {
         setTimeout(() => {
             setPage(prevPage => prevPage + 1);
             setViewMorePaused(false);
-        }, [3000]);
+        }, [1500]);
     };
 
     const handleImageLoad = (index) => {
