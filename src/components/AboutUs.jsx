@@ -3,8 +3,8 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import '../css/AboutUs.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFacebook, faTwitter, faInstagram, faGoogle, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
-import { faHeart ,faQuoteLeft,faQuoteRight} from '@fortawesome/free-solid-svg-icons';
+import { faFacebook, faTwitter, faInstagram, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
+import { faHeart ,faQuoteLeft, faQuoteRight, faEnvelope} from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import { ImArrowLeft2 } from "react-icons/im";
 
@@ -74,21 +74,21 @@ const AboutUs = () => {
 
           {/* social media icons */}
           <div className="social-icons" data-aos="fade-up">
-            <a href="mailto:someone@example.com" target="_blank" rel="noopener noreferrer">
-              <FontAwesomeIcon icon={faGoogle} size="2x" />
+            <a href="mailto:ak97.digital@gmail.com" target="_blank" rel="noopener noreferrer">
+              <FontAwesomeIcon icon={faEnvelope} size="2x" />
             </a>
-            <a href="https://wa.me/yourwhatsappnumber" target="_blank" rel="noopener noreferrer">
+            <a href="https://wa.me/+918277494355" target="_blank" rel="noopener noreferrer">
               <FontAwesomeIcon icon={faWhatsapp} size="2x" />
             </a>
-            <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.instagram.com/abhi.devadi?igsh=MW1pdGcxcjhpZzRiNA==" target="_blank" rel="noopener noreferrer">
               <FontAwesomeIcon icon={faInstagram} size="2x" />
             </a>
-            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
+            {/* <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
               <FontAwesomeIcon icon={faFacebook} size="2x" />
             </a>
             <a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer">
               <FontAwesomeIcon icon={faTwitter} size="2x" />
-            </a>
+            </a> */}
           </div>
         </div>
       </div>
@@ -97,9 +97,9 @@ const AboutUs = () => {
         <p className="text-center" style={{ fontSize: '1.2rem' }}>
           Made with <FontAwesomeIcon icon={faHeart} style={{ color: 'black' }} /> by CODE MONKS
         </p>
-        <p className="text-center">
+        {/* <p className="text-center">
           © {new Date().getFullYear()} All rights reserved.
-        </p>
+        </p> */}
       </footer>
     </div>
     </>
