@@ -1,6 +1,7 @@
 ## <img src="https://github.com/MeghanathShetty/Ak_digitals/assets/127648939/7b758960-9d11-42f0-b84b-060041a5218e" alt="Image Alt Text" style="width:27px;" /> AK Digitals Photography website
 
 ### Published at https://akdigitals.in/
+### Personal Deployement at https://ak-digitalstest-meghanathshettys-projects.vercel.app/
 
 ## Software Features
 * Showcase photos and videos in a elegant manner.
