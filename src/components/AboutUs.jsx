@@ -98,7 +98,9 @@ const AboutUs = () => {
           Made with <FontAwesomeIcon icon={faHeart} style={{ color: 'black' }} /> by MONK VARIABLES
         </p>
         <p className="text-center">
-          monkvariables09@gmail.com
+            <a href="mailto:monkvariables09@gmail.com" target="_blank" rel="noopener noreferrer">
+              monkvariables09@gmail.com
+            </a>
         </p>
       </footer>
     </div>
