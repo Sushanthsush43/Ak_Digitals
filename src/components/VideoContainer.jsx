@@ -264,11 +264,15 @@ function VideoContainer({storage}) {
             )}
           </div>
         :
-          <InView
-              as="div"
-              onChange={(inView) => inView? setFloatingDisabled(true)  : setFloatingDisabled(false)}>
-              <EndReachedBtn />
-          </InView>
+          <>
+              { videoUrls.length > 9 &&
+                  <InView
+                      as="div"
+                      onChange={(inView) => inView? setFloatingDisabled(true)  : setFloatingDisabled(false)}>
+                      <EndReachedBtn />
+                  </InView>
+              }
+          </>
       }
     </>
   );

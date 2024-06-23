@@ -211,11 +211,15 @@ function PhotoContainer({storage}) {
                     )}
                 </div> 
             :
-                <InView
-                    as="div"
-                    onChange={(inView) => inView? setFloatingDisabled(true)  : setFloatingDisabled(false)}>
-                    <EndReachedBtn />
-                </InView>
+                <>
+                    { imageUrls.length > 12 &&
+                        <InView
+                            as="div"
+                            onChange={(inView) => inView? setFloatingDisabled(true)  : setFloatingDisabled(false)}>
+                            <EndReachedBtn />
+                        </InView>
+                    }
+                </>
             }
 
         </>
