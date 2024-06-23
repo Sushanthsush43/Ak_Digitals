@@ -95,11 +95,11 @@ const AboutUs = () => {
 
       <footer className="footer mt-5">
         <p className="text-center" style={{ fontSize: '1.2rem' }}>
-          Made with <FontAwesomeIcon icon={faHeart} style={{ color: 'black' }} /> by CODE MONKS
+          Made with <FontAwesomeIcon icon={faHeart} style={{ color: 'black' }} /> by MONK VARIABLES
         </p>
-        {/* <p className="text-center">
-          © {new Date().getFullYear()} All rights reserved.
-        </p> */}
+        <p className="text-center">
+          monkvariables09@gmail.com
+        </p>
       </footer>
     </div>
     </>
