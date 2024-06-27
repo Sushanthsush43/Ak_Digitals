@@ -83,7 +83,7 @@ const AboutUs = () => {
             <a href="https://www.instagram.com/abhi.devadi?igsh=MW1pdGcxcjhpZzRiNA==" target="_blank" rel="noopener noreferrer">
               <FontAwesomeIcon icon={faInstagram} size="2x" />
             </a>
-            <a href="tel:+1234567890">
+            <a href="tel:8277494355">
               <FontAwesomeIcon icon={faPhone} style={{ fontSize: '1.7rem', marginTop:'2px'}} />
             </a>
             {/* <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
