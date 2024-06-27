@@ -77,13 +77,13 @@ const AboutUs = () => {
             <a href="mailto:ak97.digital@gmail.com" target="_blank" rel="noopener noreferrer">
               <FontAwesomeIcon icon={faEnvelope} size="2x" />
             </a>
-            <a href="https://wa.me/8277494355" target="_blank" rel="noopener noreferrer">
+            <a href="https://wa.me/+918277494355" target="_blank" rel="noopener noreferrer">
               <FontAwesomeIcon icon={faWhatsapp} size="2x" />
             </a>
             <a href="https://www.instagram.com/abhi.devadi?igsh=MW1pdGcxcjhpZzRiNA==" target="_blank" rel="noopener noreferrer">
               <FontAwesomeIcon icon={faInstagram} size="2x" />
             </a>
-            <a href="tel:8277494355">
+            <a href="tel:+918277494355">
               <FontAwesomeIcon icon={faPhone} style={{ fontSize: '1.7rem', marginTop:'2px'}} />
             </a>
             {/* <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
