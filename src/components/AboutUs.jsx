@@ -4,7 +4,7 @@ import 'aos/dist/aos.css';
 import '../css/AboutUs.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faTwitter, faInstagram, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
-import { faHeart ,faQuoteLeft, faQuoteRight, faEnvelope} from '@fortawesome/free-solid-svg-icons';
+import { faHeart ,faQuoteLeft, faQuoteRight, faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import { ImArrowLeft2 } from "react-icons/im";
 
@@ -82,6 +82,9 @@ const AboutUs = () => {
             </a>
             <a href="https://www.instagram.com/abhi.devadi?igsh=MW1pdGcxcjhpZzRiNA==" target="_blank" rel="noopener noreferrer">
               <FontAwesomeIcon icon={faInstagram} size="2x" />
+            </a>
+            <a href="tel:+1234567890">
+              <FontAwesomeIcon icon={faPhone} style={{ fontSize: '1.7rem', marginTop:'2px'}} />
             </a>
             {/* <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
               <FontAwesomeIcon icon={faFacebook} size="2x" />

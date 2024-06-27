@@ -199,6 +199,7 @@ function VideoContainer({storage}) {
               className="full-screen-video"
               controls
               playsInline
+              onContextMenu={(e) => e.preventDefault()}
               onError={(e) => console.error('Error playing video while hover (click):', e.target.error)}
           >
           </video>
@@ -232,6 +233,7 @@ function VideoContainer({storage}) {
                 onMouseEnter={(e) => { handlePlay(e.target); videoUrl = videoUrl; thumbnailUrl = false}}
                 onMouseLeave={(e) => { handlePause(e.target); videoUrl = ''; thumbnailUrl = thumbnailUrl}}
                 onLoadedData={() => handleVideoLoad(index)}
+                onContextMenu={(e) => e.preventDefault()}
                 src={videoUrl}
                 poster={thumbnailUrl}
                 onError={(e) => console.error('Error playing video while hover (hover):', e.target.error)}

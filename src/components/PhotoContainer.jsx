@@ -159,7 +159,7 @@ function PhotoContainer({storage}) {
                         <FontAwesomeIcon icon={faChevronLeft} />
                     </button>
                     )}
-                    <img src={data.img} className="full-screen-image" alt="" />
+                    <img src={data.img} className="full-screen-image" alt="" onContextMenu={(e) => e.preventDefault()}/>
                     {data.i < imageUrls.length - 1 && (
                     <button className="nav-btn next-btn" onClick={() => imgAction('next-img')}>
                         <FontAwesomeIcon icon={faChevronRight} />
@@ -187,6 +187,7 @@ function PhotoContainer({storage}) {
                                 }
                               }}
                             onLoad={() => handleImageLoad(index)}
+                            onContextMenu={(e) => e.preventDefault()}
                             src={url}
                             alt={`Image ${index}`}
                             data-index={index}
