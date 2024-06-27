@@ -3,11 +3,11 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { getFirebaseConfig } from "./components/utils/firebaseConfig";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import HomePage from './pages/HomePage';
-import DashBoard from './pages/DashBoard';
-import AboutUs from './components/AboutUs';
-import DeletePhotos from './components/admin/DeletePhotos';
-import DeleteVideos from './components/admin/DeleteVideos';
+import HomePage from './pages/AkDigitals_HomePage';
+import DashBoard from './pages/AkDigitals_DashBoard';
+import AboutUs from './components/AkDigitals_AboutUs';
+import DeletePhotos from './components/admin/AkDigitals_DeletePhotos';
+import DeleteVideos from './components/admin/AkDigitals_DeleteVideos';
 
 // Firebase stuff ( Important )
 const { storage, app } = getFirebaseConfig();

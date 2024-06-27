@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom';
 import { ImArrowLeft2 } from "react-icons/im";
 import '../css/Dashboard.css';
 import { toast } from 'react-toastify';
-import { toastErrorStyle } from '../components/utils/toastStyle';
-import TabsComponent from '../components/TabsComponent';
-import PhotoUpload from '../components/admin/PhotoUpload';
-import VideoUpload from '../components/admin/VideoUpload';
-import { CheckAdminLogin } from '../components/utils/checkAdminLogin';
-import { getDashboardData } from '../components/utils/getDashboardData';
-import DashBoardCounts from '../components/admin/DashboardCounts';
-import PieChart from '../components/admin/PieChart.jsx';
+import { toastErrorStyle } from '../components/utils/toastStyle.js';
+import TabsComponent from '../components/AkDigitals_TabsComponent';
+import PhotoUpload from '../components/admin/AkDigitals_PhotoUpload';
+import VideoUpload from '../components/admin/AkDigitals_VideoUpload';
+import { CheckAdminLogin } from '../components/utils/checkAdminLogin.js';
+import { getDashboardData } from '../components/utils/getDashboardData.js';
+import DashBoardCounts from '../components/admin/AkDigitals_DashboardCounts';
+import PieChart from '../components/admin/AkDigitals_PieChart.jsx';
 
 function DashBoard({ storage, app }) {
   // Check if authorized user, ie. admin

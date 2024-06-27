@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import '../css/HomePage.css';
-import Header from '../components/Header';
-import TabsComponent from '../components/TabsComponent';
-import PhotoContainer from '../components/PhotoContainer';
-import VideoContainer from '../components/VideoContainer';
+import Header from '../components/AkDigitals_Header';
+import TabsComponent from '../components/AkDigitals_TabsComponent';
+import PhotoContainer from '../components/AkDigitals_PhotoContainer';
+import VideoContainer from '../components/AkDigitals_VideoContainer';
 
 function HomePage({storage, app}) {
 
