@@ -33,7 +33,7 @@ function AdminLoginForm({ app, closeStatus }) {
       // signal to close component
       closeStatus(true);
       toast.success("Admin Login Successfull", toastSuccessStyle());
-      console.log('Admin logged in successfully!');
+      console.log('Admin logged in successfully!'); //msg
     } catch (error) {
       toast.error("Invalid Login Credentials", toastErrorStyle());
       console.error('Error signing in:', error.message || error);
