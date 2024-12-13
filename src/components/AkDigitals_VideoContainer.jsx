@@ -215,43 +215,45 @@ function VideoContainer({storage}) {
       {!floatingDisabled ? <FloatingScrollBtn /> : null }
 
       <div className={`video-container ${isOpened ? 'animate' : ''}`}>
-        <ResponsiveMasonry columnsCountBreakPoints={{ 380: 1, 750: 2, 900: 3 }}>
-          <Masonry gutter='17px'>
-            {videoUrls.map(({ videoUrl, thumbnailUrl, loaded }, index) => (
-              <InView
-                as="video"
-                className='image-video'
-                key={index}
-                data-index={index}
-                onChange={(inView, entry) => {
-                  // Trigger inView callback even before fully visible
-                  if (entry.isIntersecting || entry.boundingClientRect.top < 200) {
-                    inView && loaded ? (videoUrl = videoUrl) : (videoUrl = '');
-                  }
-                }}
-                onContextMenu={(e)=> e.preventDefault()}
-                onMouseEnter={(e) => { handlePlay(e.target); videoUrl = videoUrl; thumbnailUrl = false}}
-                onMouseLeave={(e) => { handlePause(e.target); videoUrl = ''; thumbnailUrl = thumbnailUrl}}
-                onLoadedData={() => handleVideoLoad(index)}
-                onContextMenu={(e) => e.preventDefault()}
-                src={videoUrl}
-                poster={thumbnailUrl}
-                onError={(e) => console.error('Error playing video while hover (hover):', e.target.error)}
-                alt={`Video ${index}`}
-                onClick={()=>viewVideo(videoUrl, index)} // Click to open video in full-screen
-                style={{ display: isIOS ? 'inline' : loaded ? 'inline' : 'none',
-                         cursor: 'pointer' }}                
-                autoPlay={false}
-                muted
-                playsInline
-                loop
-                type="video/mp4/mov"
-              >
-              </InView>
-
-            ))}
-          </Masonry>
-        </ResponsiveMasonry>
+        {videoUrls.length>0 ?
+          <ResponsiveMasonry columnsCountBreakPoints={{ 380: 1, 750: 2, 900: 3 }}>
+            <Masonry gutter='17px'>
+              {videoUrls.map(({ videoUrl, thumbnailUrl, loaded }, index) => (
+                <InView
+                  as="video"
+                  className='image-video'
+                  key={index}
+                  data-index={index}
+                  onChange={(inView, entry) => {
+                    // Trigger inView callback even before fully visible
+                    if (entry.isIntersecting || entry.boundingClientRect.top < 200) {
+                      inView && loaded ? (videoUrl = videoUrl) : (videoUrl = '');
+                    }
+                  }}
+                  onContextMenu={(e)=> e.preventDefault()}
+                  onMouseEnter={(e) => { handlePlay(e.target); videoUrl = videoUrl; thumbnailUrl = false}}
+                  onMouseLeave={(e) => { handlePause(e.target); videoUrl = ''; thumbnailUrl = thumbnailUrl}}
+                  onLoadedData={() => handleVideoLoad(index)}
+                  src={videoUrl}
+                  poster={thumbnailUrl}
+                  onError={(e) => console.error('Error playing video while hover (hover):', e.target.error)}
+                  alt={`Video ${index}`}
+                  onClick={()=>viewVideo(videoUrl, index)} // Click to open video in full-screen
+                  style={{ display: isIOS ? 'inline' : loaded ? 'inline' : 'none',
+                          cursor: 'pointer' }}                
+                  autoPlay={false}
+                  muted
+                  playsInline
+                  loop
+                  type="video/mp4/mov"
+                >
+                </InView>
+              ))}
+            </Masonry>
+          </ResponsiveMasonry>
+        :
+          <center><div>Nothing here yet. Stay tuned!</div></center>
+        }
       </div>
 
       {!endReached?

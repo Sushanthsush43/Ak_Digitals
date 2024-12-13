@@ -173,31 +173,35 @@ function PhotoContainer({storage}) {
             {!floatingDisabled ? <FloatingScrollBtn /> : null }
 
             <div className={`photo-container ${isOpened ? 'animate' : ''}`} >
-                <ResponsiveMasonry columnsCountBreakPoints={{ 380: 1, 750: 2, 900: 3 }}>
-                <Masonry gutter='17px'>
-                    {imageUrls.map(({ url, loaded }, index) => (
-                        <InView
-                            as="img"
-                            className='image-video'
-                            key={index}
-                            onChange={(inView, entry) => {
-                                // Trigger inView callback even before fully visible
-                                if (entry.isIntersecting || entry.boundingClientRect.top < 300) {
-                                  inView && loaded ? (url = url) : (url = '');
-                                }
-                              }}
-                            onLoad={() => handleImageLoad(index)}
-                            onContextMenu={(e) => e.preventDefault()}
-                            src={url}
-                            alt={`Image ${index}`}
-                            data-index={index}
-                            onClick={() => viewImage(url, index)} // Click to open image in full-screen
-                            style={{ display: loaded ? 'inline' : 'none', cursor : 'pointer' }}
-                        >
-                        </InView>
-                    ))}
-                </Masonry>
-                </ResponsiveMasonry>
+                {imageUrls.length>0 ?
+                    <ResponsiveMasonry columnsCountBreakPoints={{ 380: 1, 750: 2, 900: 3 }}>
+                    <Masonry gutter='17px'>
+                        {imageUrls.map(({ url, loaded }, index) => (
+                            <InView
+                                as="img"
+                                className='image-video'
+                                key={index}
+                                onChange={(inView, entry) => {
+                                    // Trigger inView callback even before fully visible
+                                    if (entry.isIntersecting || entry.boundingClientRect.top < 300) {
+                                    inView && loaded ? (url = url) : (url = '');
+                                    }
+                                }}
+                                onLoad={() => handleImageLoad(index)}
+                                onContextMenu={(e) => e.preventDefault()}
+                                src={url}
+                                alt={`Image ${index}`}
+                                data-index={index}
+                                onClick={() => viewImage(url, index)} // Click to open image in full-screen
+                                style={{ display: loaded ? 'inline' : 'none', cursor : 'pointer' }}
+                            >
+                            </InView>
+                        ))}
+                    </Masonry>
+                    </ResponsiveMasonry>
+                :
+                    <center><div>Nothing here yet. Stay tuned!</div></center>
+                }
             </div>
             
             {!endReached?
