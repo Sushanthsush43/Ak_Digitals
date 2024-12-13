@@ -173,6 +173,7 @@ function PhotoContainer({storage}) {
             {!floatingDisabled ? <FloatingScrollBtn /> : null }
 
             <div className={`photo-container ${isOpened ? 'animate' : ''}`} >
+                {/* check if photos are present */}
                 {imageUrls.length>0 ?
                     <ResponsiveMasonry columnsCountBreakPoints={{ 380: 1, 750: 2, 900: 3 }}>
                     <Masonry gutter='17px'>
@@ -200,6 +201,7 @@ function PhotoContainer({storage}) {
                     </Masonry>
                     </ResponsiveMasonry>
                 :
+                    // else display no photo msg
                     <center><div>Nothing here yet. Stay tuned!</div></center>
                 }
             </div>

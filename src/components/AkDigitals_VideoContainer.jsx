@@ -215,6 +215,7 @@ function VideoContainer({storage}) {
       {!floatingDisabled ? <FloatingScrollBtn /> : null }
 
       <div className={`video-container ${isOpened ? 'animate' : ''}`}>
+        {/* check if videos are present */}
         {videoUrls.length>0 ?
           <ResponsiveMasonry columnsCountBreakPoints={{ 380: 1, 750: 2, 900: 3 }}>
             <Masonry gutter='17px'>
@@ -252,6 +253,7 @@ function VideoContainer({storage}) {
             </Masonry>
           </ResponsiveMasonry>
         :
+          // else display no video msg
           <center><div>Nothing here yet. Stay tuned!</div></center>
         }
       </div>
