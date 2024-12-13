@@ -24,6 +24,16 @@ function VideoContainer({storage}) {
   const [viewMorePaused, setViewMorePaused] = useState(false);
   const [endReached, setEndReached] = useState(false);
   const [floatingDisabled, setFloatingDisabled] = useState(false);
+  const [showNoMediaMessageDelay, setShowNoMediaMessageDelay] = useState(false);
+
+  // set delay for no media message
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowNoMediaMessageDelay(true);
+    }, 2500); // 2.5 seconds delay
+
+    return () => clearTimeout(timer); // Cleanup on unmount
+  }, []);
 
   useEffect(()=>{
     const i = isIOSorMacDevice();
@@ -254,7 +264,7 @@ function VideoContainer({storage}) {
           </ResponsiveMasonry>
         :
           // else display no video msg
-          <center><div>Nothing here yet. Stay tuned!</div></center>
+          <center>{showNoMediaMessageDelay && <div>Nothing here yet. Stay tuned!</div>}</center>
         }
       </div>
 
