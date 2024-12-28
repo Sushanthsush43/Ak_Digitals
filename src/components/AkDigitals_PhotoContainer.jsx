@@ -29,7 +29,7 @@ function PhotoContainer({storage}) {
   useEffect(() => {
     const timer = setTimeout(() => {
         setShowNoMediaMessageDelay(true);
-    }, 2500); // 2.5 seconds delay
+    }, 3000); // 3 seconds delay
 
     return () => clearTimeout(timer); // Cleanup on unmount
    }, []);
