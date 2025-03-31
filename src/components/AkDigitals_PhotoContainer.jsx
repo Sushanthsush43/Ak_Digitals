@@ -121,9 +121,8 @@ function PhotoContainer({storage}) {
                     }
                 }));
     
-                // If it's the last page, reset the page count
                 if (page === totalPages) {
-                    setPage(1);
+                    // setPage(1);
                     setEndReached(true);
                 }
     
