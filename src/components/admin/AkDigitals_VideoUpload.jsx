@@ -1,5 +1,5 @@
 import '../../css/Upload.css';
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { toast } from "react-toastify";
 import { toastSuccessStyle, toastErrorStyle } from '../utils/toastStyle.js';
 import ProgressBar from "@ramonak/react-progress-bar";
@@ -14,7 +14,7 @@ function VideoUpload({firestore, runCompleted}) {
     const [uploading, setUploading] = useState(false);
     const [allUploadDone, setAllUploadDone] = useState(false);
     const [uploadTrack, setUploadTrack] = useState(0);
-    const [eachUpdated, setEachUpdated] = useState([]);
+    const [eachUpdated, setEachUpdated] = useState(new Map());
     const [uploadProgress, setUploadProgress] = useState(0);
     const [uploadingFile, setUploadingFile] = useState('');
     const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
@@ -45,9 +45,11 @@ function VideoUpload({firestore, runCompleted}) {
         runCompleted(false);
         setUploadingFile('');
 
+        const updatedMap = new Map();
+        for (let i = 0; i < selectedFiles.length; i++)
+            updatedMap.set(i, { success: true, error: "" });
         try {
-            const updatedArray = new Array(selectedFiles.length).fill(true);
-            setEachUpdated(updatedArray);
+            setEachUpdated(new Map(updatedMap));
             setUploadTrack(selectedFiles.length);
             setSelectedFilesCopy(selectedFiles);
 
@@ -64,14 +66,14 @@ function VideoUpload({firestore, runCompleted}) {
                         throw new Error('Invalid video format');
                     }
 
+                    // BLOCK if > 99MB (Cloudinary doesn't support greater than 100mb in free tier)
+                    if (file.size > 99 * 1024 * 1024) {
+                        throw new Error('Exceeds 99MB size limit');
+                    }
+
                     const formData = new FormData();
                     formData.append("file", file);
                     formData.append("upload_preset", process.env.REACT_APP_VIDEO_UPLOAD_PRESET);
-
-                    // ✅ Apply compression ONLY if >250MB
-                    if (file.size > 250 * 1024 * 1024) {
-                        formData.append("quality", "auto");
-                    }
 
                     const xhr = new XMLHttpRequest();
 
@@ -114,7 +116,10 @@ function VideoUpload({firestore, runCompleted}) {
                     });
 
                 } catch (error) {
-                    updatedArray[i] = false;
+                    updatedMap.set(i, {
+                        success: false,
+                        error: error.message || "Upload failed"
+                    });
                     console.error(`Error uploading video "${file.name}":`, error);
                     isSomeFailed = true;
                 } finally {
@@ -131,6 +136,7 @@ function VideoUpload({firestore, runCompleted}) {
             setUploading(false);
             setAllUploadDone(true);
             setSelectedFiles([]);
+            setEachUpdated(new Map(updatedMap)); // trigger error UI
 
             const fileInput = document.getElementById('upload-input');
             fileInput && (fileInput.value = '');
@@ -188,11 +194,11 @@ function VideoUpload({firestore, runCompleted}) {
                     </div>
                     <div className="failed-uploads-container">
                     {allUploadDone &&
-                        eachUpdated.map((value, i) => value !== true ?
+                        Array.from(eachUpdated.entries()).map(([i, value]) => !value.success ?
                             <div className='failed-file-upload' style={{ backgroundColor: "red", display: "flex" }} 
                             key={`${i}-failed-vid-upload`}>
-                                <div className='failed-upload-file-name'>{selectedFilesCopy[i].name}</div>
-                                <div>Failed</div>
+                                <div className='failed-upload-file-name'><b>Name: </b>{selectedFilesCopy[i].name}</div>
+                                <div className='failed-upload-error-text'><b>Error: </b>{value.error}</div>
                             </div>
                             : null
                         )

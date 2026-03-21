@@ -146,7 +146,8 @@ function PhotoUpload({firestore, runCompleted}) {
                                 resolve();
                             } else {
                                 reject(new Error("Upload failed"));
-                                // TODO: have to handle delete from cloudinary if cloudinary upload success
+                                // TODO: (maybe use deleteToken in cloduinary)
+                                // have to handle delete from cloudinary if cloudinary upload success
                                 // but firestore metadat failed
                             }
                         };

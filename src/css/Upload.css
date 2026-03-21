@@ -112,6 +112,7 @@
     
 .failed-file-upload {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     padding: 5px;
     background-color: #cf2f2f !important;
@@ -122,7 +123,13 @@
 
 .failed-upload-file-name {
     word-break: break-word;
-    padding-right: 15px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #fff;
+}
+
+.failed-upload-error-text {
+    word-break: break-word;
+    padding-top: 5px;
 }
 
 @media (max-width: 450px) {
