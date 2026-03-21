@@ -1,15 +1,15 @@
 import '../../css/Upload.css';
 import React, { useState, useEffect } from 'react';
-import { ref, uploadBytesResumable } from 'firebase/storage';
 import { toast } from "react-toastify";
 import { toastSuccessStyle, toastErrorStyle } from '../utils/toastStyle';
 import ProgressBar from "@ramonak/react-progress-bar";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import imageCompression from 'browser-image-compression';
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 // runCompleted is callback for tab component
-function PhotoUpload({storage, runCompleted}) {
+function PhotoUpload({firestore, runCompleted}) {
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [selectedFilesCopy, setSelectedFilesCopy] = useState([]);
     const [uploading, setUploading] = useState(false);
@@ -101,27 +101,58 @@ function PhotoUpload({storage, runCompleted}) {
                             setCompressionProgress(progress);
                         }
                     };
-                    const compressedFile = await imageCompression(file, options);
+                    const compressedBlob = await imageCompression(file, options);
 
-                    const storageRef = ref(storage, `images/${file.name}`);
+                    const compressedFile = new File(
+                        [compressedBlob],
+                        file.name,
+                        { type: compressedBlob.type }
+                    );
+
+                    const formData = new FormData();
+                    formData.append("file", compressedFile);
+                    formData.append("upload_preset", process.env.REACT_APP_IMG_UPLOAD_PRESET);
+
+                    const xhr = new XMLHttpRequest();
 
                     await new Promise((resolve, reject) => {
-                        const uplaodTask = uploadBytesResumable(storageRef, compressedFile);
+                        xhr.open("POST", "https://api.cloudinary.com/v1_1/" + 
+                            process.env.REACT_APP_CLOUDINARY_CLOUD_NAME + "/image/upload");
 
-                        uplaodTask.on(
-                        'state_changed',
-                        (snapshot) => {
-                            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                            setfileUploadProgress(progress);
-                        },
-                        (error) => {
-                            reject(error);
-                        },
-                        () => {
-                            setfileUploadProgress(100);
-                            resolve(); 
-                        }
-                        );
+                        xhr.upload.onprogress = (event) => {
+                            if (event.lengthComputable) {
+                                const progress = (event.loaded / event.total) * 100;
+                                setfileUploadProgress(progress);
+                            }
+                        };
+
+                        xhr.onload = async () => {
+                            if (xhr.status === 200) {
+                                const response = JSON.parse(xhr.responseText);
+
+                                const imageUrl = response.secure_url;
+                                const publicId = response.public_id;
+                                const bytes = response.bytes;
+
+                                await addDoc(collection(firestore, "images"), {
+                                    public_id: publicId,
+                                    name: file.name,
+                                    url: imageUrl,
+                                    size: bytes,
+                                    createdAt: serverTimestamp()
+                                });
+
+                                setfileUploadProgress(100);
+                                resolve();
+                            } else {
+                                reject(new Error("Upload failed"));
+                                // TODO: have to handle delete from cloudinary if cloudinary upload success
+                                // but firestore metadat failed
+                            }
+                        };
+
+                        xhr.onerror = () => reject(new Error("Upload error"));
+                        xhr.send(formData);
                     });
 
                 } catch (error) {

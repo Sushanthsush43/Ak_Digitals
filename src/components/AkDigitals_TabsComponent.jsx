@@ -6,7 +6,7 @@ import { toastErrorStyle } from './utils/toastStyle';
 // needs to be outside
 let dashboardCountRefreshCount = 0;
 
-const TabsComponent = ({ storage, Tab1, Tab2, waitBeforeSwitch = false, dashboardCountRefresh }) => {
+const TabsComponent = ({ firestore, Tab1, Tab2, waitBeforeSwitch = false, dashboardCountRefresh }) => {
   const [activeTab, setActiveTab] = useState(0);
   const [runCompleted, setRunCompleted] = useState(true);
 
@@ -39,12 +39,12 @@ const TabsComponent = ({ storage, Tab1, Tab2, waitBeforeSwitch = false, dashboar
         {
           waitBeforeSwitch ?
             <>
-              {activeTab === 0 && <Tab1 storage={storage} runCompleted={handleRunCompleted} />}
-              {activeTab === 1 && <Tab2 storage={storage} runCompleted={handleRunCompleted} />}
+              {activeTab === 0 && <Tab1 firestore={firestore} runCompleted={handleRunCompleted} />}
+              {activeTab === 1 && <Tab2 firestore={firestore} runCompleted={handleRunCompleted} />}
             </> :
             <>
-              {activeTab === 0 && <Tab1 storage={storage} />}
-              {activeTab === 1 && <Tab2 storage={storage} />}
+              {activeTab === 0 && <Tab1 firestore={firestore} />}
+              {activeTab === 1 && <Tab2 firestore={firestore} />}
             </>
         }
       </div>

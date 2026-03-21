@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 // import { getAnalytics } from "firebase/analytics";
-import { getStorage } from 'firebase/storage';
+import { getFirestore } from 'firebase/firestore';
 
 let cachedFirebaseApp; // Cache the initialized Firebase app
 
@@ -22,10 +22,10 @@ export const getFirebaseConfig = () => {
 
     const app = initializeApp(firebaseConfig);
     // const analytics = getAnalytics(app);
-    const storage = getStorage(app);
+    const firestore = getFirestore(app);
 
     // Cache the initialized Firebase app
-    cachedFirebaseApp = { storage, app };
+    cachedFirebaseApp = { firestore, app };
 
     return cachedFirebaseApp;
 }

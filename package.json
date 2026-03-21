@@ -21,6 +21,7 @@
     "bootstrap": "^5.3.3",
     "browser-image-compression": "^2.0.2",
     "browserify-fs": "^1.0.0",
+    "caniuse-lite": "^1.0.30001720",
     "chart.js": "^4.4.3",
     "firebase": "^10.11.1",
     "path-browserify": "^1.0.1",

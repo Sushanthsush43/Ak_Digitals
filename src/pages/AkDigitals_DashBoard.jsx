@@ -12,7 +12,7 @@ import { getDashboardData } from '../components/utils/getDashboardData.js';
 import DashBoardCounts from '../components/admin/AkDigitals_DashboardCounts';
 import PieChart from '../components/admin/AkDigitals_PieChart.jsx';
 
-function DashBoard({ storage, app }) {
+function DashBoard({ firestore, app }) {
   // Check if authorized user, ie. admin
   CheckAdminLogin({app});
 
@@ -27,7 +27,7 @@ function DashBoard({ storage, app }) {
   }
 
   useEffect(() => {
-      getDashboardData(storage).then((data) => {
+      getDashboardData(firestore).then((data) => {
         if (data) {
           setImgsLength(data.imgsLength);
           setVidsLength(data.vidsLength);
@@ -70,7 +70,7 @@ function DashBoard({ storage, app }) {
                       <div className='dashboard-head-texts'>
                         Upload
                       </div>
-                      <TabsComponent storage={storage} Tab1={PhotoUpload} Tab2={VideoUpload} waitBeforeSwitch={true} dashboardCountRefresh={handleCountRefresh}/>
+                      <TabsComponent firestore={firestore} Tab1={PhotoUpload} Tab2={VideoUpload} waitBeforeSwitch={true} dashboardCountRefresh={handleCountRefresh}/>
                   </div>
                   <div className='dashboard-delete-main'>
                       <div className='dashboard-head-texts'>
