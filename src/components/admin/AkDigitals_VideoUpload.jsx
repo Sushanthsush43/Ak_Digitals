@@ -95,14 +95,32 @@ function VideoUpload({firestore, runCompleted}) {
                                 const videoUrl = response.secure_url;
                                 const publicId = response.public_id;
                                 const bytes = response.bytes;
-
-                                await addDoc(collection(firestore, "videos"), {
-                                    public_id: publicId,
-                                    name: file.name,
-                                    url: videoUrl,
-                                    size: bytes,
-                                    createdAt: serverTimestamp()
-                                });
+                                const deleteToken = response.delete_token; // Valid only for 10 mins, used for exception case
+                                try {
+                                    await addDoc(collection(firestore, "videos"), {
+                                        public_id: publicId,
+                                        name: file.name,
+                                        url: videoUrl,
+                                        size: bytes,
+                                        createdAt: serverTimestamp()
+                                    });
+                                    console.log(`Video uploaded successfully: ${file.name}`);
+                                    } catch (firestoreError) {
+                                        // rollback Cloudinary upload, if firestore metadat uplaod failed
+                                        if (deleteToken) {
+                                            await fetch(
+                                                "https://api.cloudinary.com/v1_1/" +
+                                                process.env.REACT_APP_CLOUDINARY_CLOUD_NAME +
+                                                "/delete_by_token",
+                                                {
+                                                    method: "POST",
+                                                    headers: {"Content-Type": "application/json"},
+                                                    body: JSON.stringify({token: deleteToken})
+                                                }
+                                            );
+                                        }
+                                        reject(firestoreError);
+                                    }
 
                                 setUploadProgress(100);
                                 resolve();

@@ -1,5 +1,5 @@
 import '../../css/Upload.css';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { toast } from "react-toastify";
 import { toastSuccessStyle, toastErrorStyle } from '../utils/toastStyle';
 import ProgressBar from "@ramonak/react-progress-bar";
@@ -15,7 +15,7 @@ function PhotoUpload({firestore, runCompleted}) {
     const [uploading, setUploading] = useState(false);
     const [allUploadDone, setAllUploadDone] = useState(false);
     const [uploadTrack, setUploadTrack] = useState(0);
-    const [eachUpdated, setEachUpdated] = useState([]);
+    const [eachUpdated, setEachUpdated] = useState(new Map());
     const [abortController, setAbortController] = useState(null);
     const [fileUploadProgress, setfileUploadProgress] = useState(0);
     const [compressionProgress, setCompressionProgress] = useState(0);
@@ -67,9 +67,11 @@ function PhotoUpload({firestore, runCompleted}) {
         const controller = new AbortController();
         setAbortController(controller);
 
+        const updatedMap = new Map();
+        for (let i = 0; i < selectedFiles.length; i++)
+            updatedMap.set(i, { success: true, error: "" });
         try {
-            const updatedArray = new Array(selectedFiles.length).fill(true); // set all file upload as successful initially
-            setEachUpdated(updatedArray);
+            setEachUpdated(new Map(updatedMap));
             setUploadTrack(selectedFiles.length);
 
             setSelectedFilesCopy(selectedFiles);
@@ -133,22 +135,36 @@ function PhotoUpload({firestore, runCompleted}) {
                                 const imageUrl = response.secure_url;
                                 const publicId = response.public_id;
                                 const bytes = response.bytes;
-
-                                await addDoc(collection(firestore, "images"), {
-                                    public_id: publicId,
-                                    name: file.name,
-                                    url: imageUrl,
-                                    size: bytes,
-                                    createdAt: serverTimestamp()
-                                });
-
+                                const deleteToken = response.delete_token; // Valid only for 10 mins, used for exception case
+                                try {
+                                    await addDoc(collection(firestore, "images"), {
+                                        public_id: publicId,
+                                        name: file.name,
+                                        url: imageUrl,
+                                        size: bytes,
+                                        createdAt: serverTimestamp()
+                                    });
+                                    console.log(`Image uploaded successfully: ${file.name}`);
+                                    } catch (firestoreError) {
+                                        // rollback Cloudinary upload, if firestore metadat uplaod failed
+                                        if (deleteToken) {
+                                            await fetch(
+                                                "https://api.cloudinary.com/v1_1/" +
+                                                process.env.REACT_APP_CLOUDINARY_CLOUD_NAME +
+                                                "/delete_by_token",
+                                                {
+                                                    method: "POST",
+                                                    headers: {"Content-Type": "application/json"},
+                                                    body: JSON.stringify({token: deleteToken})
+                                                }
+                                            );
+                                        }
+                                        reject(firestoreError);
+                                    }
                                 setfileUploadProgress(100);
                                 resolve();
                             } else {
                                 reject(new Error("Upload failed"));
-                                // TODO: (maybe use deleteToken in cloduinary)
-                                // have to handle delete from cloudinary if cloudinary upload success
-                                // but firestore metadat failed
                             }
                         };
 
@@ -157,7 +173,10 @@ function PhotoUpload({firestore, runCompleted}) {
                     });
 
                 } catch (error) {
-                    updatedArray[i] = false; // if upload failed, then set failed for that file
+                    updatedMap.set(i, {
+                        success: false,
+                        error: error.message || "Upload failed"
+                    });
                     console.error(`Error uploading photo "${file.name}":`, error);
                     isSomeFailed = true;
                 } finally {
@@ -175,6 +194,7 @@ function PhotoUpload({firestore, runCompleted}) {
             setUploading(false);
             setAllUploadDone(true);
             setSelectedFiles([]);
+            setEachUpdated(new Map(updatedMap)); // trigger error UI
 
             // Reset input element
             const fileInput = document.getElementById('upload-input');
@@ -242,12 +262,11 @@ function PhotoUpload({firestore, runCompleted}) {
 
                     <div className="failed-uploads-container">
                     {allUploadDone &&
-                        eachUpdated.map((value, i) => value !== true ?
-                            <div className='failed-file-upload' style={{ backgroundColor: "red", display: "flex" }}
+                        Array.from(eachUpdated.entries()).map(([i, value]) => !value.success ?
+                            <div className='failed-file-upload' style={{ backgroundColor: "red", display: "flex" }} 
                             key={`${i}-failed-img-upload`}>
-                                {/* display these in row style */}
-                                <div className='failed-upload-file-name'>{selectedFilesCopy[i].name}</div>
-                                <div>Failed</div>
+                                <div className='failed-upload-file-name'><b>Name: </b>{selectedFilesCopy[i].name}</div>
+                                <div className='failed-upload-error-text'><b>Error: </b>{value.error}</div>
                             </div>
                             : null
                         )
