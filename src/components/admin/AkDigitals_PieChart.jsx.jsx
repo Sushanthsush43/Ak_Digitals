@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Pie } from 'react-chartjs-2';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
@@ -14,13 +14,12 @@ import { toastErrorStyle } from '../utils/toastStyle';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const PieChart = ({ data }) => {
-  const totalStorage = parseFloat(5); // Total storage in GB
+  const totalStorage = parseFloat(20); // Total storage in GB
   const photoSize  = parseFloat(data.photoSize);
   const videoSize  = parseFloat(data.videoSize);
 
-  const usedStorage = parseFloat(photoSize + videoSize).toFixed(2);
-
-  const remainingStorage = parseFloat(totalStorage - usedStorage).toFixed(2);
+  const usedStorage = parseFloat(data.usedSize);
+  const remainingStorage = parseFloat(data.remainingSize);
 
   const chartData = {
     labels: ['Photos', 'Videos', 'Remaining'],
@@ -83,7 +82,7 @@ const PieChart = ({ data }) => {
       <strong style={{fontSize: '1.8rem', color : usedStorage>= (totalStorage - 0.5) ? '#cf2f2f' : 'inherit' }}> {usedStorage} GB</strong>
   </h2>
   <h2 className="lead">
-    <FontAwesomeIcon icon={faCaretRight} /> Storage space Limit :<strong style={{fontSize: '1.8rem'}}> 5 GB</strong>
+    <FontAwesomeIcon icon={faCaretRight} /> Storage space Limit :<strong style={{fontSize: '1.8rem'}}> 20 GB</strong>
   </h2>
 </div>
 

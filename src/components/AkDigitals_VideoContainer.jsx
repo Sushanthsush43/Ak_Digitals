@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { ref, listAll, getDownloadURL, getMetadata } from 'firebase/storage';
 import { toast } from 'react-toastify';
 import { toastErrorStyle } from './utils/toastStyle';
 import { InView } from "react-intersection-observer";
@@ -11,20 +10,19 @@ import './../css/VideoContainer.css';
 import './../css/Fullscreen.css';
 import FloatingScrollBtn from './utils/scrollToTop/FloatingBtn';
 import EndReachedBtn from './utils/scrollToTop/EndReachedBtn';
+import { collection, getDocs, query, orderBy, limit, startAfter } from "firebase/firestore";
 
-function VideoContainer({storage}) {
+function VideoContainer({firestore}) {
 
   const [isOpened, setIsOpened] = useState(false);
   const [data, setData] = useState({ video: '', i: 0 });
   const [videoUrls, setVideoUrls] = useState([]);
-  const [page, setPage] = useState(1);
-  const videosPerPage = 9;
-  const [videoRefs, setVideoRefs] = useState([]);
   const [isIOS, setIsIos] = useState(true); // for safety we will assume its IOS intialy
   const [viewMorePaused, setViewMorePaused] = useState(false);
   const [endReached, setEndReached] = useState(false);
   const [floatingDisabled, setFloatingDisabled] = useState(false);
   const [showNoMediaMessageDelay, setShowNoMediaMessageDelay] = useState(false);
+  const [lastDoc, setLastDoc] = useState(null);
 
   // set delay for no media message
   useEffect(() => {
@@ -61,7 +59,7 @@ function VideoContainer({storage}) {
   // Function to handle video actions (next, previous, close)
   const videoAction = (action) => {
     if (action === 'next-video') {
-      handleFullScreenEnded() // pause previous video
+      handleFullScreenEnded()
       let newIndex = data.i + 1;
       if (newIndex < videoUrls.length) {
         setData({ video: videoUrls[newIndex].videoUrl, i: newIndex });
@@ -74,7 +72,7 @@ function VideoContainer({storage}) {
       }
     } else if (action === 'close-video') {
       handleFullScreenEnded()
-      setIsOpened(false); // Close the full-screen view
+      setIsOpened(false);
     }
   }
 
@@ -86,91 +84,71 @@ function VideoContainer({storage}) {
   };
 
   useEffect(() => {
-    initialFetchVideos(); // Fetch videos on component mount
+    fetchVideos(true);
   }, []);
 
-  useEffect(() => {
-    fetchVideos(); // Fetch videos when page or videoRefs change
-  }, [page, videoRefs]);
-
-  async function initialFetchVideos() {
+  const fetchVideos = async (isInitial = false) => {
     try {
-        const videoRefsTemp = await listAll(ref(storage, 'videos')); // List items inside 'videos' folder
-        const videoRefsItems = videoRefsTemp.items;
+        let q;
 
-        // Fetch metadata for each video to get the upload time
-        const videosWithMetadata = await Promise.all(
-            videoRefsItems.map(async (videoRef) => {
-                const metadata = await getMetadata(videoRef);
-                return { ref: videoRef, timeCreated: metadata.timeCreated };
-            })
-        );
+        if (isInitial || !lastDoc) {
+            q = query(
+                collection(firestore, "videos"),
+                orderBy("createdAt", "desc"),
+                limit(9)
+            );
+        } else {
+            q = query(
+                collection(firestore, "videos"),
+                orderBy("createdAt", "desc"),
+                startAfter(lastDoc),
+                limit(9)
+            );
+        }
 
-        // Sort videos by upload time, newest first
-        videosWithMetadata.sort((a, b) => new Date(b.timeCreated) - new Date(a.timeCreated));
+        const snapshot = await getDocs(q);
 
-        // Remove the uploadTime from the final array
-        const sortedVideoRefs = videosWithMetadata.map(video => video.ref);
+        const urls = snapshot.docs.map(doc => ({
+            videoUrl: doc.data().url,
+            thumbnailUrl: doc.data().url.replace("/video/upload/", "/video/upload/so_1/")  // Cloudinary feature thumbnail
+              .replace(/\.[^/.]+$/, ".jpg"),
+            loaded: false
+        }));
 
-        setVideoRefs(sortedVideoRefs);
+        if (isInitial) {
+            setVideoUrls(urls);
+        } else {
+            setVideoUrls(prevUrls => [...prevUrls, ...urls]);
+        }
+
+        if (!snapshot.empty)
+            setLastDoc(snapshot.docs[snapshot.docs.length - 1]);
+
+        if (snapshot.empty || snapshot.docs.length < 9) {
+            setEndReached(true);
+        }
+
     } catch (error) {
         toast.error("Something went wrong, Please try again!", toastErrorStyle());
-        console.error('Error listing items in storage:', error);
+        console.error(error);
     }
-  }
-
-  async function fetchVideos() {
-    if (videoRefs && videoRefs.length >= 1) {
-      try {
-        const startIndex = (page - 1) * videosPerPage;
-        const endIndex = startIndex + videosPerPage;
-  
-        const totalPages = Math.ceil(videoRefs.length / videosPerPage);
-  
-        const urls = await Promise.all(videoRefs.slice(startIndex, endIndex).map(async (itemRef) => {
-          try {
-            const videoUrl = await getDownloadURL(itemRef);
-            const thumbnailName = itemRef.name.slice(0, itemRef.name.lastIndexOf('.')) + '.png';
-
-            const thumbnailRef = ref(storage, `thumbnails/${thumbnailName}`);
-
-            const thumbnailUrl = await getDownloadURL(thumbnailRef);
-
-            return { videoUrl, thumbnailUrl, loaded: false };
-          } catch (error) {
-            console.error('Error getting download URL for itemRef:', error);
-            return null;
-          }
-        }));
-  
-        if (page === totalPages) {
-          // setPage(1);
-          setEndReached(true);
-        }
-  
-        setVideoUrls(prevUrls => [...prevUrls, ...urls.filter(url => url !== null)]);
-      } catch (error) {
-        toast.error("Something went wrong, Please try again!", toastErrorStyle());
-        console.error('Error listing items in storage:', error);
-      }
-    }
-  }
+  };
 
   const handleViewMore = () => {
-    if (viewMorePaused)
+    if (viewMorePaused || endReached)
         return;
 
     setViewMorePaused(true);
     setTimeout(() => {
-        setPage(prevPage => prevPage + 1);
+        fetchVideos();
         setViewMorePaused(false);
-    }, [2250]);
+    }, 2250);
   };
 
   const handleVideoLoad = (index) => {
     setVideoUrls(prevVideoUrls => {
       const updatedVideoUrls = [...prevVideoUrls];
-      updatedVideoUrls[index].loaded = true; // Mark video as loaded
+      updatedVideoUrls[index].loaded = true;
       return updatedVideoUrls;
     });
   };
@@ -220,11 +198,9 @@ function VideoContainer({storage}) {
         </div>
       )}
       
-      {/* Scroll to top Floating Btn */}
       {!floatingDisabled ? <FloatingScrollBtn /> : null }
 
       <div className={`video-container ${isOpened ? 'animate' : ''}`}>
-        {/* check if videos are present */}
         {videoUrls.length>0 ?
           <ResponsiveMasonry columnsCountBreakPoints={{ 380: 1, 750: 2, 900: 3 }}>
             <Masonry gutter='17px'>
@@ -235,7 +211,6 @@ function VideoContainer({storage}) {
                   key={index}
                   data-index={index}
                   onChange={(inView, entry) => {
-                    // Trigger inView callback even before fully visible
                     if (entry.isIntersecting || entry.boundingClientRect.top < 200) {
                       inView && loaded ? (videoUrl = videoUrl) : (videoUrl = '');
                     }
@@ -248,7 +223,7 @@ function VideoContainer({storage}) {
                   poster={thumbnailUrl}
                   onError={(e) => console.error('Error playing video while hover (hover):', e.target.error)}
                   alt={`Video ${index}`}
-                  onClick={()=>viewVideo(videoUrl, index)} // Click to open video in full-screen
+                  onClick={()=>viewVideo(videoUrl, index)}
                   style={{ display: isIOS ? 'inline' : loaded ? 'inline' : 'none',
                           cursor: 'pointer' }}                
                   autoPlay={false}
@@ -262,19 +237,20 @@ function VideoContainer({storage}) {
             </Masonry>
           </ResponsiveMasonry>
         :
-          // else display no video msg
           <center>{showNoMediaMessageDelay && <div>Nothing here yet. Stay tuned!</div>}</center>
         }
       </div>
 
       {!endReached?
           <div className='loading-viewMore' style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', }}>
-            {/* Loading & ViewMore */}
             {videoUrls.length > 0 && (
                 <InView
                     as="div"
                     className='loading'
-                    onChange={(inView) => inView? handleViewMore()  : ''}>
+                    onChange={(inView) => {
+                        if (inView && !viewMorePaused && !endReached)
+                            handleViewMore();
+                    }}>
                 </InView>
             )}
           </div>

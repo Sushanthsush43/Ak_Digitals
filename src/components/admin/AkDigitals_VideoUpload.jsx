@@ -5,7 +5,7 @@ import { toastSuccessStyle, toastErrorStyle } from '../utils/toastStyle.js';
 import ProgressBar from "@ramonak/react-progress-bar";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { doc, setDoc, increment, collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 function VideoUpload({firestore, runCompleted}) {
 
@@ -44,6 +44,8 @@ function VideoUpload({firestore, runCompleted}) {
         isCompleteFailed = false;
         runCompleted(false);
         setUploadingFile('');
+        let totalUploadedSize = 0;
+        let totalUploadedCount = 0;
 
         const updatedMap = new Map();
         for (let i = 0; i < selectedFiles.length; i++)
@@ -64,14 +66,14 @@ function VideoUpload({firestore, runCompleted}) {
                     const fileExtension = file.name.slice(file.name.lastIndexOf('.') + 1).toLowerCase();
                     if (!supportedExtensions.includes(fileExtension)) {
                         updatedMap.set(i, { success: false, error: "Invalid video format" });
-                        console.error(`Skipping "${file.name}" - invalid video format`);
+                        console.error(`Skipping upload "${file.name}" - invalid video format`);
                         isSomeFailed = true;
                         continue;
                     }
 
                     if (file.size > 99 * 1024 * 1024) {
                         updatedMap.set(i, { success: false, error: "Exceeds 99MB size limit" });
-                        console.error(`Skipping "${file.name}" - too large`);
+                        console.error(`Skipping upload "${file.name}" - too large`);
                         isSomeFailed = true;
                         continue;
                     }
@@ -111,6 +113,10 @@ function VideoUpload({firestore, runCompleted}) {
                                         createdAt: serverTimestamp()
                                     });
                                     console.log(`Video uploaded successfully: ${file.name}`);
+
+                                    // keep track of usage for usage collection
+                                    totalUploadedSize += bytes;
+                                    totalUploadedCount += 1;
                                     } catch (firestoreError) {
                                         // rollback Cloudinary upload, if firestore metadata uplaod failed
                                         if (deleteToken) {
@@ -157,6 +163,21 @@ function VideoUpload({firestore, runCompleted}) {
             isCompleteFailed = true;
             return;
         } finally {
+            // upload usage statistics to firebase
+            if (totalUploadedCount > 0) {
+                try {
+                    const statsRef = doc(firestore, "usage_stats", "media");
+                    await setDoc(statsRef, {
+                        vid_count: increment(totalUploadedCount),
+                        vid_total_size: increment(totalUploadedSize),
+                        total_size: increment(totalUploadedSize),
+                        last_updated: serverTimestamp()
+                    }, { merge: true });
+                    console.log("Usage Statistics Updated");
+                } catch (err) {
+                    console.error("Usage Statistics update failed:", err);
+                }
+            }
             setUploading(false);
             setAllUploadDone(true);
             setSelectedFiles([]);

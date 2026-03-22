@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { IoMdImages, IoIosVideocam } from "react-icons/io";
 
 function DashBoardCounts({imgsLength = 0, vidsLength = 0}) {

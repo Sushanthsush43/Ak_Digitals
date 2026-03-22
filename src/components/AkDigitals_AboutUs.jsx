@@ -101,9 +101,9 @@ const AboutUs = () => {
           Made with <FontAwesomeIcon icon={faHeart} style={{ color: 'black' }} /> by MONK VARIABLES
         </p>
         <p className="text-center">
-            <a href="mailto:monkvariables09@gmail.com" target="_blank" rel="noopener noreferrer" 
+            <a href="mailto:sushanthdevadiga034@gmail.com" target="_blank" rel="noopener noreferrer" 
               style={{ textDecoration: 'none', color: 'inherit' }}>
-              monkvariables09@gmail.com
+              sushanthdevadiga034@gmail.com
             </a>
         </p>
       </footer>

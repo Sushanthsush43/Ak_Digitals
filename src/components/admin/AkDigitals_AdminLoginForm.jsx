@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
 import { toast } from 'react-toastify';
 import { toastErrorStyle, toastSuccessStyle } from '../utils/toastStyle';
@@ -33,7 +33,7 @@ function AdminLoginForm({ app, closeStatus }) {
       // signal to close component
       closeStatus(true);
       toast.success("Admin Login Successfull", toastSuccessStyle());
-      console.log('Admin logged in successfully!'); //msg
+      console.log('Admin Login Successfull!');
     } catch (error) {
       toast.error("Invalid Login Credentials", toastErrorStyle());
       console.error('Error signing in:', error.message || error);
@@ -81,6 +81,7 @@ function AdminLoginForm({ app, closeStatus }) {
         <input
           className='admin-email'
           type="email"
+          autocomplete="email"
           placeholder="email"
           value={email}
           onChange={(e) => setEmail(e.target.value.trim())}
@@ -91,6 +92,7 @@ function AdminLoginForm({ app, closeStatus }) {
           placeholder="password"
           value={password}
           onChange={(e) => setPassword(e.target.value.trim())}
+          autocomplete="current-password"
         />
         <button className='admin-submit' type="submit" disabled={isLoginBtnDisabled}>
           {isLoginBtnDisabled ? <FontAwesomeIcon icon={faSpinner} spin />: 'Login'}

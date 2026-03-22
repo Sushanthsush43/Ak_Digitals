@@ -6,7 +6,7 @@ import ProgressBar from "@ramonak/react-progress-bar";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import imageCompression from 'browser-image-compression';
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { doc, setDoc, increment, collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 // runCompleted is callback for tab component
 function PhotoUpload({firestore, runCompleted}) {
@@ -66,6 +66,8 @@ function PhotoUpload({firestore, runCompleted}) {
         runCompleted(false);
         const controller = new AbortController();
         setAbortController(controller);
+        let totalUploadedSize = 0;
+        let totalUploadedCount = 0;
 
         const updatedMap = new Map();
         for (let i = 0; i < selectedFiles.length; i++)
@@ -94,7 +96,7 @@ function PhotoUpload({firestore, runCompleted}) {
 
                     if (!supportedExtensions.includes(fileExtension)) {
                         updatedMap.set(i, { success: false, error: "Invalid image format" });
-                        console.error(`Skipping "${file.name}" - invalid image format`);
+                        console.error(`Skipping upload "${file.name}" - invalid image format`);
                         isSomeFailed = true;
                         continue;
                     }
@@ -150,6 +152,10 @@ function PhotoUpload({firestore, runCompleted}) {
                                         createdAt: serverTimestamp()
                                     });
                                     console.log(`Image uploaded successfully: ${file.name}`);
+
+                                    // keep track of usage for usage collection
+                                    totalUploadedSize += bytes;
+                                    totalUploadedCount += 1;
                                     } catch (firestoreError) {
                                         // rollback Cloudinary upload, if firestore metadata uplaod failed
                                         if (deleteToken) {
@@ -196,6 +202,21 @@ function PhotoUpload({firestore, runCompleted}) {
             isCompleteFailed = true;
             return;
         } finally {
+            // upload usage statistics to firebase
+            if (totalUploadedCount > 0) {
+                try {
+                    const statsRef = doc(firestore, "usage_stats", "media");
+                    await setDoc(statsRef, {
+                        img_count: increment(totalUploadedCount),
+                        img_total_size: increment(totalUploadedSize),
+                        total_size: increment(totalUploadedSize),
+                        last_updated: serverTimestamp()
+                    }, { merge: true });
+                    console.log("Usage Statistics Updated");
+                } catch (err) {
+                    console.error("Usage Statistics update failed:", err);
+                }
+            }
             setUploading(false);
             setAllUploadDone(true);
             setSelectedFiles([]);

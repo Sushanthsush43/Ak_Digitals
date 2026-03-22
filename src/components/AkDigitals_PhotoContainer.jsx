@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { ref, listAll, getDownloadURL, getMetadata } from 'firebase/storage';
 import { toast } from 'react-toastify';
 import { toastErrorStyle } from './utils/toastStyle';
 import { InView } from "react-intersection-observer";
@@ -10,20 +9,19 @@ import './../css/PhotoContainer.css';
 import './../css/Fullscreen.css';
 import FloatingScrollBtn from './utils/scrollToTop/FloatingBtn';
 import EndReachedBtn from './utils/scrollToTop/EndReachedBtn';
+import { collection, getDocs, query, orderBy, limit, startAfter } from "firebase/firestore";
 
-function PhotoContainer({storage}) {
+function PhotoContainer({firestore}) {
 
   // Define state variables
   const [isOpened, setIsOpened] = useState(false);
   const [data, setData] = useState({ img: '', i: 0 });
   const [imageUrls, setImageUrls] = useState([]);
-  const [page, setPage] = useState(1);
-  const imagesPerPage = 12;
-  const [imageRefs, setImageRefs] = useState([]);
   const [viewMorePaused, setViewMorePaused] = useState(false);
   const [endReached, setEndReached] = useState(false);
   const [floatingDisabled, setFloatingDisabled] = useState(false);
   const [showNoMediaMessageDelay, setShowNoMediaMessageDelay] = useState(false);
+  const [lastDoc, setLastDoc] = useState(null);
   
   // set delay for no media message
   useEffect(() => {
@@ -70,80 +68,19 @@ function PhotoContainer({storage}) {
   }
 
     useEffect(() => {
-        initialFetchImages(); // only once retreive all images from database
+        fetchImages(true);
     }, []);
 
-    useEffect(() => {
-        fetchImages();
-    }, [page, imageRefs]);
-
-    async function initialFetchImages() {
-        try {
-            const imageRefsTemp = await listAll(ref(storage, 'images')); // List items inside 'images' folder
-            const imageRefsItems = imageRefsTemp.items;
-
-            // Fetch metadata for each image to get the upload time
-            const imagesWithMetadata = await Promise.all(
-                imageRefsItems.map(async (imageRef) => {
-                    const metadata = await getMetadata(imageRef);
-                    return { ref: imageRef, timeCreated: metadata.timeCreated };
-                })
-            );
-
-            // Sort images by upload time, newest first
-            imagesWithMetadata.sort((a, b) => new Date(b.timeCreated) - new Date(a.timeCreated));
-
-            // Remove the uploadTime from the final array
-            const sortedImageRefs = imagesWithMetadata.map(image => image.ref);
-
-            setImageRefs(sortedImageRefs);
-        } catch (error) {
-            toast.error("Something went wrong, Please try again!", toastErrorStyle());
-            console.error('Error listing items in storage:', error);
-        }
-    }
-
-    async function fetchImages() {
-        if(imageRefs && imageRefs.length >= 1){
-            try {
-                const startIndex = (page - 1) * imagesPerPage;
-                const endIndex = startIndex + imagesPerPage;
-    
-                const totalPages = Math.ceil(imageRefs.length / imagesPerPage);
-    
-                const urls = await Promise.all(imageRefs.slice(startIndex, endIndex).map(async (itemRef) => {
-                    try {
-                        const url = await getDownloadURL(itemRef);
-                        return { url, loaded: false };
-                    } catch (error) {
-                        console.error('Error getting download URL for itemRef:', error);
-                        return null;
-                    }
-                }));
-    
-                if (page === totalPages) {
-                    // setPage(1);
-                    setEndReached(true);
-                }
-    
-                setImageUrls(prevUrls => [...prevUrls, ...urls.filter(url => url !== null)]);
-
-            } catch (error) {
-                toast.error("Something went wrong, Please try again!",toastErrorStyle());
-                console.error('Error listing items in storage:', error);
-            }
-        } 
-    }
-
     const handleViewMore = () => {
-        if (viewMorePaused)
+        if (viewMorePaused || endReached)
             return;
 
         setViewMorePaused(true);
+
         setTimeout(() => {
-            setPage(prevPage => prevPage + 1);
+            fetchImages();
             setViewMorePaused(false);
-        }, [2250]);
+        }, 2250);
     };
 
     const handleImageLoad = (index) => {
@@ -152,6 +89,52 @@ function PhotoContainer({storage}) {
             updatedImageUrls[index].loaded = true; // Mark image as loaded
             return updatedImageUrls;
         });
+    };
+
+    const fetchImages = async (isInitial = false) => {
+        try {
+            let q;
+
+            if (isInitial || !lastDoc) {
+                q = query(
+                    collection(firestore, "images"),
+                    orderBy("createdAt", "desc"),
+                    limit(12) // 12 images per load
+                );
+            } else {
+                q = query(
+                    collection(firestore, "images"),
+                    orderBy("createdAt", "desc"),
+                    startAfter(lastDoc),
+                    limit(12) // 12 images per load
+                );
+            }
+
+            const snapshot = await getDocs(q);
+
+            const newImages = snapshot.docs.map(doc => ({
+                url: doc.data().url,
+                thumb: doc.data().url, // for now keep same, in future we might use seperate
+                loaded: false
+            }));
+
+            if (isInitial) {
+                setImageUrls(newImages);
+            } else {
+                setImageUrls(prev => [...prev, ...newImages]);
+            }
+
+            if (!snapshot.empty)
+                setLastDoc(snapshot.docs[snapshot.docs.length - 1]);
+
+            if (snapshot.empty || snapshot.docs.length < 12) {
+                setEndReached(true);
+            }
+
+        } catch (error) {
+            toast.error("Something went wrong, Please try again!", toastErrorStyle());
+            console.error(error);
+        }
     };
 
   return (
@@ -186,7 +169,7 @@ function PhotoContainer({storage}) {
                 {imageUrls.length>0 ?
                     <ResponsiveMasonry columnsCountBreakPoints={{ 380: 1, 750: 2, 900: 3 }}>
                     <Masonry gutter='17px'>
-                        {imageUrls.map(({ url, loaded }, index) => (
+                        {imageUrls.map(({ url, thumb, loaded }, index) => (
                             <InView
                                 as="img"
                                 className='image-video'
@@ -199,7 +182,7 @@ function PhotoContainer({storage}) {
                                 }}
                                 onLoad={() => handleImageLoad(index)}
                                 onContextMenu={(e) => e.preventDefault()}
-                                src={url}
+                                src={thumb}
                                 alt={`Image ${index}`}
                                 data-index={index}
                                 onClick={() => viewImage(url, index)} // Click to open image in full-screen
@@ -222,7 +205,11 @@ function PhotoContainer({storage}) {
                     <InView
                         as="div"
                         className='loading'
-                        onChange={(inView) => inView? handleViewMore()  : ''}>
+                        onChange={(inView) => {
+                            if (inView && !viewMorePaused && !endReached)
+                                handleViewMore();
+                        }}
+                    >
                     </InView>
                     )}
                 </div> 

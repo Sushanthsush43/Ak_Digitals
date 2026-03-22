@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './../css/TabsComponent.css';
 import { toast } from 'react-toastify';
 import { toastErrorStyle } from './utils/toastStyle';

@@ -31,7 +31,16 @@ function DashBoard({ firestore, app }) {
         if (data) {
           setImgsLength(data.imgsLength);
           setVidsLength(data.vidsLength);
-          setPieChartdata({ photoSize: data.imgSize, videoSize: data.vidSize, totalUsedSize: data.totalUsedSize });
+          
+          const totalStorage = 20;
+          const used = parseFloat(data.totalUsedSize || 0);
+          const remaining = (totalStorage - used).toFixed(2);
+          setPieChartdata({ 
+            photoSize: data.imgSize,
+            videoSize: data.vidSize,
+            usedSize: used.toFixed(2),
+            remainingSize: remaining
+          });
         } else {
           toast.error("Something went wrong", toastErrorStyle());
         }

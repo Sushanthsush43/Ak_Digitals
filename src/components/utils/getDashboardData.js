@@ -1,58 +1,36 @@
-import { ref, listAll, getMetadata } from 'firebase/storage';
+import { doc, getDoc } from "firebase/firestore";
 
-export const getDashboardData = async (storage) => {
-
+export const getDashboardData = async (firestore) => {
     const convertBytesToGb = (bytes) => {
         return parseFloat(bytes / (1024 * 1024 * 1024)).toFixed(2);
     };
-    try{
-        // Image section
-        const imgRefsTemp = await listAll(ref(storage, 'images'));
-        const imgRefs = imgRefsTemp.items;
-        const imgsSizes = await Promise.all(
-        imgRefs.map(async (imgRef) => {
-            const metadata = await getMetadata(imgRef);
-            return metadata.size;
-        }));
-        const imgsSizeTotalMainBytes = imgsSizes.reduce((accumulator, currentValue) => accumulator  + currentValue, 0);
-        const imgsSizeTotalMainGB = convertBytesToGb(imgsSizeTotalMainBytes);
 
-        // Video section
-        const vidRefsTemp = await listAll(ref(storage, 'videos'));
-        const vidRefs = vidRefsTemp.items;
-        const vidsSizes = await Promise.all(
-        vidRefs.map(async (vidRef) => {
-            const metadata = await getMetadata(vidRef);
-            return metadata.size;
-        }));
-        const vidsSizeTotalBytes = vidsSizes.reduce((accumulator, currentValue) => accumulator  + currentValue, 0);
-        
-        // Thumbnail section
-        const thumbnailsRefsTemp = await listAll(ref(storage, 'thumbnails'));
-        const thumbnailsRefs = thumbnailsRefsTemp.items;
-        const thumbnailsSizes = await Promise.all(
-        thumbnailsRefs.map(async (thumbnailRef) => {
-            const metadata = await getMetadata(thumbnailRef);
-            return metadata.size;
-        }));
-        const thumbnailsSizeTotalBytes = thumbnailsSizes.reduce((accumulator, currentValue) => accumulator  + currentValue, 0);
+    try {
+        const statsRef = doc(firestore, "usage_stats", "media");
+        const statsSnap = await getDoc(statsRef);
 
-        // Thumbnails and Videos are considered togethor
-        const vidsSizeTotalMainBytes = vidsSizeTotalBytes + thumbnailsSizeTotalBytes;
-        const vidsSizeTotalMainGB = convertBytesToGb(vidsSizeTotalMainBytes);
+        if (!statsSnap.exists()) {
+            return {
+                imgsLength: 0,
+                vidsLength: 0,
+                imgSize: "0.00",
+                vidSize: "0.00",
+                totalUsedSize: "0.00"
+            };
+        }
 
-        const totalSizeUsedBytes = imgsSizeTotalMainBytes + vidsSizeTotalMainBytes;
-        const totalSizeUsedGB = convertBytesToGb(totalSizeUsedBytes);
+        const data = statsSnap.data();
 
-        return { imgsLength : imgRefs.length,
-                 vidsLength : vidRefs.length,
-                 imgSize : imgsSizeTotalMainGB,
-                 vidSize : vidsSizeTotalMainGB,
-                 totalUsedSize : totalSizeUsedGB 
-                };
+        return {
+            imgsLength: data.img_count || 0,
+            vidsLength: data.vid_count || 0,
+            imgSize: convertBytesToGb(data.img_total_size || 0),
+            vidSize: convertBytesToGb(data.vid_total_size || 0),
+            totalUsedSize: convertBytesToGb(data.total_size || 0)
+        };
 
-    }catch(error){
+    } catch (error) {
         console.log("Something went wrong while getting dashboard data :", error);
         return null;
     }
-}
+};
