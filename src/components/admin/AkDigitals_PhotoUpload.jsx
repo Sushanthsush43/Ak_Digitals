@@ -91,8 +91,12 @@ function PhotoUpload({firestore, runCompleted}) {
                     }
 
                     const fileExtension = file.name.slice(file.name.lastIndexOf('.') + 1).toLowerCase();
-                    if(!supportedExtensions.includes(fileExtension)) {
-                        throw new Error('Invalid image format');
+
+                    if (!supportedExtensions.includes(fileExtension)) {
+                        updatedMap.set(i, { success: false, error: "Invalid image format" });
+                        console.error(`Skipping "${file.name}" - invalid image format`);
+                        isSomeFailed = true;
+                        continue;
                     }
 
                     const options = {
@@ -137,6 +141,7 @@ function PhotoUpload({firestore, runCompleted}) {
                                 const bytes = response.bytes;
                                 const deleteToken = response.delete_token; // Valid only for 10 mins, used for exception case
                                 try {
+                                    // store image url and other metadata in firestore for later use
                                     await addDoc(collection(firestore, "images"), {
                                         public_id: publicId,
                                         name: file.name,
@@ -146,7 +151,7 @@ function PhotoUpload({firestore, runCompleted}) {
                                     });
                                     console.log(`Image uploaded successfully: ${file.name}`);
                                     } catch (firestoreError) {
-                                        // rollback Cloudinary upload, if firestore metadat uplaod failed
+                                        // rollback Cloudinary upload, if firestore metadata uplaod failed
                                         if (deleteToken) {
                                             await fetch(
                                                 "https://api.cloudinary.com/v1_1/" +

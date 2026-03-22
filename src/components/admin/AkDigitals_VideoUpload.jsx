@@ -62,13 +62,18 @@ function VideoUpload({firestore, runCompleted}) {
                     setUploadProgress(0);
 
                     const fileExtension = file.name.slice(file.name.lastIndexOf('.') + 1).toLowerCase();
-                    if(!supportedExtensions.includes(fileExtension)) {
-                        throw new Error('Invalid video format');
+                    if (!supportedExtensions.includes(fileExtension)) {
+                        updatedMap.set(i, { success: false, error: "Invalid video format" });
+                        console.error(`Skipping "${file.name}" - invalid video format`);
+                        isSomeFailed = true;
+                        continue;
                     }
 
-                    // BLOCK if > 99MB (Cloudinary doesn't support greater than 100mb in free tier)
                     if (file.size > 99 * 1024 * 1024) {
-                        throw new Error('Exceeds 99MB size limit');
+                        updatedMap.set(i, { success: false, error: "Exceeds 99MB size limit" });
+                        console.error(`Skipping "${file.name}" - too large`);
+                        isSomeFailed = true;
+                        continue;
                     }
 
                     const formData = new FormData();
@@ -97,6 +102,7 @@ function VideoUpload({firestore, runCompleted}) {
                                 const bytes = response.bytes;
                                 const deleteToken = response.delete_token; // Valid only for 10 mins, used for exception case
                                 try {
+                                    // store video url and other metadata in firestore for later use
                                     await addDoc(collection(firestore, "videos"), {
                                         public_id: publicId,
                                         name: file.name,
@@ -106,7 +112,7 @@ function VideoUpload({firestore, runCompleted}) {
                                     });
                                     console.log(`Video uploaded successfully: ${file.name}`);
                                     } catch (firestoreError) {
-                                        // rollback Cloudinary upload, if firestore metadat uplaod failed
+                                        // rollback Cloudinary upload, if firestore metadata uplaod failed
                                         if (deleteToken) {
                                             await fetch(
                                                 "https://api.cloudinary.com/v1_1/" +
